@@ -1,0 +1,52 @@
+{
+  "name": "emotion-trainer-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prebuild": "node scripts/generate-image-manifest.js",
+    "build": "rsbuild build",
+    "predev": "node scripts/generate-image-manifest.js",
+    "dev": "rsbuild dev --open",
+    "dev:frontend": "rsbuild dev",
+    "preview": "rsbuild preview",
+    "start": "node server.cjs",
+    "generate-manifest": "node scripts/generate-image-manifest.js",
+    "images-server": "node server.cjs",
+    "dev:all": "concurrently \"npm run images-server\" \"npm run dev\"",
+    "tauri:dev": "npm run create-tauri-icons && tauri dev",
+    "tauri:build": "npm run build && rm -rf dist/images && cd src-tauri && bash ../scripts/build-app.sh",
+    "tauri:build:debug": "npm run build && rm -rf dist/images && cd src-tauri && bash ../scripts/build-app-debug.sh",
+    "create-tauri-icons": "bash scripts/create-tauri-icons.sh"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-slot": "^1.2.4",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "^10.4.23",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "lucide-react": "^0.562.0",
+    "postcss": "^8.5.6",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-helmet-async": "^2.0.5",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "@playwright/test": "^1.57.0",
+    "@rsbuild/core": "^1.6.14",
+    "@rsbuild/plugin-react": "^1.4.2",
+    "@shadcn/ui": "^0.0.4",
+    "@tailwindcss/postcss": "^4.1.18",
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.3"
+  }
+}

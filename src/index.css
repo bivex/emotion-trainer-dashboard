@@ -1,0 +1,551 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Design System Color Tokens - Light Mode */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --border: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --input: 214.3 31.8% 91.4%;
+
+    /* Emotion Matrix Color System - Light Mode */
+    --matrix-bg: 210 20% 98%;          /* Light background */
+    --matrix-surface: 210 15% 96%;      /* Slightly darker surface */
+    --matrix-accent: 262 60% 70%;       /* Light pastel purple accent for light mode */
+    --matrix-secondary: 188 70% 60%;    /* Light pastel cyan secondary for light mode */
+    --matrix-text: 222.2 84% 4.9%;      /* Dark text for light mode */
+
+    /* Emotion-specific colors - Light pastel colors for light mode */
+    --emotion-joy: 45 80% 65%;           /* Light pastel yellow for joy */
+    --emotion-sadness: 220 70% 55%;      /* Light pastel blue for sadness */
+    --emotion-anger: 0 75% 65%;          /* Light pastel red for anger */
+    --emotion-fear: 280 60% 55%;         /* Light pastel purple for fear */
+    --emotion-surprise: 320 70% 65%;    /* Light pastel pink for surprise */
+    --emotion-disgust: 120 60% 55%;     /* Light pastel green for disgust */
+    --emotion-guilt: 30 55% 55%;         /* Light pastel orange for guilt */
+    --emotion-shame: 340 55% 55%;        /* Light pastel magenta for shame */
+    --emotion-suspicion: 180 45% 55%;    /* Light pastel teal for suspicion */
+    --emotion-neutral: 0 0% 50%;         /* Light gray for neutral */
+
+    --radius: 0.5rem;
+
+    /* Animation variables */
+    --pulse-speed: 2s;
+    --float-speed: 3s;
+    --glow-intensity: 0.2;  /* Very subtle glow for light pastel mode */
+  }
+
+  .dark {
+    /* Design System Color Tokens - Dark Mode */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 78%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --input: 217.2 32.6% 17.5%;
+
+    /* Emotion Matrix Color System - Dark Mode */
+    --matrix-bg: 240 15% 5%;          /* Darker background for better contrast */
+    --matrix-surface: 240 12% 7%;      /* Slightly lighter surface */
+    --matrix-accent: 280 100% 70%;     /* Bright purple accent */
+    --matrix-secondary: 200 100% 65%;  /* Bright cyan secondary */
+    --matrix-text: 210 40% 98%;        /* Light text for dark mode */
+
+    /* Emotion-specific colors - Improved contrast for dark mode */
+    --emotion-joy: 45 95% 65%;          /* Brighter yellow for joy */
+    --emotion-sadness: 220 85% 55%;     /* Brighter blue for sadness */
+    --emotion-anger: 0 90% 65%;         /* Brighter red for anger */
+    --emotion-fear: 280 75% 55%;        /* Brighter purple for fear */
+    --emotion-surprise: 320 85% 65%;   /* Brighter pink for surprise */
+    --emotion-disgust: 120 75% 55%;    /* Brighter green for disgust */
+    --emotion-guilt: 30 70% 55%;        /* Brighter orange for guilt */
+    --emotion-shame: 340 70% 55%;       /* Brighter magenta for shame */
+    --emotion-suspicion: 180 60% 55%;   /* Brighter teal for suspicion */
+    --emotion-neutral: 0 0% 70%;        /* Brighter gray for neutral */
+
+    --glow-intensity: 0.6;  /* Higher glow for dark mode */
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: hsl(var(--matrix-bg));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--matrix-bg));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--matrix-accent) / 0.6);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--matrix-accent) / 0.8);
+  }
+}
+
+@layer utilities {
+  /* Enhanced Typography System */
+  .font-matrix {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-feature-settings: 'liga' off;
+    letter-spacing: 0.025em;
+    font-weight: 400;
+  }
+
+  .font-matrix-medium {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-feature-settings: 'liga' off;
+    letter-spacing: 0.025em;
+    font-weight: 500;
+  }
+
+  .font-matrix-semibold {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-feature-settings: 'liga' off;
+    letter-spacing: 0.025em;
+    font-weight: 600;
+  }
+
+  .font-matrix-bold {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-feature-settings: 'liga' off;
+    letter-spacing: 0.025em;
+    font-weight: 700;
+  }
+
+  .font-matrix-display {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+
+  /* Improved text hierarchy */
+  .text-display-lg {
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.1;
+  }
+
+  .text-display-md {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.1;
+  }
+
+  .text-heading-xl {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.2;
+  }
+
+  .text-heading-lg {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    line-height: 1.3;
+  }
+
+  .text-body-lg {
+    font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+    line-height: 1.6;
+  }
+
+  .text-body {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    line-height: 1.6;
+  }
+
+  .text-caption {
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    line-height: 1.5;
+  }
+
+  /* Emotion Matrix Effects */
+  .matrix-glass {
+    background:
+      linear-gradient(180deg, hsl(var(--card) / 0.94), hsl(var(--matrix-surface) / 0.88));
+    backdrop-filter: blur(14px) saturate(135%);
+    -webkit-backdrop-filter: blur(14px) saturate(135%);
+    border: 1px solid hsl(var(--foreground) / 0.08);
+    box-shadow:
+      0 18px 40px hsl(var(--matrix-bg) / 0.08),
+      inset 0 1px 0 hsl(var(--foreground) / 0.05);
+  }
+
+  .dark .matrix-glass {
+    background:
+      linear-gradient(180deg, rgba(15, 23, 42, 0.76), rgba(15, 23, 42, 0.9));
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    box-shadow:
+      0 20px 48px rgba(2, 6, 23, 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .matrix-glow {
+    box-shadow:
+      0 0 20px hsl(var(--matrix-accent) / var(--glow-intensity)),
+      0 0 40px hsl(var(--matrix-accent) / calc(var(--glow-intensity) * 0.3)),
+      0 0 80px hsl(var(--matrix-accent) / calc(var(--glow-intensity) * 0.1));
+  }
+
+  .matrix-border {
+    position: relative;
+  }
+
+  .matrix-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: linear-gradient(45deg,
+      hsl(var(--matrix-accent)),
+      hsl(var(--matrix-secondary)),
+      hsl(var(--matrix-accent))
+    );
+    border-radius: inherit;
+    z-index: -1;
+    animation: matrix-border-rotate 3s linear infinite;
+  }
+
+  @keyframes matrix-border-rotate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .matrix-grid {
+    background-image:
+      linear-gradient(hsl(var(--matrix-accent) / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--matrix-accent) / 0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .dark .matrix-grid {
+    background-image:
+      linear-gradient(hsl(var(--matrix-accent) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--matrix-accent) / 0.05) 1px, transparent 1px);
+  }
+
+  .matrix-hero-shell {
+    position: relative;
+    margin-inline: auto;
+    max-width: 72rem;
+    padding: 0.5rem 1rem 1rem;
+  }
+
+  .matrix-hero-shell::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 2rem;
+    background:
+      radial-gradient(circle at top, hsl(var(--matrix-secondary) / 0.12), transparent 42%),
+      radial-gradient(circle at bottom, hsl(var(--matrix-accent) / 0.1), transparent 48%);
+    filter: blur(8px);
+    z-index: -1;
+    opacity: 0.8;
+  }
+
+  .matrix-hero-title {
+    color: hsl(var(--foreground));
+    text-shadow:
+      0 10px 28px hsl(var(--matrix-bg) / 0.18),
+      0 0 1px hsl(var(--foreground) / 0.4);
+  }
+
+  .dark .matrix-hero-title {
+    color: rgba(248, 250, 252, 0.96);
+    text-shadow:
+      0 0 32px rgba(56, 189, 248, 0.14),
+      0 18px 42px rgba(2, 6, 23, 0.72);
+  }
+
+  .matrix-hero-accent {
+    background: linear-gradient(90deg, hsl(var(--matrix-secondary)), hsl(var(--matrix-accent)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .matrix-hero-subtitle {
+    color: hsl(var(--muted-foreground));
+    text-shadow: 0 8px 18px hsl(var(--matrix-bg) / 0.08);
+  }
+
+  .dark .matrix-hero-subtitle {
+    color: rgba(226, 232, 240, 0.86);
+  }
+
+  .matrix-toolbar-button {
+    background:
+      linear-gradient(180deg, hsl(var(--card) / 0.96), hsl(var(--matrix-surface) / 0.88));
+    border: 1px solid hsl(var(--matrix-accent) / 0.18);
+    color: hsl(var(--foreground));
+    box-shadow: 0 10px 24px hsl(var(--matrix-bg) / 0.08);
+  }
+
+  .matrix-toolbar-button:hover {
+    background:
+      linear-gradient(180deg, hsl(var(--card) / 1), hsl(var(--matrix-surface) / 0.94));
+    color: hsl(var(--foreground));
+  }
+
+  .dark .matrix-toolbar-button {
+    background:
+      linear-gradient(180deg, rgba(30, 41, 59, 0.84), rgba(15, 23, 42, 0.92));
+    border: 1px solid rgba(125, 211, 252, 0.18);
+    color: rgba(248, 250, 252, 0.94);
+    box-shadow: 0 14px 30px rgba(2, 6, 23, 0.34);
+  }
+
+  .dark .matrix-toolbar-button:hover {
+    background:
+      linear-gradient(180deg, rgba(37, 52, 77, 0.92), rgba(17, 24, 39, 0.96));
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .matrix-primary-action {
+    background: linear-gradient(135deg, hsl(var(--matrix-secondary)), hsl(var(--matrix-accent)));
+    color: #020617;
+    border: 1px solid hsl(var(--matrix-secondary) / 0.45);
+    box-shadow:
+      0 18px 36px hsl(var(--matrix-secondary) / 0.18),
+      0 0 0 1px hsl(var(--matrix-secondary) / 0.12);
+  }
+
+  .matrix-primary-action:hover {
+    filter: brightness(1.04);
+    transform: translateY(-1px);
+  }
+
+  /* Emotion-specific utilities */
+  .emotion-bg-joy { background: linear-gradient(135deg, hsl(var(--emotion-joy) / 0.1), hsl(var(--emotion-joy) / 0.05)); }
+  .emotion-bg-sadness { background: linear-gradient(135deg, hsl(var(--emotion-sadness) / 0.1), hsl(var(--emotion-sadness) / 0.05)); }
+  .emotion-bg-anger { background: linear-gradient(135deg, hsl(var(--emotion-anger) / 0.1), hsl(var(--emotion-anger) / 0.05)); }
+  .emotion-bg-fear { background: linear-gradient(135deg, hsl(var(--emotion-fear) / 0.1), hsl(var(--emotion-fear) / 0.05)); }
+  .emotion-bg-surprise { background: linear-gradient(135deg, hsl(var(--emotion-surprise) / 0.1), hsl(var(--emotion-surprise) / 0.05)); }
+  .emotion-bg-disgust { background: linear-gradient(135deg, hsl(var(--emotion-disgust) / 0.1), hsl(var(--emotion-disgust) / 0.05)); }
+  .emotion-bg-guilt { background: linear-gradient(135deg, hsl(var(--emotion-guilt) / 0.1), hsl(var(--emotion-guilt) / 0.05)); }
+  .emotion-bg-shame { background: linear-gradient(135deg, hsl(var(--emotion-shame) / 0.1), hsl(var(--emotion-shame) / 0.05)); }
+  .emotion-bg-suspicion { background: linear-gradient(135deg, hsl(var(--emotion-suspicion) / 0.1), hsl(var(--emotion-suspicion) / 0.05)); }
+  .emotion-bg-neutral { background: linear-gradient(135deg, hsl(var(--emotion-neutral) / 0.1), hsl(var(--emotion-neutral) / 0.05)); }
+
+  .emotion-text-joy { color: hsl(var(--emotion-joy)); }
+  .emotion-text-sadness { color: hsl(var(--emotion-sadness)); }
+  .emotion-text-anger { color: hsl(var(--emotion-anger)); }
+  .emotion-text-fear { color: hsl(var(--emotion-fear)); }
+  .emotion-text-surprise { color: hsl(var(--emotion-surprise)); }
+  .emotion-text-disgust { color: hsl(var(--emotion-disgust)); }
+  .emotion-text-guilt { color: hsl(var(--emotion-guilt)); }
+  .emotion-text-shame { color: hsl(var(--emotion-shame)); }
+  .emotion-text-suspicion { color: hsl(var(--emotion-suspicion)); }
+  .emotion-text-neutral { color: hsl(var(--emotion-neutral)); }
+
+  /* Animation utilities */
+  .animate-matrix-float {
+    animation: matrix-float var(--float-speed) ease-in-out infinite;
+  }
+
+  .animate-matrix-pulse {
+    animation: matrix-pulse var(--pulse-speed) ease-in-out infinite;
+  }
+
+  .animate-matrix-glow {
+    animation: matrix-glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-matrix-scan {
+    animation: matrix-scan 1.5s linear infinite;
+  }
+
+  /* Design System Animation Utilities */
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+  }
+
+  .animate-fade-out {
+    animation: fade-out 0.5s ease-out;
+  }
+
+  .animate-slide-in-from-top {
+    animation: slide-in-from-top 0.3s ease-out;
+  }
+
+  .animate-slide-in-from-bottom {
+    animation: slide-in-from-bottom 0.3s ease-out;
+  }
+
+  .animate-slide-in-from-left {
+    animation: slide-in-from-left 0.3s ease-out;
+  }
+
+  .animate-slide-in-from-right {
+    animation: slide-in-from-right 0.3s ease-out;
+  }
+
+  .animate-zoom-in {
+    animation: zoom-in 0.2s ease-out;
+  }
+
+  .animate-zoom-out {
+    animation: zoom-out 0.2s ease-out;
+  }
+
+  /* Compound animations */
+  .animate-modal-enter {
+    animation: fade-in 0.2s ease-out, zoom-in 0.2s ease-out;
+  }
+
+  .animate-modal-exit {
+    animation: fade-out 0.2s ease-out, zoom-out 0.2s ease-out;
+  }
+
+  .animate-dropdown-enter {
+    animation: fade-in 0.15s ease-out, slide-in-from-top 0.15s ease-out;
+  }
+
+  .animate-dropdown-exit {
+    animation: fade-out 0.15s ease-out, slide-out-to-top 0.15s ease-out;
+  }
+
+  @keyframes matrix-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes matrix-pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes matrix-glow {
+    0% { --glow-intensity: 0.2; }
+    100% { --glow-intensity: 0.4; }
+  }
+
+  @keyframes matrix-scan {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* Design System Utilities */
+  .focus-ring:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
+  }
+
+  .disabled:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* Interactive states */
+  .matrix-interactive {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    transform: translateZ(0); /* Force hardware acceleration without layout shift */
+  }
+
+  .matrix-interactive:hover {
+    --glow-intensity: 0.3;
+    box-shadow:
+      0 8px 32px hsl(var(--matrix-bg) / 0.1),
+      0 0 20px hsl(var(--matrix-accent) / var(--glow-intensity)),
+      0 0 40px hsl(var(--matrix-accent) / calc(var(--glow-intensity) * 0.3));
+  }
+
+  .dark .matrix-interactive:hover {
+    --glow-intensity: 0.8;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 20px hsl(var(--matrix-accent) / var(--glow-intensity)),
+      0 0 40px hsl(var(--matrix-accent) / calc(var(--glow-intensity) * 0.3));
+  }
+
+  .matrix-interactive:active {
+    --glow-intensity: 0.4;
+  }
+
+  .dark .matrix-interactive:active {
+    --glow-intensity: 1;
+  }
+
+  /* Data stream effect */
+  .data-stream {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .data-stream::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(139, 92, 246, 0.3),
+      transparent
+    );
+    animation: data-stream 2s infinite;
+  }
+
+  @keyframes data-stream {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+}
