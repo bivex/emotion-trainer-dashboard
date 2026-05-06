@@ -1,8 +1,7 @@
 import { useLanguage } from '../i18n/LanguageProvider';
-import { Language } from '../i18n/translations';
 import { Globe } from 'lucide-react';
 
-const languages: { code: Language; label: string; flag: string }[] = [
+const languages: { code: 'en' | 'ru' | 'zh' | 'es'; label: string; flag: string }[] = [
   { code: 'en', label: 'English', flag: '🇺🇸' },
   { code: 'ru', label: 'Русский', flag: '🇷🇺' },
   { code: 'zh', label: '中文', flag: '🇨🇳' },
@@ -10,13 +9,13 @@ const languages: { code: Language; label: string; flag: string }[] = [
 ];
 
 export function LanguageSelector() {
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
 
   return (
     <div className="relative group">
       <button
         className="matrix-toolbar-button inline-flex h-10 items-center justify-center gap-2 rounded-xl px-3 text-sm font-matrix uppercase tracking-wider matrix-interactive sm:h-11"
-        aria-label="Select language"
+        aria-label={t.selectLanguage}
       >
         <Globe className="w-4 h-4" />
         <span className="hidden sm:inline">{languages.find(l => l.code === language)?.flag}</span>

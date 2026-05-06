@@ -1,7 +1,10 @@
 import { Button } from './ui/button';
 import { Code2 } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageProvider';
 
 export function DevToolsToggle() {
+  const { t } = useLanguage();
+
   const handleOpenDevTools = async () => {
     if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
       const { invoke } = await import('@tauri-apps/api/core');
@@ -24,7 +27,7 @@ export function DevToolsToggle() {
       size="icon"
       onClick={handleOpenDevTools}
       className="relative overflow-hidden group"
-      title="Open DevTools"
+      title={t.openDevTools}
     >
       <Code2 className="h-4 w-4" />
     </Button>

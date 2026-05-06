@@ -83,10 +83,11 @@ export const translations = {
     poweredBy: 'Powered by Advanced AI Emotion Recognition',
     secure: 'Secure',
 
-    // Language selector
-    language: 'Language',
+     // Language selector
+     language: 'Language',
+     selectLanguage: 'Select language',
 
-    // Progress
+     // Progress
     imagesRemaining: 'images remaining',
     allImagesSeen: 'Starting new round!',
 
@@ -102,10 +103,25 @@ export const translations = {
     resetConfirm: 'Reset all statistics?',
     actualEmotion: 'Actual',
     predictedEmotion: 'Predicted',
-    noData: 'No data yet',
-    weakEmotions: 'Weak Emotions',
-    noWeakEmotions: 'No weak emotions detected',
-  },
+     noData: 'No data yet',
+     weakEmotions: 'Weak Emotions',
+     noWeakEmotions: 'No weak emotions detected',
+
+     // Accessibility & UI
+     ariaLabelDashboard: 'Emotion Recognition Training Dashboard',
+     ariaLabelNeuralScanner: 'Neural Emotion Scanner - AI-powered emotion recognition training',
+     ariaLabelTrainingInterface: 'Training Interface',
+     activeEmotionsCount: 'Active: {count} emotions',
+     noImage: 'No image',
+     openDevTools: 'Open DevTools',
+
+     // Preset labels
+     presetAll: 'All 39',
+     presetBasic: 'Basic 10',
+     presetExtended: 'Extended 20',
+     presetAdvanced: 'Advanced 30',
+     presetCustom: 'Custom',
+   },
 
   ru: {
     // Header
@@ -191,10 +207,11 @@ export const translations = {
     poweredBy: 'На базе продвинутого ИИ распознавания эмоций',
     secure: 'Защищено',
 
-    // Language selector
-    language: 'Язык',
+     // Language selector
+     language: 'Язык',
+     selectLanguage: 'Выбрать язык',
 
-    // Progress
+     // Progress
     imagesRemaining: 'изображений осталось',
     allImagesSeen: 'Начинаем новый раунд!',
 
@@ -210,10 +227,25 @@ export const translations = {
     resetConfirm: 'Сбросить всю статистику?',
     actualEmotion: 'Факт',
     predictedEmotion: 'Ответ',
-    noData: 'Нет данных',
-    weakEmotions: 'Слабые эмоции',
-    noWeakEmotions: 'Слабых эмоций не обнаружено',
-  },
+     noData: 'Нет данных',
+     weakEmotions: 'Слабые эмоции',
+     noWeakEmotions: 'Слабых эмоций не обнаружено',
+
+     // Accessibility & UI
+     ariaLabelDashboard: 'Панель тренировки распознавания эмоций',
+     ariaLabelNeuralScanner: 'Нейронный сканер эмоций - Распознавание эмоций на базе ИИ',
+     ariaLabelTrainingInterface: 'Интерфейс тренировки',
+     activeEmotionsCount: 'Активно: {count} эмоций',
+     noImage: 'Нет изображения',
+     openDevTools: 'Открыть инструменты разработчика',
+
+     // Preset labels
+     presetAll: 'Все 39',
+     presetBasic: 'Базовые 10',
+     presetExtended: 'Расширенные 20',
+     presetAdvanced: 'Продвинутые 30',
+     presetCustom: 'Пользовательские',
+   },
 
   zh: {
     // Header
@@ -299,10 +331,11 @@ export const translations = {
     poweredBy: '由先进的AI情绪识别技术驱动',
     secure: '安全',
 
-    // Language selector
-    language: '语言',
+     // Language selector
+     language: '语言',
+     selectLanguage: '选择语言',
 
-    // Progress
+     // Progress
     imagesRemaining: '张图片剩余',
     allImagesSeen: '开始新一轮！',
 
@@ -318,119 +351,150 @@ export const translations = {
     resetConfirm: '重置所有统计数据？',
     actualEmotion: '实际',
     predictedEmotion: '预测',
-    noData: '暂无数据',
-    weakEmotions: '弱项情绪',
-    noWeakEmotions: '未检测到弱项情绪',
-  },
+     noData: '暂无数据',
+     weakEmotions: '弱项情绪',
+     noWeakEmotions: '未检测到弱项情绪',
 
-  es: {
-    // Header
-    appTitle: 'MATRIZ DE EMOCIONES',
-    title: 'ESCÁNER',
-    titleAccent: 'NEURONAL',
-    titleEnd: 'DE EMOCIONES',
-    subtitle: 'Red neuronal avanzada para entrenamiento de reconocimiento de emociones.',
-    subtitleLine2: 'Decodifica expresiones faciales con precisión.',
-    matrixReady: 'Matriz lista',
-    toggleTheme: 'Cambiar tema',
+     // Accessibility & UI
+     ariaLabelDashboard: '情绪识别训练面板',
+     ariaLabelNeuralScanner: '神经情绪扫描器 - AI驱动的情绪识别',
+     ariaLabelTrainingInterface: '训练界面',
+     activeEmotionsCount: '活跃：{count} 种情绪',
+     noImage: '无图像',
+     openDevTools: '打开开发者工具',
 
-    // Stats Panel
-    neuralPerformance: 'Rendimiento neuronal',
-    accuracy: 'Precisión',
-    correct: 'Correctos',
-    total: 'Total',
-    emotionSpectrum: 'Espectro emocional',
+     // Preset labels
+     presetAll: '全部 39',
+     presetBasic: '基础 10',
+     presetExtended: '扩展 20',
+     presetAdvanced: '高级 30',
+     presetCustom: '自定义',
+   },
 
-    // Analysis Panel
-    neuralAnalysis: 'Análisis neuronal',
-    processingFacial: 'Procesando microexpresiones faciales',
-    initializing: 'Inicializando',
-    loadingDatabase: 'Cargando base de datos neuronal...',
-    neuralProcessing: 'Procesamiento neuronal activo...',
-    confirmed: 'Confirmado',
-    error: 'Error',
-    neuralMatch: 'Coincidencia neuronal',
-    analysisError: 'Error de análisis',
-    detectedEmotion: 'Emoción detectada',
-    predicted: 'predicho',
+   es: {
+     // Header
+     appTitle: 'MATRIZ DE EMOCIONES',
+     title: 'ESCÁNER',
+     titleAccent: 'NEURONAL',
+     titleEnd: 'DE EMOCIONES',
+     subtitle: 'Red neuronal avanzada para entrenamiento de reconocimiento de emociones.',
+     subtitleLine2: 'Decodifica expresiones faciales con precisión.',
+     matrixReady: 'Matriz lista',
+     toggleTheme: 'Cambiar tema',
 
-    // Emotion Matrix Panel
-    emotionMatrix: 'Matriz de emociones',
-    nextScan: 'Siguiente escaneo',
-    neuralActivity: 'Actividad neuronal',
+     // Stats Panel
+     neuralPerformance: 'Rendimiento neuronal',
+     accuracy: 'Precisión',
+     correct: 'Correctos',
+     total: 'Total',
+     emotionSpectrum: 'Espectro emocional',
 
-     // Emotions
-     emotions: {
-       joy: 'alegría',
-       sadness: 'tristeza',
-       anger: 'ira',
-       fear: 'miedo',
-       surprise: 'sorpresa',
-       disgust: 'asco',
-       guilt: 'culpa',
-       shame: 'vergüenza',
-       suspicion: 'sospecha',
-       neutral: 'neutral',
-       amusement: 'diversión',
-       anxiety: 'ansiedad',
-       awe: 'asombro',
-       callousness: 'indiferencia',
-       confusion: 'confusión',
-       contempt: 'desprecio',
-       deceit: 'engaño',
-       despair: 'desesperación',
-       determination: 'determinación',
-       disappointment: 'decepción',
-       embarrassment: 'verguenza',
-       envy: 'envidia',
-       excitement: 'emoción',
-       fearlessness: 'intrepidez',
-       frustration: 'frustración',
-       hatred: 'odio',
-       interest: 'interés',
-       jealousy: 'celos',
-       loneliness: 'soledad',
-       manipulative: 'manipulación',
-       narcissism: 'narcisismo',
-       predatory: 'depredación',
-       pride: 'orgullo',
-       regret: 'arrepentimiento',
-       relief: 'alivio',
-       remorselessness: 'sin remordimientos',
-       resentment: 'resentimiento',
-       shallow_affect: 'superficialidad',
-       sociopathy: 'sociopatía',
-     },
+     // Analysis Panel
+     neuralAnalysis: 'Análisis neuronal',
+     processingFacial: 'Procesando microexpresiones faciales',
+     initializing: 'Inicializando',
+     loadingDatabase: 'Cargando base de datos neuronal...',
+     neuralProcessing: 'Procesamiento neuronal activo...',
+     confirmed: 'Confirmado',
+     error: 'Error',
+     neuralMatch: 'Coincidencia neuronal',
+     analysisError: 'Error de análisis',
+     detectedEmotion: 'Emoción detectada',
+     predicted: 'predicho',
 
-    // Footer
-    neuralNetwork: 'Red neuronal',
-    poweredBy: 'Impulsado por IA avanzada de reconocimiento de emociones',
-    secure: 'Seguro',
+     // Emotion Matrix Panel
+     emotionMatrix: 'Matriz de emociones',
+     nextScan: 'Siguiente escaneo',
+     neuralActivity: 'Actividad neuronal',
 
-    // Language selector
-    language: 'Idioma',
+      // Emotions
+      emotions: {
+        joy: 'alegría',
+        sadness: 'tristeza',
+        anger: 'ira',
+        fear: 'miedo',
+        surprise: 'sorpresa',
+        disgust: 'asco',
+        guilt: 'culpa',
+        shame: 'vergüenza',
+        suspicion: 'sospecha',
+        neutral: 'neutral',
+        amusement: 'diversión',
+        anxiety: 'ansiedad',
+        awe: 'asombro',
+        callousness: 'indiferencia',
+        confusion: 'confusión',
+        contempt: 'desprecio',
+        deceit: 'engaño',
+        despair: 'desesperación',
+        determination: 'determinación',
+        disappointment: 'decepción',
+        embarrassment: 'verguenza',
+        envy: 'envidia',
+        excitement: 'emoción',
+        fearlessness: 'intrepidez',
+        frustration: 'frustración',
+        hatred: 'odio',
+        interest: 'interés',
+        jealousy: 'celos',
+        loneliness: 'soledad',
+        manipulative: 'manipulación',
+        narcissism: 'narcisismo',
+        predatory: 'depredación',
+        pride: 'orgullo',
+        regret: 'arrepentimiento',
+        relief: 'alivio',
+        remorselessness: 'sin remordimientos',
+        resentment: 'resentimiento',
+        shallow_affect: 'superficialidad',
+        sociopathy: 'sociopatía',
+      },
 
-    // Progress
-    imagesRemaining: 'imágenes restantes',
-    allImagesSeen: '¡Comenzando nueva ronda!',
+     // Footer
+     neuralNetwork: 'Red neuronal',
+     poweredBy: 'Impulsado por IA avanzada de reconocimiento de emociones',
+     secure: 'Seguro',
 
-    // Training Mode & Stats
-     trainingMode: 'Modo de entrenamiento',
-     normalMode: 'Normal',
-     weakMode: 'Débiles',
-     emotionPreset: 'Preset de emociones',
-     confusionMatrix: 'Matriz de confusión',
-     showMatrix: 'Ver',
-     closeMatrix: 'Cerrar',
-     resetStats: 'Reiniciar',
-    resetConfirm: '¿Reiniciar todas las estadísticas?',
-    actualEmotion: 'Real',
-    predictedEmotion: 'Predicho',
-    noData: 'Sin datos',
-    weakEmotions: 'Emociones débiles',
-    noWeakEmotions: 'No se detectaron emociones débiles',
-  },
-} as const;
+     // Language selector
+     language: 'Idioma',
+     selectLanguage: 'Seleccionar idioma',
+
+     // Progress
+     imagesRemaining: 'imágenes restantes',
+     allImagesSeen: '¡Comenzando nueva ronda!',
+
+     // Training Mode & Stats
+      trainingMode: 'Modo de entrenamiento',
+      normalMode: 'Normal',
+      weakMode: 'Débiles',
+      emotionPreset: 'Preset de emociones',
+      confusionMatrix: 'Matriz de confusión',
+      showMatrix: 'Ver',
+      closeMatrix: 'Cerrar',
+      resetStats: 'Reiniciar',
+     resetConfirm: '¿Reiniciar todas las estadísticas?',
+     actualEmotion: 'Real',
+     predictedEmotion: 'Predicho',
+     noData: 'Sin datos',
+     weakEmotions: 'Emociones débiles',
+     noWeakEmotions: 'No se detectaron emociones débiles',
+
+     // Accessibility & UI
+     ariaLabelDashboard: 'Panel de entrenamiento de reconocimiento de emociones',
+     ariaLabelNeuralScanner: 'Escáner neuronal de emociones - Reconocimiento de emociones impulsado por IA',
+     ariaLabelTrainingInterface: 'Interfaz de entrenamiento',
+     activeEmotionsCount: 'Activo: {count} emociones',
+     noImage: 'No hay imagen',
+     openDevTools: 'Abrir herramientas de desarrollo',
+
+     // Preset labels
+     presetAll: 'Todas 39',
+     presetBasic: 'Básicas 10',
+     presetExtended: 'Extendidas 20',
+     presetAdvanced: 'Avanzadas 30',
+     presetCustom: 'Personalizado',
+   }
+};
 
 export type Language = keyof typeof translations;
 export type TranslationKey = keyof typeof translations.en;
