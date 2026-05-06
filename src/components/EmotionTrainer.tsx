@@ -1290,7 +1290,7 @@ const EmotionTrainer: React.FC = () => {
                           {getEmotionEmoji(emotion)}
                         </span>
                         <span className="truncate max-w-full">
-                          {emotion.substring(0, 3)}
+                          {(t.emotions as Record<string, string>)[emotion]?.substring(0, 3) || emotion.substring(0, 3)}
                         </span>
                       </div>
                     </Button>
