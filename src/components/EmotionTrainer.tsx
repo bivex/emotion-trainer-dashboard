@@ -738,7 +738,7 @@ const EmotionTrainer: React.FC = () => {
                          onClick={() => setEmotionPreset(preset)}
                          className={`text-xs ${emotionPreset === preset ? "bg-matrix-accent text-matrix-bg" : ""}`}
                        >
-                         {t[PRESET_LABEL_KEYS[preset] as keyof typeof t]}
+                         {t[PRESET_LABEL_KEYS[preset] as keyof typeof t] as React.ReactNode}
                        </Button>
                     ),
                   )}
