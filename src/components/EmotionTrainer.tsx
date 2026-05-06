@@ -1290,7 +1290,7 @@ const EmotionTrainer: React.FC = () => {
                           {getEmotionEmoji(emotion)}
                         </span>
                         <span className="truncate max-w-full">
-                          {(t.emotions as Record<string, string>)[emotion]?.substring(0, 3) || emotion.substring(0, 3)}
+                          {(t.emotions as Record<string, string>)[emotion] || emotion}
                         </span>
                       </div>
                     </Button>
@@ -1299,9 +1299,6 @@ const EmotionTrainer: React.FC = () => {
 
                 {/* Current emotion display */}
                 <div className="matrix-glass rounded-lg p-3 sm:p-4 text-center">
-                  <div className="text-muted-foreground text-xs sm:text-sm mb-1">
-                    {t.neuralActivity}
-                  </div>
                   <div className="flex items-center justify-center gap-2 sm:gap-3">
                     {currentImage ? (
                       <>
