@@ -158,115 +158,549 @@
   }
 }
 
-@layer base {
-  * {
-    border-color: hsl(var(--border));
-  }
+ @layer base {
+   * {
+     border-color: hsl(var(--border));
+   }
 
-  html {
-    scroll-behavior: smooth;
-  }
+   html {
+     scroll-behavior: smooth;
+     font-size: 16px;
+   }
 
+   body {
+     background-color: hsl(var(--matrix-bg));
+     color: hsl(var(--foreground));
+     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+     letter-spacing: -0.004em;
+     overflow-x: hidden;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+     text-rendering: optimizeLegibility;
+   }
+
+   /* Improved focus styles for accessibility */
+   *:focus-visible {
+     outline: 2px solid hsl(var(--ring));
+     outline-offset: 2px;
+     border-radius: 2px;
+   }
+
+   /* Better selection color */
+   ::selection {
+     background: hsl(var(--matrix-accent) / 0.3);
+     color: hsl(var(--foreground));
+   }
+
+   /* Custom scrollbar */
+   ::-webkit-scrollbar {
+     width: 8px;
+     height: 8px;
+   }
+
+   ::-webkit-scrollbar-track {
+     background: hsl(var(--matrix-bg));
+   }
+
+   ::-webkit-scrollbar-thumb {
+     background: hsl(var(--matrix-accent) / 0.6);
+     border-radius: 4px;
+   }
+
+   ::-webkit-scrollbar-thumb:hover {
+     background: hsl(var(--matrix-accent) / 0.8);
+   }
+
+   /* Safari scrollbar */
+   @supports (scrollbar-color: red blue) {
+     * {
+       scrollbar-color: hsl(var(--matrix-accent) / 0.6) hsl(var(--matrix-bg));
+       scrollbar-width: thin;
+     }
+   }
+
+   /* Form element consistency */
+   button, input, select, textarea {
+     font-family: inherit;
+     font-size: inherit;
+     line-height: inherit;
+     letter-spacing: inherit;
+   }
+
+   /* Media element defaults */
+   img, video, canvas, svg {
+     display: block;
+     max-width: 100%;
+     height: auto;
+   }
+ }
+
+/* ─── Semantic Typography Layer ─── */
+@layer components {
+  /* Base text sizing & leading */
   body {
-    background-color: hsl(var(--matrix-bg));
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.004em;
+  }
+
+  /* Headings hierarchy */
+  h1, .h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.5em 0;
     color: hsl(var(--foreground));
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-    overflow-x: hidden;
   }
 
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
+  h2, .h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin: 1.25em 0 0.5em 0;
+    color: hsl(var(--foreground));
   }
 
-  ::-webkit-scrollbar-track {
-    background: hsl(var(--matrix-bg));
+  h3, .h3 {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 1.15em 0 0.5em 0;
+    color: hsl(var(--foreground));
   }
 
-  ::-webkit-scrollbar-thumb {
-    background: hsl(var(--matrix-accent) / 0.6);
-    border-radius: 4px;
+  h4, .h4 {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    line-height: 1.25;
+    font-weight: 600;
+    margin: 1.1em 0 0.45em 0;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--matrix-accent) / 0.8);
+  h5, .h5 {
+    font-size: 1rem;
+    line-height: 1.35;
+    font-weight: 600;
+    margin: 1em 0 0.4em 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
-}
 
-@layer utilities {
-  /* Enhanced Typography System */
-  .font-matrix {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-feature-settings: 'liga' off;
-    letter-spacing: 0.025em;
+  h6, .h6 {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    font-weight: 600;
+    margin: 0.9em 0 0.35em 0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Paragraphs & body copy */
+  p {
+    margin: 0.75em 0;
+    max-width: 65ch;
+    line-height: 1.6;
+  }
+
+  .lead {
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    line-height: 1.55;
+    color: hsl(var(--muted-foreground));
+    max-width: 60ch;
     font-weight: 400;
   }
 
-  .font-matrix-medium {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-feature-settings: 'liga' off;
-    letter-spacing: 0.025em;
+  .small {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .caption {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: hsl(var(--muted-foreground));
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     font-weight: 500;
   }
 
-  .font-matrix-semibold {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-feature-settings: 'liga' off;
-    letter-spacing: 0.025em;
-    font-weight: 600;
+  /* Links & interactive text */
+  a {
+    color: hsl(var(--matrix-accent));
+    text-decoration: none;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+    text-underline-offset: 3px;
   }
 
-  .font-matrix-bold {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-feature-settings: 'liga' off;
-    letter-spacing: 0.025em;
-    font-weight: 700;
+  a:hover {
+    color: hsl(var(--matrix-secondary));
+    text-decoration: underline;
   }
 
-  .font-matrix-display {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    line-height: 1.1;
+  a:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
-  /* Improved text hierarchy */
-  .text-display-lg {
-    font-size: clamp(3rem, 8vw, 6rem);
-    line-height: 1.1;
-  }
-
-  .text-display-md {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 1.1;
-  }
-
-  .text-heading-xl {
-    font-size: clamp(2rem, 4vw, 3rem);
-    line-height: 1.2;
-  }
-
-  .text-heading-lg {
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    line-height: 1.3;
-  }
-
-  .text-body-lg {
-    font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+  /* Lists */
+  ul, ol {
+    margin: 1em 0;
+    padding-left: 1.5em;
     line-height: 1.6;
   }
 
-  .text-body {
-    font-size: clamp(1rem, 2vw, 1.125rem);
+  li {
+    margin: 0.25em 0;
+    max-width: 60ch;
+  }
+
+  /* Code & preformatted */
+  code, .code-inline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875em;
+    background: hsl(var(--muted) / 0.5);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: hsl(var(--foreground));
+  }
+
+  pre, .code-block {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    background: hsl(var(--matrix-surface) / 0.8);
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1.5em 0;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left: 3px solid hsl(var(--matrix-accent));
+    margin: 1.5em 0;
+    padding: 0.5em 1.5em;
+    background: hsl(var(--muted) / 0.3);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: hsl(var(--muted-foreground));
     line-height: 1.6;
   }
 
-  .text-caption {
-    font-size: clamp(0.875rem, 1.5vw, 1rem);
-    line-height: 1.5;
+  blockquote p {
+    margin: 0;
   }
+
+  /* Selection */
+  ::selection {
+    background: hsl(var(--matrix-accent) / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  /* Vertical rhythm fix */
+  h1:first-child, h2:first-child, h3:first-child,
+  .h1:first-child, .h2:first-child, .h3:first-child {
+    margin-top: 0;
+  }
+
+  p:last-child,
+  ul:last-child, ol:last-child,
+  pre:last-child, blockquote:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Small screen tuning */
+  @media (max-width: 640px) {
+    body {
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    p, li, ul, ol {
+      line-height: 1.55;
+    }
+
+    h1, h2, h3 {
+      letter-spacing: -0.02em;
+    }
+  }
+}
+
+ @layer utilities {
+   /* Typography scale — structured */
+   .font-sans {
+     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+     font-weight: 400;
+     letter-spacing: -0.004em;
+   }
+
+   .font-mono {
+     font-family: 'JetBrains Mono', 'Courier New', monospace;
+     font-weight: 400;
+     letter-spacing: 0.025em;
+   }
+
+   .text-xs { font-size: 0.75rem; line-height: 1.4; }
+   .text-sm { font-size: 0.875rem; line-height: 1.45; }
+   .text-base { font-size: 1rem; line-height: 1.5; }
+   .text-lg { font-size: 1.125rem; line-height: 1.55; }
+   .text-xl { font-size: 1.25rem; line-height: 1.5; }
+   .text-2xl { font-size: 1.5rem; line-height: 1.4; }
+   .text-3xl { font-size: 1.875rem; line-height: 1.35; }
+   .text-4xl { font-size: 2.25rem; line-height: 1.3; }
+
+   .tracking-tight { letter-spacing: -0.04em; }
+   .tracking-normal { letter-spacing: 0; }
+   .tracking-wide { letter-spacing: 0.025em; }
+   .tracking-wider { letter-spacing: 0.05em; }
+   .tracking-widest { letter-spacing: 0.1em; }
+
+   .font-normal { font-weight: 400; }
+   .font-medium { font-weight: 500; }
+   .font-semibold { font-weight: 600; }
+   .font-bold { font-weight: 700; }
+   .font-extrabold { font-weight: 800; }
+
+   .leading-none   { line-height: 1; }
+   .leading-tight  { line-height: 1.25; }
+   .leading-snug   { line-height: 1.375; }
+   .leading-normal { line-height: 1.5; }
+   .leading-relaxed{ line-height: 1.625; }
+   .leading-loose  { line-height: 1.75; }
+
+   /* Semantic text utilities —— better than raw numbers */
+   .text-title {
+     font-weight: 800;
+     letter-spacing: -0.025em;
+     line-height: 1.1;
+     color: hsl(var(--foreground));
+   }
+
+   .text-subtitle {
+     font-weight: 500;
+     letter-spacing: -0.01em;
+     line-height: 1.4;
+     color: hsl(var(--muted-foreground));
+   }
+
+   .text-body {
+     font-weight: 400;
+     letter-spacing: -0.003em;
+     line-height: 1.6;
+   }
+
+   .text-caption {
+     font-weight: 500;
+     letter-spacing: 0.06em;
+     text-transform: uppercase;
+     font-size: 0.75rem;
+     line-height: 1.4;
+     color: hsl(var(--muted-foreground));
+   }
+
+   /* Refined display presets (responsive fallback) */
+   .display-4xl {
+     font-size: clamp(3rem, 10vw, 6rem);
+     font-weight: 800;
+     line-height: 1.05;
+     letter-spacing: -0.04em;
+   }
+
+   .display-3xl {
+     font-size: clamp(2.5rem, 8vw, 4.5rem);
+     font-weight: 800;
+     line-height: 1.08;
+     letter-spacing: -0.035em;
+   }
+
+   .display-2xl {
+     font-size: clamp(2rem, 6vw, 3.5rem);
+     font-weight: 700;
+     line-height: 1.1;
+     letter-spacing: -0.03em;
+   }
+
+   .display-xl {
+     font-size: clamp(1.75rem, 5vw, 3rem);
+     font-weight: 700;
+     line-height: 1.12;
+     letter-spacing: -0.025em;
+   }
+
+   .display-lg {
+     font-size: clamp(1.5rem, 4vw, 2.5rem);
+     font-weight: 600;
+     line-height: 1.15;
+     letter-spacing: -0.015em;
+   }
+
+   /* Truncation */
+   .truncate {
+     overflow: hidden;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+   }
+
+   .line-clamp-2 {
+     display: -webkit-box;
+     -webkit-line-clamp: 2;
+     -webkit-box-orient: vertical;
+     overflow: hidden;
+   }
+
+   .line-clamp-3 {
+     display: -webkit-box;
+     -webkit-line-clamp: 3;
+     -webkit-box-orient: vertical;
+     overflow: hidden;
+   }
+
+   /* ─── Legacy Matrix Typography Classes (keep backward compatibility) ─── */
+   .font-matrix {
+     font-family: 'JetBrains Mono', 'Courier New', monospace;
+     font-feature-settings: 'liga' off;
+     letter-spacing: 0.025em;
+     font-weight: 400;
+   }
+
+   .font-matrix-medium {
+     font-family: 'JetBrains Mono', 'Courier New', monospace;
+     font-feature-settings: 'liga' off;
+     letter-spacing: 0.025em;
+     font-weight: 500;
+   }
+
+   .font-matrix-semibold {
+     font-family: 'JetBrains Mono', 'Courier New', monospace;
+     font-feature-settings: 'liga' off;
+     letter-spacing: 0.025em;
+     font-weight: 600;
+   }
+
+   .font-matrix-bold {
+     font-family: 'JetBrains Mono', 'Courier New', monospace;
+     font-feature-settings: 'liga' off;
+     letter-spacing: 0.025em;
+     font-weight: 700;
+   }
+
+   .font-matrix-display {
+     font-family: 'JetBrains Mono', 'Courier New', monospace;
+     font-weight: 800;
+     letter-spacing: 0.1em;
+     text-transform: uppercase;
+     line-height: 1.1;
+   }
+
+   /* Responsive text utility classes (used in UI) */
+   .text-display-lg { font-size: clamp(3rem, 8vw, 6rem); line-height: 1.1; }
+   .text-display-md { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; }
+   .text-heading-xl { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.2; }
+   .text-heading-lg { font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.3; }
+   .text-body-lg    { font-size: clamp(1.125rem, 2.5vw, 1.25rem); line-height: 1.6; }
+   .text-body       { font-size: clamp(1rem, 2vw, 1.125rem); line-height: 1.6; }
+   .text-caption    { font-size: clamp(0.875rem, 1.5vw, 1rem); line-height: 1.5; }
+
+   /* Spacing rhythm helpers */
+   .space-y-0 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(0 * var(--space-direction, 1)); }
+   .space-y-1 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(0.25rem * var(--space-direction, 1)); }
+   .space-y-2 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(0.5rem * var(--space-direction, 1)); }
+   .space-y-3 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(0.75rem * var(--space-direction, 1)); }
+   .space-y-4 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(1rem * var(--space-direction, 1)); }
+   .space-y-6 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(1.5rem * var(--space-direction, 1)); }
+   .space-y-8 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(2rem * var(--space-direction, 1)); }
+
+   /* Text alignment utilities */
+   .text-left    { text-align: left; }
+   .text-center  { text-align: center; }
+   .text-right   { text-align: right; }
+   .text-justify { text-align: justify; }
+
+   /* Print typography */
+   @media print {
+     body {
+       font-size: 12pt;
+       line-height: 1.4;
+       color: #000;
+       background: #fff;
+     }
+
+     .matrix-glass, .matrix-interactive,
+     .matrix-border, .matrix-glow,
+     .data-stream, ::-webkit-scrollbar {
+       display: none !important;
+     }
+
+     a {
+       color: #000;
+       text-decoration: underline;
+     }
+
+     h1, h2, h3, h4, h5, h6 {
+       page-break-after: avoid;
+     }
+
+     p, li, blockquote {
+       page-break-inside: avoid;
+     }
+   }
+ }
+
+   /* Spacing rhythm helpers */
+   .space-y-0 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(0 * var(--space-direction, 1)); }
+   .space-y-1 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(0.25rem * var(--space-direction, 1)); }
+   .space-y-2 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(0.5rem * var(--space-direction, 1)); }
+   .space-y-3 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(0.75rem * var(--space-direction, 1)); }
+   .space-y-4 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(1rem * var(--space-direction, 1)); }
+   .space-y-6 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(1.5rem * var(--space-direction, 1)); }
+   .space-y-8 { --tw-space-y-reverse: 0; margin-top: 0; margin-bottom: calc(2rem * var(--space-direction, 1)); }
+
+   /* Text alignment utilities */
+   .text-left   { text-align: left; }
+   .text-center { text-align: center; }
+   .text-right  { text-align: right; }
+   .text-justify{ text-align: justify; }
+
+   /* Print typography */
+   @media print {
+     body {
+       font-size: 12pt;
+       line-height: 1.4;
+       color: #000;
+       background: #fff;
+     }
+
+     .matrix-glass, .matrix-interactive,
+     .matrix-border, .matrix-glow,
+     .data-stream, ::-webkit-scrollbar {
+       display: none !important;
+     }
+
+     a {
+       color: #000;
+       text-decoration: underline;
+     }
+
+     h1, h2, h3, h4, h5, h6 {
+       page-break-after: avoid;
+     }
+
+     p, li, blockquote {
+       page-break-inside: avoid;
+     }
+   }
+ }
 
   /* Emotion Matrix Effects */
   .matrix-glass {
