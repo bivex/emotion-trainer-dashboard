@@ -7,17 +7,26 @@ export interface EmotionImage {
   filename: string;
 }
 
+// All 39 emotions from the dataset (matches manifest)
 const EMOTIONS = [
-  'joy', 'sadness', 'anger', 'fear', 'surprise',
-  'disgust', 'guilt', 'shame', 'suspicion', 'neutral'
-];
+  'amusement', 'anger', 'anxiety', 'awe', 'callousness',
+  'confusion', 'contempt', 'deceit', 'despair', 'determination',
+  'disappointment', 'disgust', 'embarrassment', 'envy', 'excitement',
+  'fear', 'fearlessness', 'frustration', 'guilt', 'hatred',
+  'interest', 'jealousy', 'joy', 'loneliness', 'manipulative',
+  'narcissism', 'neutral', 'predatory', 'pride', 'regret',
+  'relief', 'remorselessness', 'resentment', 'sadness', 'shallow_affect',
+  'shame', 'sociopathy', 'surprise', 'suspicion'
+] as const;
+export type EmotionKey = typeof EMOTIONS[number];
 
 function isTauri(): boolean {
   return typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
 }
 
 export function getAllEmotionImages(): EmotionImage[] {
-  return imageManifest.images as EmotionImage[];
+  const manifest = imageManifest as { images: EmotionImage[] };
+  return manifest.images;
 }
 
 export function getEmotionStats(): { [emotion: string]: number } {

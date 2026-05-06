@@ -43,6 +43,37 @@
     --emotion-suspicion: 180 45% 55%;    /* Light pastel teal for suspicion */
     --emotion-neutral: 0 0% 50%;         /* Light gray for neutral */
 
+    /* Additional emotions - Light mode */
+    --emotion-amusement: 45 90% 70%;     /* Bright yellow for amusement */
+    --emotion-anxiety: 260 60% 60%;      /* Soft purple for anxiety */
+    --emotion-awe: 320 80% 75%;          /* Warm pink for awe */
+    --emotion-callousness: 0 0% 30%;     /* Dark gray for callousness */
+    --emotion-confusion: 180 30% 60%;    /* Muted teal for confusion */
+    --emotion-contempt: 340 50% 50%;     /* Muted magenta for contempt */
+    --emotion-deceit: 120 40% 40%;       /* Olive green for deceit */
+    --emotion-despair: 240 40% 30%;      /* Deep blue-gray for despair */
+    --emotion-determination: 10 80% 60%; /* Burnt orange for determination */
+    --emotion-disappointment: 30 50% 55%; /* Muted orange for disappointment */
+    --emotion-embarrassment: 340 70% 70%; /* Bright pink for embarrassment */
+    --emotion-envy: 120 60% 40%;         /* Dark green for envy */
+    --emotion-excitement: 45 95% 55%;    /* Vibrant yellow for excitement */
+    --emotion-fearlessness: 120 70% 50%; /* Bold green for fearlessness */
+    --emotion-frustration: 30 70% 50%;   /* Orange-red for frustration */
+    --emotion-hatred: 0 90% 40%;         /* Deep red for hatred */
+    --emotion-interest: 180 60% 50%;     /* Cyan for interest */
+    --emotion-jealousy: 120 50% 30%;     /* Dark forest green for jealousy */
+    --emotion-loneliness: 220 40% 40%;   /* Muted blue for loneliness */
+    --emotion-manipulative: 280 50% 50%; /* Purple for manipulative */
+    --emotion-narcissism: 280 70% 60%;   /* Lavender for narcissism */
+    --emotion-predatory: 0 70% 30%;      /* Blood red for predatory */
+    --emotion-pride: 270 70% 55%;        /* Purple for pride */
+    --emotion-regret: 200 40% 45%;       /* Soft blue-gray for regret */
+    --emotion-relief: 120 60% 65%;       /* Light green for relief */
+    --emotion-remorselessness: 0 0% 20%; /* Near black for remorselessness */
+    --emotion-resentment: 30 60% 40%;    /* Rust for resentment */
+    --emotion-shallow_affect: 0 0% 70%;  /* Light gray for shallow_affect */
+    --emotion-sociopathy: 0 80% 35%;     /* Dark red for sociopathy */
+
     --radius: 0.5rem;
 
     /* Animation variables */
@@ -80,17 +111,48 @@
     --matrix-secondary: 200 100% 65%;  /* Bright cyan secondary */
     --matrix-text: 210 40% 98%;        /* Light text for dark mode */
 
-    /* Emotion-specific colors - Improved contrast for dark mode */
-    --emotion-joy: 45 95% 65%;          /* Brighter yellow for joy */
-    --emotion-sadness: 220 85% 55%;     /* Brighter blue for sadness */
-    --emotion-anger: 0 90% 65%;         /* Brighter red for anger */
-    --emotion-fear: 280 75% 55%;        /* Brighter purple for fear */
-    --emotion-surprise: 320 85% 65%;   /* Brighter pink for surprise */
-    --emotion-disgust: 120 75% 55%;    /* Brighter green for disgust */
-    --emotion-guilt: 30 70% 55%;        /* Brighter orange for guilt */
-    --emotion-shame: 340 70% 55%;       /* Brighter magenta for shame */
-    --emotion-suspicion: 180 60% 55%;   /* Brighter teal for suspicion */
-    --emotion-neutral: 0 0% 70%;        /* Brighter gray for neutral */
+     /* Emotion-specific colors - Improved contrast for dark mode */
+     --emotion-joy: 45 95% 65%;          /* Brighter yellow for joy */
+     --emotion-sadness: 220 85% 55%;     /* Brighter blue for sadness */
+     --emotion-anger: 0 90% 65%;         /* Brighter red for anger */
+     --emotion-fear: 280 75% 55%;        /* Brighter purple for fear */
+     --emotion-surprise: 320 85% 65%;   /* Brighter pink for surprise */
+     --emotion-disgust: 120 75% 55%;    /* Brighter green for disgust */
+     --emotion-guilt: 30 70% 55%;        /* Brighter orange for guilt */
+     --emotion-shame: 340 70% 55%;       /* Brighter magenta for shame */
+     --emotion-suspicion: 180 60% 55%;   /* Brighter teal for suspicion */
+     --emotion-neutral: 0 0% 70%;        /* Brighter gray for neutral */
+
+     /* Additional emotions - Dark mode */
+     --emotion-amusement: 45 100% 75%;   /* Vibrant yellow for amusement */
+     --emotion-anxiety: 260 70% 65%;     /* Bright purple for anxiety */
+     --emotion-awe: 320 90% 80%;         /* Hot pink for awe */
+     --emotion-callousness: 0 0% 30%;    /* Dark gray for callousness */
+     --emotion-confusion: 180 50% 60%;   /* Cyan for confusion */
+     --emotion-contempt: 340 60% 60%;    /* Bright magenta for contempt */
+     --emotion-deceit: 120 50% 45%;      /* Deeper green for deceit */
+     --emotion-despair: 240 40% 30%;     /* Deep blue for despair */
+     --emotion-determination: 10 90% 65%; /* Bright orange for determination */
+     --emotion-disappointment: 30 60% 60%; /* Orange for disappointment */
+     --emotion-embarrassment: 340 80% 75%; /* Hot pink for embarrassment */
+     --emotion-envy: 120 70% 40%;        /* Forest green for envy */
+     --emotion-excitement: 45 100% 60%;  /* Electric yellow for excitement */
+     --emotion-fearlessness: 120 80% 55%; /* Bright green for fearlessness */
+     --emotion-frustration: 30 80% 55%;  /* Red-orange for frustration */
+     --emotion-hatred: 0 100% 40%;       /* Blood red for hatred */
+     --emotion-interest: 180 70% 55%;    /* Bright cyan for interest */
+     --emotion-jealousy: 120 60% 30%;    /* Dark green for jealousy */
+     --emotion-loneliness: 220 50% 45%;  /* Muted blue for loneliness */
+     --emotion-manipulative: 280 60% 55%; /* Medium purple for manipulative */
+     --emotion-narcissism: 280 80% 65%;  /* Light purple for narcissism */
+     --emotion-predatory: 0 80% 35%;     /* Crimson for predatory */
+     --emotion-pride: 270 80% 60%;       /* Bright purple for pride */
+     --emotion-regret: 200 50% 50%;      /* Soft blue-gray for regret */
+     --emotion-relief: 120 70% 70%;      /* Bright green for relief */
+     --emotion-remorselessness: 0 0% 10%; /* Almost black for remorselessness */
+     --emotion-resentment: 30 70% 45%;   /* Rust red for resentment */
+     --emotion-shallow_affect: 0 0% 75%; /* Light gray for shallow_affect */
+     --emotion-sociopathy: 0 90% 35%;    /* Dark red for sociopathy */
 
     --glow-intensity: 0.6;  /* Higher glow for dark mode */
   }
@@ -377,6 +439,40 @@
   .emotion-bg-suspicion { background: linear-gradient(135deg, hsl(var(--emotion-suspicion) / 0.1), hsl(var(--emotion-suspicion) / 0.05)); }
   .emotion-bg-neutral { background: linear-gradient(135deg, hsl(var(--emotion-neutral) / 0.1), hsl(var(--emotion-neutral) / 0.05)); }
 
+  /* Additional emotion background utilities */
+  .emotion-bg-amusement { background: linear-gradient(135deg, hsl(var(--emotion-amusement) / 0.1), hsl(var(--emotion-amusement) / 0.05)); }
+  .emotion-bg-anxiety { background: linear-gradient(135deg, hsl(var(--emotion-anxiety) / 0.1), hsl(var(--emotion-anxiety) / 0.05)); }
+  .emotion-bg-awe { background: linear-gradient(135deg, hsl(var(--emotion-awe) / 0.1), hsl(var(--emotion-awe) / 0.05)); }
+  .emotion-bg-callousness { background: linear-gradient(135deg, hsl(var(--emotion-callousness) / 0.1), hsl(var(--emotion-callousness) / 0.05)); }
+  .emotion-bg-confusion { background: linear-gradient(135deg, hsl(var(--emotion-confusion) / 0.1), hsl(var(--emotion-confusion) / 0.05)); }
+  .emotion-bg-contempt { background: linear-gradient(135deg, hsl(var(--emotion-contempt) / 0.1), hsl(var(--emotion-contempt) / 0.05)); }
+  .emotion-bg-deceit { background: linear-gradient(135deg, hsl(var(--emotion-deceit) / 0.1), hsl(var(--emotion-deceit) / 0.05)); }
+  .emotion-bg-despair { background: linear-gradient(135deg, hsl(var(--emotion-despair) / 0.1), hsl(var(--emotion-despair) / 0.05)); }
+  .emotion-bg-determination { background: linear-gradient(135deg, hsl(var(--emotion-determination) / 0.1), hsl(var(--emotion-determination) / 0.05)); }
+  .emotion-bg-disappointment { background: linear-gradient(135deg, hsl(var(--emotion-disappointment) / 0.1), hsl(var(--emotion-disappointment) / 0.05)); }
+  .emotion-bg-embarrassment { background: linear-gradient(135deg, hsl(var(--emotion-embarrassment) / 0.1), hsl(var(--emotion-embarrassment) / 0.05)); }
+  .emotion-bg-envy { background: linear-gradient(135deg, hsl(var(--emotion-envy) / 0.1), hsl(var(--emotion-envy) / 0.05)); }
+  .emotion-bg-excitement { background: linear-gradient(135deg, hsl(var(--emotion-excitement) / 0.1), hsl(var(--emotion-excitement) / 0.05)); }
+  .emotion-bg-fearlessness { background: linear-gradient(135deg, hsl(var(--emotion-fearlessness) / 0.1), hsl(var(--emotion-fearlessness) / 0.05)); }
+  .emotion-bg-frustration { background: linear-gradient(135deg, hsl(var(--emotion-frustration) / 0.1), hsl(var(--emotion-frustration) / 0.05)); }
+  .emotion-bg-hatred { background: linear-gradient(135deg, hsl(var(--emotion-hatred) / 0.1), hsl(var(--emotion-hatred) / 0.05)); }
+  .emotion-bg-interest { background: linear-gradient(135deg, hsl(var(--emotion-interest) / 0.1), hsl(var(--emotion-interest) / 0.05)); }
+  .emotion-bg-jealousy { background: linear-gradient(135deg, hsl(var(--emotion-jealousy) / 0.1), hsl(var(--emotion-jealousy) / 0.05)); }
+  .emotion-bg-loneliness { background: linear-gradient(135deg, hsl(var(--emotion-loneliness) / 0.1), hsl(var(--emotion-loneliness) / 0.05)); }
+  .emotion-bg-manipulative { background: linear-gradient(135deg, hsl(var(--emotion-manipulative) / 0.1), hsl(var(--emotion-manipulative) / 0.05)); }
+  .emotion-bg-narcissism { background: linear-gradient(135deg, hsl(var(--emotion-narcissism) / 0.1), hsl(var(--emotion-narcissism) / 0.05)); }
+  .emotion-bg-predatory { background: linear-gradient(135deg, hsl(var(--emotion-predatory) / 0.1), hsl(var(--emotion-predatory) / 0.05)); }
+  .emotion-bg-pride { background: linear-gradient(135deg, hsl(var(--emotion-pride) / 0.1), hsl(var(--emotion-pride) / 0.05)); }
+  .emotion-bg-regret { background: linear-gradient(135deg, hsl(var(--emotion-regret) / 0.1), hsl(var(--emotion-regret) / 0.05)); }
+  .emotion-bg-relief { background: linear-gradient(135deg, hsl(var(--emotion-relief) / 0.1), hsl(var(--emotion-relief) / 0.05)); }
+  .emotion-bg-remorselessness { background: linear-gradient(135deg, hsl(var(--emotion-remorselessness) / 0.1), hsl(var(--emotion-remorselessness) / 0.05)); }
+  .emotion-bg-resentment { background: linear-gradient(135deg, hsl(var(--emotion-resentment) / 0.1), hsl(var(--emotion-resentment) / 0.05)); }
+  .emotion-bg-shallow_affect { background: linear-gradient(135deg, hsl(var(--emotion-shallow_affect) / 0.1), hsl(var(--emotion-shallow_affect) / 0.05)); }
+  .emotion-bg-shame { background: linear-gradient(135deg, hsl(var(--emotion-shame) / 0.1), hsl(var(--emotion-shame) / 0.05)); }
+  .emotion-bg-sociopathy { background: linear-gradient(135deg, hsl(var(--emotion-sociopathy) / 0.1), hsl(var(--emotion-sociopathy) / 0.05)); }
+  .emotion-bg-surprise { background: linear-gradient(135deg, hsl(var(--emotion-surprise) / 0.1), hsl(var(--emotion-surprise) / 0.05)); }
+  .emotion-bg-suspicion { background: linear-gradient(135deg, hsl(var(--emotion-suspicion) / 0.1), hsl(var(--emotion-suspicion) / 0.05)); }
+
   .emotion-text-joy { color: hsl(var(--emotion-joy)); }
   .emotion-text-sadness { color: hsl(var(--emotion-sadness)); }
   .emotion-text-anger { color: hsl(var(--emotion-anger)); }
@@ -387,6 +483,39 @@
   .emotion-text-shame { color: hsl(var(--emotion-shame)); }
   .emotion-text-suspicion { color: hsl(var(--emotion-suspicion)); }
   .emotion-text-neutral { color: hsl(var(--emotion-neutral)); }
+
+  /* Additional emotion text utilities */
+  .emotion-text-amusement { color: hsl(var(--emotion-amusement)); }
+  .emotion-text-anxiety { color: hsl(var(--emotion-anxiety)); }
+  .emotion-text-awe { color: hsl(var(--emotion-awe)); }
+  .emotion-text-callousness { color: hsl(var(--emotion-callousness)); }
+  .emotion-text-confusion { color: hsl(var(--emotion-confusion)); }
+  .emotion-text-contempt { color: hsl(var(--emotion-contempt)); }
+  .emotion-text-deceit { color: hsl(var(--emotion-deceit)); }
+  .emotion-text-despair { color: hsl(var(--emotion-despair)); }
+  .emotion-text-determination { color: hsl(var(--emotion-determination)); }
+  .emotion-text-disappointment { color: hsl(var(--emotion-disappointment)); }
+  .emotion-text-embarrassment { color: hsl(var(--emotion-embarrassment)); }
+  .emotion-text-envy { color: hsl(var(--emotion-envy)); }
+  .emotion-text-excitement { color: hsl(var(--emotion-excitement)); }
+  .emotion-text-fearlessness { color: hsl(var(--emotion-fearlessness)); }
+  .emotion-text-frustration { color: hsl(var(--emotion-frustration)); }
+  .emotion-text-hatred { color: hsl(var(--emotion-hatred)); }
+  .emotion-text-interest { color: hsl(var(--emotion-interest)); }
+  .emotion-text-jealousy { color: hsl(var(--emotion-jealousy)); }
+  .emotion-text-loneliness { color: hsl(var(--emotion-loneliness)); }
+  .emotion-text-manipulative { color: hsl(var(--emotion-manipulative)); }
+  .emotion-text-narcissism { color: hsl(var(--emotion-narcissism)); }
+  .emotion-text-predatory { color: hsl(var(--emotion-predatory)); }
+  .emotion-text-pride { color: hsl(var(--emotion-pride)); }
+  .emotion-text-regret { color: hsl(var(--emotion-regret)); }
+  .emotion-text-relief { color: hsl(var(--emotion-relief)); }
+  .emotion-text-remorselessness { color: hsl(var(--emotion-remorselessness)); }
+  .emotion-text-resentment { color: hsl(var(--emotion-resentment)); }
+  .emotion-text-shallow_affect { color: hsl(var(--emotion-shallow_affect)); }
+  .emotion-text-sociopathy { color: hsl(var(--emotion-sociopathy)); }
+  .emotion-text-surprise { color: hsl(var(--emotion-surprise)); }
+  .emotion-text-suspicion { color: hsl(var(--emotion-suspicion)); }
 
   /* Animation utilities */
   .animate-matrix-float {
