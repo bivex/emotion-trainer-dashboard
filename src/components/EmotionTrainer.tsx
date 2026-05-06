@@ -1269,34 +1269,40 @@ const EmotionTrainer: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-5 sm:grid-cols-2 gap-1.5 sm:gap-3 mb-3 sm:mb-6">
-                  {activeEmotions.map((emotion) => (
+                  {activeEmotions.map((emotion) => {
+                    const isSelected = selectedEmotion === emotion;
+                    const showBlurred = showResult && isSelected && !revealEmotion;
+                    return (
                     <Button
                       key={emotion}
-                      onClick={() => checkAnswer(emotion)}
-                      disabled={showResult}
+                      onClick={showBlurred ? () => setRevealEmotion(true) : () => checkAnswer(emotion)}
+                      disabled={showResult && !showBlurred}
                       variant="ghost"
                       aria-label={`Select ${getEmotionTranslation(emotion)} emotion`}
-                      aria-pressed={selectedEmotion === emotion}
+                      aria-pressed={isSelected}
                       className={`h-12 sm:h-16 rounded-lg border sm:border-2 transition-all duration-300 matrix-interactive disabled:opacity-50 disabled:cursor-not-allowed font-matrix text-[9px] sm:text-xs uppercase tracking-wider focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-matrix-accent focus:ring-offset-1 sm:focus:ring-offset-2 focus:ring-offset-matrix-bg px-1 sm:px-4 ${
-                        showResult && emotion === currentImage?.emotion
+                        showBlurred
+                          ? "blur-[3px] select-none opacity-70 cursor-pointer"
+                          : showResult && emotion === currentImage?.emotion
                           ? `bg-emotion-${emotion}/20 border-emotion-${emotion} emotion-text-${emotion} matrix-glow animate-matrix-pulse`
                           : showResult &&
-                              emotion === selectedEmotion &&
+                              isSelected &&
                               !isCorrect
                             ? "bg-emotion-anger/20 border-emotion-anger emotion-text-anger"
                             : `hover:bg-emotion-${emotion}/10 border-border`
                       }`}
                     >
                       <div className="flex flex-col items-center gap-0.5 sm:gap-1">
-                        <span className="text-lg sm:text-xl">
+                        <span className={`text-lg sm:text-xl ${showBlurred ? "blur-sm" : ""}`}>
                           {getEmotionEmoji(emotion)}
                         </span>
-                        <span className="truncate max-w-full">
+                        <span className={`truncate max-w-full ${showBlurred ? "blur-sm" : ""}`}>
                           {(t.emotions as Record<string, string>)[emotion] || emotion}
                         </span>
                       </div>
                     </Button>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* Current emotion display */}
