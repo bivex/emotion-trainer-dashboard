@@ -1329,16 +1329,16 @@ const EmotionTrainer: React.FC = () => {
                           {getEmotionTranslation(selectedEmotion)}
                         </span>
                       </>
-                     ) : currentImage ? (
-                      <>
-                        <span className="text-2xl sm:text-3xl">
-                          {getEmotionEmoji(currentImage.emotion)}
-                        </span>
-                        <span className="font-matrix text-matrix-accent text-sm sm:text-base uppercase">
-                          {getEmotionTranslation(currentImage.emotion)}
-                        </span>
-                      </>
-                     ) : (
+                      ) : currentImage ? (
+                       <div className="blur-md select-none opacity-60">
+                         <span className="text-2xl sm:text-3xl">
+                           {getEmotionEmoji(currentImage.emotion)}
+                         </span>
+                         <span className="font-matrix text-matrix-accent text-sm sm:text-base uppercase">
+                           {getEmotionTranslation(currentImage.emotion)}
+                         </span>
+                       </div>
+                      ) : (
                        <span className="font-matrix text-muted-foreground text-xs sm:text-sm">
                          {t.noImage}
                        </span>
