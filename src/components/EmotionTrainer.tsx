@@ -356,7 +356,7 @@ const EmotionTrainer: React.FC = () => {
       total: prev.total + 1
     }));
 
-    setConfusionMatrix(prev => ({
+    setConfusionMatrix((prev: ConfusionMatrix) => ({
       ...prev,
       [actualEmotion]: {
         ...(prev[actualEmotion] || {}),
@@ -364,7 +364,7 @@ const EmotionTrainer: React.FC = () => {
       }
     }));
 
-    setEmotionStats(prev => ({
+    setEmotionStats((prev: EmotionStats) => ({
       ...prev,
       [actualEmotion]: {
         correct: (prev[actualEmotion]?.correct || 0) + (correct ? 1 : 0),
