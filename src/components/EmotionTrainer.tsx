@@ -21,16 +21,49 @@ import { LanguageSelector } from './LanguageSelector';
 import { DevToolsToggle } from './devtools-toggle';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { Button } from './ui/button';
-import { Brain, Zap, BarChart3, Microscope, Theater, RefreshCw, Shield, X, Target, RotateCcw, Grid3X3 } from 'lucide-react';
+import { Brain, Zap, BarChart3, Microscope, Theater, RefreshCw, Shield, RotateCcw, Grid3X3, ListFilter, Target } from 'lucide-react';
 
-const EMOTIONS = [
-  'joy', 'sadness', 'anger', 'fear', 'surprise',
-  'disgust', 'guilt', 'shame', 'suspicion', 'neutral'
+// All 39 emotions from dataset
+const ALL_EMOTIONS = [
+  'amusement', 'anger', 'anxiety', 'awe', 'callousness',
+  'confusion', 'contempt', 'deceit', 'despair', 'determination',
+  'disappointment', 'disgust', 'embarrassment', 'envy', 'excitement',
+  'fear', 'fearlessness', 'frustration', 'guilt', 'hatred',
+  'interest', 'jealousy', 'joy', 'loneliness', 'manipulative',
+  'narcissism', 'neutral', 'predatory', 'pride', 'regret',
+  'relief', 'remorselessness', 'resentment', 'sadness', 'shallow_affect',
+  'shame', 'sociopathy', 'surprise', 'suspicion'
 ] as const;
 
-type EmotionKey = typeof EMOTIONS[number];
+type EmotionKey = typeof ALL_EMOTIONS[number];
 
-// Fisher-Yates shuffle algorithm
+// Emotion presets
+type EmotionPreset = 'all' | 'basic' | 'extended' | 'advanced' | 'custom';
+
+const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
+  all: ALL_EMOTIONS,
+  basic: ['joy', 'sadness', 'anger', 'fear', 'surprise', 'disgust', 'guilt', 'shame', 'suspicion', 'neutral'] as const,
+  extended: [
+    'joy', 'sadness', 'anger', 'fear', 'surprise', 'disgust', 'guilt', 'shame', 'suspicion', 'neutral',
+    'amusement', 'excitement', 'pride', 'relief', 'anxiety', 'confusion', 'contempt', 'embarrassment', 'envy', 'frustration'
+  ] as const,
+  advanced: [
+    'joy', 'sadness', 'anger', 'fear', 'surprise', 'disgust', 'guilt', 'shame', 'suspicion', 'neutral',
+    'amusement', 'excitement', 'pride', 'relief', 'anxiety', 'confusion', 'contempt', 'embarrassment', 'envy', 'frustration',
+    'disappointment', 'regret', 'interest', 'determination', 'loneliness', 'jealousy'
+  ] as const,
+  custom: ALL_EMOTIONS,
+};
+
+const PRESET_LABELS: Record<EmotionPreset, string> = {
+  all: 'All 39',
+  basic: 'Basic 10',
+  extended: 'Extended 20',
+  advanced: 'Advanced 30',
+  custom: 'Custom',
+};
+
+// Fisher-Yates shuffle
 const shuffleArray = <T,>(array: T[]): T[] => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -40,34 +73,34 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled;
 };
 
-// Types for confusion matrix and per-emotion stats
+// Types
 type ConfusionMatrix = { [actual: string]: { [predicted: string]: number } };
 type EmotionStats = { [emotion: string]: { correct: number; total: number } };
 
-// LocalStorage keys
+// Storage keys
 const STORAGE_KEYS = {
   score: 'emotion-trainer-score',
   confusionMatrix: 'emotion-trainer-confusion',
   emotionStats: 'emotion-trainer-emotion-stats',
   trainingMode: 'emotion-trainer-training-mode',
+  emotionPreset: 'emotion-trainer-preset',
 };
 
-// Initialize empty confusion matrix
+// Initialize empty data
 const createEmptyConfusionMatrix = (): ConfusionMatrix => {
   const matrix: ConfusionMatrix = {};
-  EMOTIONS.forEach(actual => {
+  ALL_EMOTIONS.forEach(actual => {
     matrix[actual] = {};
-    EMOTIONS.forEach(predicted => {
+    ALL_EMOTIONS.forEach(predicted => {
       matrix[actual][predicted] = 0;
     });
   });
   return matrix;
 };
 
-// Initialize empty emotion stats
 const createEmptyEmotionStats = (): EmotionStats => {
   const stats: EmotionStats = {};
-  EMOTIONS.forEach(emotion => {
+  ALL_EMOTIONS.forEach(emotion => {
     stats[emotion] = { correct: 0, total: 0 };
   });
   return stats;
@@ -75,47 +108,201 @@ const createEmptyEmotionStats = (): EmotionStats => {
 
 const EmotionTrainer: React.FC = () => {
   const { t } = useLanguage();
+
+  // State
   const [currentImage, setCurrentImage] = useState<EmotionImage | null>(null);
-  const [imageQueue, setImageQueue] = useState<EmotionImage[]>([]); // Shuffled queue
+  const [imageQueue, setImageQueue] = useState<EmotionImage[]>([]);
   const [queueIndex, setQueueIndex] = useState(0);
   const [totalImages, setTotalImages] = useState(0);
-  const [score, setScore] = useState(() => {
+  const [score, setScore] = useState<{ correct: number; total: number }>(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.score);
     return stored ? JSON.parse(stored) : { correct: 0, total: 0 };
   });
   const [showResult, setShowResult] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState<string>('');
   const [isCorrect, setIsCorrect] = useState(false);
-
-  // Confusion matrix: tracks actual vs predicted emotions
   const [confusionMatrix, setConfusionMatrix] = useState<ConfusionMatrix>(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.confusionMatrix);
     return stored ? JSON.parse(stored) : createEmptyConfusionMatrix();
   });
-
-  // Per-emotion statistics
   const [emotionStats, setEmotionStats] = useState<EmotionStats>(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.emotionStats);
     return stored ? JSON.parse(stored) : createEmptyEmotionStats();
   });
-
-  // Training mode: focus on weak emotions
   const [trainingMode, setTrainingMode] = useState<'normal' | 'weak'>(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.trainingMode);
     return (stored as 'normal' | 'weak') || 'normal';
   });
+  const [emotionPreset, setEmotionPreset] = useState<EmotionPreset>(() => {
+    const stored = localStorage.getItem(STORAGE_KEYS.emotionPreset);
+    return (stored as EmotionPreset) || 'all';
+  });
 
-  // Show confusion matrix modal
-  const [showConfusionMatrix, setShowConfusionMatrix] = useState(false);
+  // Helpers
+  const getActiveEmotions = (): readonly EmotionKey[] => EMOTION_PRESETS[emotionPreset];
 
-  const getEmotionTranslation = (emotion: string): string => {
-    return t.emotions[emotion as EmotionKey] || emotion;
+  const filterImagesByPreset = (images: EmotionImage[]): EmotionImage[] => {
+    if (emotionPreset === 'all') return images;
+    const activeSet = new Set(getActiveEmotions());
+    return images.filter(img => activeSet.has(img.emotion as EmotionKey));
   };
 
-  // Calculate remaining images
-  const remainingImages = imageQueue.length - queueIndex;
+  const getEmotionTranslation = (emotion: string): string => {
+    return (t.emotions as Record<string, string>)[emotion] || emotion;
+  };
 
-  // Persist data to localStorage
+  const getEmotionAccuracy = (emotion: string): number => {
+    const stats = emotionStats[emotion];
+    if (!stats || stats.total === 0) return 0;
+    return Math.round((stats.correct / stats.total) * 100);
+  };
+
+  const getWeakEmotions = (): string[] => {
+    return ALL_EMOTIONS.filter(emotion => {
+      const stats = emotionStats[emotion];
+      if (!stats || stats.total < 3) return false;
+      const accuracy = (stats.correct / stats.total) * 100;
+      return accuracy < 70;
+    });
+  };
+
+  const getEmotionEmoji = (emotion: string) => {
+    const emojiMap: Record<string, string> = {
+      joy: '😊', amusement: '😄', excitement: '🤩', pride: '😁', relief: '😅',
+      sadness: '😢', despair: '😩', disappointment: '😞', regret: '😔',
+      guilt: '😔', shame: '😳', embarrassment: '😳', loneliness: '😔',
+      anger: '😠', hatred: '👿', frustration: '😤', resentment: '😒',
+      contempt: '😏', determination: '😠',
+      fear: '😨', anxiety: '😰', fearlessness: '😏',
+      neutral: '😐', suspicion: '🤨', surprise: '😲', awe: '🤩',
+      confusion: '😕', interest: '🤔', disgust: '🤢',
+      deceit: '😈', manipulative: '😈', narcissism: '😏',
+      callousness: '😶', remorselessness: '😶', shallow_affect: '😑',
+      sociopathy: '😈', predatory: '👁️', envy: '😒', jealousy: '😒',
+    };
+    return emojiMap[emotion] || '❓';
+  };
+
+  const remainingImages = imageQueue.length - queueIndex;
+  const accuracy = score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0;
+  const activeEmotions = getActiveEmotions();
+
+  // Initialize queue
+  const initializeQueue = (imageList: EmotionImage[], mode: 'normal' | 'weak' = trainingMode) => {
+    let filteredList = imageList;
+
+    if (mode === 'weak') {
+      const weakEmotions = getWeakEmotions();
+      if (weakEmotions.length > 0) {
+        filteredList = imageList.filter(img => weakEmotions.includes(img.emotion));
+        console.log(`Training mode: focusing on ${weakEmotions.length} weak emotions (${weakEmotions.join(', ')})`);
+      }
+    } else {
+      filteredList = filterImagesByPreset(imageList);
+      console.log(`Normal mode: using preset "${emotionPreset}" with ${filteredList.length} images`);
+    }
+
+    const shuffled = shuffleArray(filteredList);
+    setImageQueue(shuffled);
+    setTotalImages(filteredList.length);
+    setQueueIndex(0);
+    if (shuffled.length > 0) {
+      setCurrentImage(shuffled[0]);
+    }
+    console.log(`Initialized queue with ${shuffled.length} shuffled images`);
+  };
+
+  const loadNextImage = () => {
+    const nextIndex = queueIndex + 1;
+    if (nextIndex >= imageQueue.length) {
+      const reshuffled = shuffleArray(imageQueue);
+      setImageQueue(reshuffled);
+      setQueueIndex(0);
+      setCurrentImage(reshuffled[0]);
+    } else {
+      setQueueIndex(nextIndex);
+      setCurrentImage(imageQueue[nextIndex]);
+    }
+    setShowResult(false);
+    setSelectedEmotion('');
+  };
+
+  // Sound
+  const playEmotionSound = (emotion: string, isCorrect: boolean) => {
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      const frequencies: Record<string, number> = {
+        joy: 523, excitement: 587, pride: 659, relief: 698,
+        sadness: 294, despair: 262, disappointment: 293, regret: 330,
+        guilt: 247, shame: 220, embarrassment: 246, loneliness: 262,
+        anger: 175, hatred: 164, frustration: 196, resentment: 185, contempt: 174, determination: 174,
+        fear: 220, anxiety: 208, fearlessness: 233,
+        neutral: 440, suspicion: 330, surprise: 784, awe: 622,
+        confusion: 277, interest: 392, disgust: 131,
+        deceit: 123, manipulative: 116, narcissism: 138,
+        callousness: 110, remorselessness: 103, shallow_affect: 97,
+        sociopathy: 92, predatory: 82, envy: 155, jealousy: 146,
+      };
+
+      oscillator.frequency.setValueAtTime(frequencies[emotion] || 440, audioContext.currentTime);
+
+      if (isCorrect) {
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        oscillator.frequency.exponentialRampToValueAtTime((frequencies[emotion] || 440) * 2, audioContext.currentTime + 0.5);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.5);
+      } else {
+        oscillator.type = 'sawtooth';
+        gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+        oscillator.frequency.exponentialRampToValueAtTime((frequencies[emotion] || 440) * 0.5, audioContext.currentTime + 0.3);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.3);
+      }
+    } catch (error) {
+      console.log('Audio not supported');
+    }
+  };
+
+  const resetStats = () => {
+    setScore({ correct: 0, total: 0 });
+    setConfusionMatrix(createEmptyConfusionMatrix());
+    setEmotionStats(createEmptyEmotionStats());
+  };
+
+  // Load images on mount
+  useEffect(() => {
+    const loadImages = async () => {
+      try {
+        const imageList = await fetchEmotionImages();
+        if (imageList.length > 0) {
+          initializeQueue(imageList, trainingMode);
+        }
+        console.log(`Loaded ${imageList.length} emotion images from dataset`);
+      } catch (error) {
+        console.error('Error loading images:', error);
+        const mockImages: EmotionImage[] = ALL_EMOTIONS.flatMap(emotion =>
+          Array.from({ length: 5 }, (_, i) => ({
+            path: `/images/generated_images_v2_g/${emotion}/sample_${i}.png`,
+            emotion: emotion,
+            filename: `sample_${i}.png`
+          }))
+        );
+        initializeQueue(mockImages, trainingMode);
+        console.log('Using mock data due to API unavailability');
+      }
+    };
+    loadImages();
+  }, []);
+
+  // Persist to localStorage
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.score, JSON.stringify(score));
   }, [score]);
@@ -132,232 +319,71 @@ const EmotionTrainer: React.FC = () => {
     localStorage.setItem(STORAGE_KEYS.trainingMode, trainingMode);
   }, [trainingMode]);
 
-  // Get weak emotions (accuracy < 70%)
-  const getWeakEmotions = (): string[] => {
-    return EMOTIONS.filter(emotion => {
-      const stats = emotionStats[emotion];
-      if (stats.total < 3) return false; // Need at least 3 attempts
-      const accuracy = (stats.correct / stats.total) * 100;
-      return accuracy < 70;
-    });
-  };
-
-  // Get emotion accuracy for display
-  const getEmotionAccuracy = (emotion: string): number => {
-    const stats = emotionStats[emotion];
-    if (stats.total === 0) return 0;
-    return Math.round((stats.correct / stats.total) * 100);
-  };
-
-  // Reset all statistics
-  const resetStats = () => {
-    setScore({ correct: 0, total: 0 });
-    setConfusionMatrix(createEmptyConfusionMatrix());
-    setEmotionStats(createEmptyEmotionStats());
-  };
-
-  // Sound system
-  const playEmotionSound = (emotion: string, isCorrect: boolean) => {
-    try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      // Emotion-specific frequencies
-      const frequencies: { [key: string]: number } = {
-        joy: 523, // C5
-        sadness: 294, // D4
-        anger: 175, // F3
-        fear: 220, // A3
-        surprise: 659, // E5
-        disgust: 131, // C3
-        guilt: 247, // B3
-        shame: 196, // G3
-        suspicion: 330, // E4
-        neutral: 440, // A4
-      };
-
-      oscillator.frequency.setValueAtTime(
-        frequencies[emotion] || 440,
-        audioContext.currentTime
-      );
-
-      if (isCorrect) {
-        // Success sound: ascending arpeggio
-        oscillator.type = 'sine';
-        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-
-        oscillator.frequency.setValueAtTime(frequencies[emotion] || 440, audioContext.currentTime);
-        oscillator.frequency.setValueAtTime((frequencies[emotion] || 440) * 1.25, audioContext.currentTime + 0.1);
-        oscillator.frequency.setValueAtTime((frequencies[emotion] || 440) * 1.5, audioContext.currentTime + 0.2);
-
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.4);
-      } else {
-        // Error sound: descending tone
-        oscillator.type = 'sawtooth';
-        gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-
-        oscillator.frequency.setValueAtTime(frequencies[emotion] || 440, audioContext.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime((frequencies[emotion] || 440) * 0.5, audioContext.currentTime + 0.3);
-
-        oscillator.start(audioContext.currentTime);
-        oscillator.stop(audioContext.currentTime + 0.3);
-      }
-    } catch (error) {
-      // Silently fail if Web Audio API is not supported
-      console.log('Audio not supported');
-    }
-  };
-
-  // Initialize shuffled queue from images (with training mode support)
-  const initializeQueue = (imageList: EmotionImage[], mode: 'normal' | 'weak' = trainingMode) => {
-    let filteredList = imageList;
-
-    if (mode === 'weak') {
-      const weakEmotions = getWeakEmotions();
-      if (weakEmotions.length > 0) {
-        // Filter to only weak emotions
-        filteredList = imageList.filter(img => weakEmotions.includes(img.emotion));
-        console.log(`Training mode: focusing on ${weakEmotions.length} weak emotions (${weakEmotions.join(', ')})`);
-      } else {
-        console.log('No weak emotions found, using all images');
-      }
-    }
-
-    const shuffled = shuffleArray(filteredList);
-    setImageQueue(shuffled);
-    setTotalImages(filteredList.length);
-    setQueueIndex(0);
-    if (shuffled.length > 0) {
-      setCurrentImage(shuffled[0]);
-    }
-    console.log(`Initialized queue with ${shuffled.length} shuffled images`);
-  };
-
-  // Load next image from queue
-  const loadNextImage = () => {
-    const nextIndex = queueIndex + 1;
-
-    if (nextIndex >= imageQueue.length) {
-      // All images seen - reshuffle and start over
-      console.log('All images seen, reshuffling...');
-      const reshuffled = shuffleArray(imageQueue);
-      setImageQueue(reshuffled);
-      setQueueIndex(0);
-      setCurrentImage(reshuffled[0]);
-    } else {
-      // Move to next image in queue
-      setQueueIndex(nextIndex);
-      setCurrentImage(imageQueue[nextIndex]);
-    }
-
-    setShowResult(false);
-    setSelectedEmotion('');
-  };
-
-  // Загрузка изображений из API или mock данных
   useEffect(() => {
-    const loadImages = async () => {
-      try {
-        // Try to fetch from API first
-        const imageList = await fetchEmotionImages();
+    localStorage.setItem(STORAGE_KEYS.emotionPreset, emotionPreset);
+  }, [emotionPreset]);
 
-        if (imageList.length > 0) {
-          initializeQueue(imageList);
-        }
+  // Reload queue when preset changes
+  useEffect(() => {
+    fetchEmotionImages().then(images => {
+      initializeQueue(filterImagesByPreset(images), trainingMode);
+    });
+  }, [emotionPreset]);
 
-        console.log(`Loaded ${imageList.length} emotion images from dataset`);
-      } catch (error) {
-        console.error('Error loading images:', error);
-        // Fallback to mock data
-        const mockImages: EmotionImage[] = EMOTIONS.flatMap(emotion =>
-          Array.from({ length: 10 }, (_, i) => ({
-            path: `/images/generated_images_v2_g/${emotion}/sample_${i}.png`,
-            emotion: emotion,
-            filename: `sample_${i}.png`
-          }))
-        );
-        initializeQueue(mockImages);
-        console.log('Using mock data due to API unavailability');
-      }
-    };
-
-    loadImages();
-  }, []);
+  // Reload queue when training mode changes
+  useEffect(() => {
+    fetchEmotionImages().then(images => {
+      initializeQueue(images, trainingMode);
+    });
+  }, [trainingMode]);
 
   const checkAnswer = (emotion: string) => {
     if (!currentImage) return;
 
     const actualEmotion = currentImage.emotion;
-    const correct = emotion === actualEmotion;
-    setIsCorrect(correct);
     setSelectedEmotion(emotion);
     setShowResult(true);
 
-    // Play emotion-specific sound
+    if (!getActiveEmotions().includes(emotion as EmotionKey)) return;
+
+    const correct = emotion === actualEmotion;
+    setIsCorrect(correct);
+
     playEmotionSound(emotion, correct);
 
-    // Update score
     setScore(prev => ({
       correct: prev.correct + (correct ? 1 : 0),
       total: prev.total + 1
     }));
 
-    // Update confusion matrix
     setConfusionMatrix(prev => ({
       ...prev,
       [actualEmotion]: {
-        ...prev[actualEmotion],
+        ...(prev[actualEmotion] || {}),
         [emotion]: (prev[actualEmotion]?.[emotion] || 0) + 1
       }
     }));
 
-    // Update per-emotion stats
     setEmotionStats(prev => ({
       ...prev,
       [actualEmotion]: {
-        correct: prev[actualEmotion].correct + (correct ? 1 : 0),
-        total: prev[actualEmotion].total + 1
+        correct: (prev[actualEmotion]?.correct || 0) + (correct ? 1 : 0),
+        total: (prev[actualEmotion]?.total || 0) + 1
       }
     }));
 
-    // Автоматически перейти к следующему изображению через 2 секунды
     setTimeout(() => {
       loadNextImage();
     }, 2000);
   };
 
-  const getEmotionEmoji = (emotion: string) => {
-    const emojiMap: { [key: string]: string } = {
-      joy: '😊',
-      sadness: '😢',
-      anger: '😠',
-      fear: '😨',
-      surprise: '😲',
-      disgust: '🤢',
-      guilt: '😔',
-      shame: '😳',
-      suspicion: '🤨',
-      neutral: '😐'
-    };
-    return emojiMap[emotion] || '❓';
-  };
-
-  const accuracy = score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0;
-
+  // Render
   return (
     <MatrixBackground>
       <div className="p-2 sm:p-4 matrix-grid">
         <div className="max-w-8xl mx-auto relative" role="main" aria-label="Emotion Recognition Training Dashboard">
           {/* Compact Mobile Header */}
           <div className="mb-6 text-center sm:mb-10">
-            {/* Logo bar - compact on mobile */}
             <div className="inline-flex items-center gap-2 sm:gap-4 matrix-glass rounded-xl sm:rounded-2xl px-4 sm:px-8 py-2 sm:py-4 mb-3 sm:mb-4 animate-matrix-float matrix-border">
               <div className="w-8 h-8 sm:w-12 sm:h-12 bg-matrix-accent rounded-lg sm:rounded-xl flex items-center justify-center matrix-glow animate-matrix-pulse">
                 <Brain className="w-4 h-4 sm:w-6 sm:h-6 text-matrix-bg" />
@@ -371,7 +397,6 @@ const EmotionTrainer: React.FC = () => {
             </div>
 
             <div className="matrix-hero-shell">
-              {/* Title - hidden on mobile, shown on tablet+ */}
               <h1 className="matrix-hero-title hidden sm:block font-matrix-display text-display-lg mb-4 tracking-wider animate-matrix-glow" aria-label="Neural Emotion Scanner - AI-powered emotion recognition training">
                 {t.title}
                 <br />
@@ -379,8 +404,6 @@ const EmotionTrainer: React.FC = () => {
                 <br />
                 {t.titleEnd}
               </h1>
-
-              {/* Subtitle - hidden on mobile */}
               <p className="matrix-hero-subtitle hidden sm:block text-body-lg max-w-3xl mx-auto leading-relaxed font-medium mb-6">
                 {t.subtitle}
                 <br />
@@ -388,7 +411,6 @@ const EmotionTrainer: React.FC = () => {
               </p>
             </div>
 
-            {/* Controls - compact on mobile */}
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
               <Button variant="secondary" size="sm" className="matrix-primary-action px-3 font-matrix text-xs uppercase tracking-wider sm:px-4 sm:text-sm">
                 <Brain className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -400,10 +422,9 @@ const EmotionTrainer: React.FC = () => {
             </div>
           </div>
 
-          {/* Responsive Grid Layout - reordered for mobile */}
+          {/* Responsive Grid Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-12 gap-3 sm:gap-6 lg:gap-8 mb-4 sm:mb-8" role="region" aria-label="Training Interface">
-
-            {/* Mobile: Compact stats bar at top */}
+            {/* Mobile: Compact stats bar */}
             <div className="lg:hidden matrix-glass rounded-xl p-3 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="text-center">
@@ -424,7 +445,7 @@ const EmotionTrainer: React.FC = () => {
               )}
             </div>
 
-            {/* Neural Stats Panel - Left Side (hidden on mobile) */}
+            {/* Left Panel - Stats & Controls */}
             <div className="hidden lg:block lg:col-span-1 xl:col-span-3 space-y-6">
               {/* Performance Metrics */}
               <div className="matrix-glass rounded-2xl p-6 matrix-interactive">
@@ -434,7 +455,6 @@ const EmotionTrainer: React.FC = () => {
                   </div>
                   <h2 className="font-matrix-semibold text-matrix-accent text-heading-lg">{t.neuralPerformance}</h2>
                 </div>
-
                 <div className="space-y-4">
                   <div className="emotion-bg-joy rounded-xl p-4 border border-emotion-joy/20">
                     <div className="flex justify-between items-center mb-2">
@@ -442,13 +462,9 @@ const EmotionTrainer: React.FC = () => {
                       <span className="font-matrix text-emotion-joy text-lg">{accuracy}%</span>
                     </div>
                     <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                      <div
-                        className="bg-emotion-joy h-2 rounded-full transition-all duration-1000 data-stream"
-                        style={{ width: `${accuracy}%` }}
-                      ></div>
+                      <div className="bg-emotion-joy h-2 rounded-full transition-all duration-1000 data-stream" style={{ width: `${accuracy}%` }} />
                     </div>
                   </div>
-
                   <div className="grid grid-cols-2 gap-3">
                     <div className="emotion-bg-neutral rounded-lg p-3 text-center">
                       <div className="font-matrix text-emotion-neutral text-2xl mb-1">{score.correct}</div>
@@ -459,8 +475,6 @@ const EmotionTrainer: React.FC = () => {
                       <div className="text-xs text-muted-foreground">{t.total}</div>
                     </div>
                   </div>
-
-                  {/* Progress indicator */}
                   {totalImages > 0 && (
                     <div className="mt-4 text-center text-xs text-muted-foreground">
                       <span className="font-matrix text-matrix-secondary">{remainingImages}</span>
@@ -470,16 +484,47 @@ const EmotionTrainer: React.FC = () => {
                 </div>
               </div>
 
-              {/* Emotion Accuracy - shows real stats */}
+              {/* Emotion Preset Selector */}
+              <div className="matrix-glass rounded-2xl p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <ListFilter className="w-4 h-4 text-matrix-accent" />
+                  <h3 className="font-matrix text-matrix-accent text-sm">{t.emotionPreset || 'Emotion Preset'}</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {(Object.keys(EMOTION_PRESETS) as EmotionPreset[]).map(preset => (
+                    <Button
+                      key={preset}
+                      size="sm"
+                      variant={emotionPreset === preset ? 'default' : 'outline'}
+                      onClick={() => setEmotionPreset(preset)}
+                      className={`text-xs ${emotionPreset === preset ? 'bg-matrix-accent text-matrix-bg' : ''}`}
+                    >
+                      {PRESET_LABELS[preset]}
+                    </Button>
+                  ))}
+                </div>
+                {emotionPreset !== 'all' && (
+                  <div className="mt-2 text-[10px] text-muted-foreground">
+                    Active: {activeEmotions.length} emotions
+                  </div>
+                )}
+              </div>
+
+              {/* Emotion Spectrum */}
               <div className="matrix-glass rounded-2xl p-6">
                 <h3 className="font-matrix text-matrix-accent text-lg mb-4">{t.emotionSpectrum}</h3>
                 <div className="space-y-2 max-h-[200px] overflow-y-auto">
-                  {EMOTIONS.map((emotion, index) => {
+                  {ALL_EMOTIONS.map((emotion, index) => {
                     const acc = getEmotionAccuracy(emotion);
                     const stats = emotionStats[emotion];
-                    const isWeak = stats.total >= 3 && acc < 70;
+                    const isWeak = stats && stats.total >= 3 && acc < 70;
+                    const isActive = activeEmotions.includes(emotion);
                     return (
-                      <div key={emotion} className="flex items-center gap-2" style={{ animationDelay: `${index * 0.05}s` }}>
+                      <div
+                        key={emotion}
+                        className={`flex items-center gap-2 ${!isActive ? 'opacity-40' : ''}`}
+                        style={{ animationDelay: `${index * 0.05}s` }}
+                      >
                         <span className="text-sm">{getEmotionEmoji(emotion)}</span>
                         <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
                           <div
@@ -488,7 +533,7 @@ const EmotionTrainer: React.FC = () => {
                           />
                         </div>
                         <div className={`text-xs font-matrix min-w-[32px] text-right ${isWeak ? 'text-emotion-anger' : 'text-matrix-secondary'}`}>
-                          {stats.total > 0 ? `${acc}%` : '-'}
+                          {stats && stats.total > 0 ? `${acc}%` : '-'}
                         </div>
                       </div>
                     );
@@ -533,23 +578,61 @@ const EmotionTrainer: React.FC = () => {
                 )}
               </div>
 
-              {/* Confusion Matrix & Reset Buttons */}
+              {/* Reset Stats */}
               <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => setShowConfusionMatrix(true)}
-                  className="flex-1 text-xs"
-                >
-                  <Grid3X3 className="w-3 h-3 mr-1" />
-                  {t.showMatrix}
-                </Button>
                 <Button
                   size="sm"
                   variant="outline"
                   onClick={() => {
                     if (confirm(t.resetConfirm)) resetStats();
                   }}
+                  className="flex-1 text-xs text-emotion-anger hover:bg-emotion-anger/10"
+                >
+                  <RotateCcw className="w-3 h-3 mr-1" />
+                  {t.resetStats}
+                </Button>
+              </div>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant={trainingMode === 'normal' ? 'default' : 'outline'}
+                    onClick={() => {
+                      setTrainingMode('normal');
+                      fetchEmotionImages().then(imgs => initializeQueue(imgs, 'normal'));
+                    }}
+                    className={`flex-1 text-xs ${trainingMode === 'normal' ? 'bg-matrix-accent text-matrix-bg' : ''}`}
+                  >
+                    {t.normalMode}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={trainingMode === 'weak' ? 'default' : 'outline'}
+                    onClick={() => {
+                      setTrainingMode('weak');
+                      fetchEmotionImages().then(imgs => initializeQueue(imgs, 'weak'));
+                    }}
+                    className={`flex-1 text-xs ${trainingMode === 'weak' ? 'bg-emotion-anger text-white' : ''}`}
+                  >
+                    {t.weakMode}
+                  </Button>
+                </div>
+                {trainingMode === 'weak' && getWeakEmotions().length > 0 && (
+                  <div className="mt-2 text-[10px] text-muted-foreground">
+                    {getWeakEmotions().map(e => getEmotionEmoji(e)).join(' ')}
+                  </div>
+                )}
+              </div>
+
+              {/* Matrix & Reset */}
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" onClick={() => setShowConfusionMatrix(true)} className="flex-1 text-xs">
+                  <Grid3X3 className="w-3 h-3 mr-1" />
+                  {t.showMatrix}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => { if (confirm(t.resetConfirm)) resetStats(); }}
                   className="text-xs text-emotion-anger hover:bg-emotion-anger/10"
                 >
                   <RotateCcw className="w-3 h-3" />
@@ -560,7 +643,6 @@ const EmotionTrainer: React.FC = () => {
             {/* Main Analysis Area - Center */}
             <div className="lg:col-span-1 xl:col-span-6 order-first lg:order-none">
               <div className="matrix-glass rounded-xl sm:rounded-2xl p-3 sm:p-6 lg:p-8 matrix-interactive">
-                {/* Header - hidden on mobile */}
                 <div className="hidden sm:flex items-center gap-4 mb-6 lg:mb-8">
                   <div className="w-12 h-12 bg-matrix-secondary rounded-xl flex items-center justify-center matrix-glow">
                     <Microscope className="w-6 h-6 text-matrix-bg" />
@@ -574,9 +656,7 @@ const EmotionTrainer: React.FC = () => {
                 <div className="flex justify-center mb-3 sm:mb-6">
                   {currentImage ? (
                     <div className="relative group w-full">
-                      {/* Emotion-specific glow border */}
                       <div className={`absolute -inset-1 sm:-inset-2 rounded-xl sm:rounded-2xl opacity-50 blur-xl emotion-bg-${currentImage.emotion} animate-matrix-glow`} />
-
                       <div className="relative">
                         <img
                           src={currentImage.path}
@@ -588,7 +668,6 @@ const EmotionTrainer: React.FC = () => {
                             if (fallback) fallback.style.display = 'flex';
                           }}
                         />
-
                         {/* Fallback UI */}
                         <div className="absolute inset-0 matrix-glass rounded-lg sm:rounded-xl flex items-center justify-center hidden">
                           <div className="text-center">
@@ -603,14 +682,15 @@ const EmotionTrainer: React.FC = () => {
                             </div>
                           </div>
                         </div>
-
-                        {/* Analysis result overlay */}
+                        {/* Result overlay */}
                         {showResult && (
-                          <div className={`absolute top-2 right-2 sm:top-4 sm:right-4 px-2 sm:px-4 py-1 sm:py-2 rounded-lg font-matrix text-xs sm:text-sm matrix-glass border ${
-                            isCorrect
-                              ? 'border-emotion-joy/50 text-emotion-joy'
-                              : 'border-emotion-anger/50 text-emotion-anger'
-                          } animate-matrix-pulse`}>
+                          <div
+                            className={`absolute top-2 right-2 sm:top-4 sm:right-4 px-2 sm:px-4 py-1 sm:py-2 rounded-lg font-matrix text-xs sm:text-sm matrix-glass border ${
+                              isCorrect
+                                ? 'border-emotion-joy/50 text-emotion-joy'
+                                : 'border-emotion-anger/50 text-emotion-anger'
+                            } animate-matrix-pulse`}
+                          >
                             <div className="flex items-center gap-1 sm:gap-2">
                               <span>{isCorrect ? '✓' : '✗'}</span>
                               <span className="uppercase tracking-wider">
@@ -619,8 +699,7 @@ const EmotionTrainer: React.FC = () => {
                             </div>
                           </div>
                         )}
-
-                        {/* Neural scan lines - hidden on mobile */}
+                        {/* Scan lines */}
                         <div className="hidden sm:block absolute inset-0 pointer-events-none">
                           <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-matrix-accent to-transparent animate-matrix-scan opacity-30" />
                           <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-matrix-accent to-transparent animate-matrix-scan opacity-30" style={{ animationDelay: '0.5s' }} />
@@ -644,13 +723,14 @@ const EmotionTrainer: React.FC = () => {
                   )}
                 </div>
 
-                {/* Analysis feedback - compact on mobile */}
                 {showResult && (
-                  <div className={`p-2 sm:p-4 rounded-lg sm:rounded-xl border sm:border-2 matrix-glass ${
-                    isCorrect
-                      ? 'border-emotion-joy/30 bg-emotion-joy/5'
-                      : 'border-emotion-anger/30 bg-emotion-anger/5'
-                  }`}>
+                  <div
+                    className={`p-2 sm:p-4 rounded-lg sm:rounded-xl border sm:border-2 matrix-glass ${
+                      isCorrect
+                        ? 'border-emotion-joy/30 bg-emotion-joy/5'
+                        : 'border-emotion-anger/30 bg-emotion-anger/5'
+                    }`}
+                  >
                     <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
                       <span className={`text-lg sm:text-2xl ${isCorrect ? 'emotion-text-joy' : 'emotion-text-anger'}`}>
                         {isCorrect ? '🎯' : '⚠️'}
@@ -672,10 +752,9 @@ const EmotionTrainer: React.FC = () => {
               </div>
             </div>
 
-            {/* Emotion Selection Matrix - Right Side */}
+            {/* Right Panel - Emotion Selector */}
             <div className="lg:col-span-1 xl:col-span-3">
               <div className="matrix-glass rounded-xl sm:rounded-2xl p-3 sm:p-6">
-                {/* Header - hidden on mobile */}
                 <div className="hidden sm:flex items-center gap-3 mb-6">
                   <div className="w-10 h-10 bg-matrix-accent rounded-lg flex items-center justify-center matrix-glow">
                     <Theater className="w-5 h-5 text-matrix-bg" />
@@ -683,9 +762,8 @@ const EmotionTrainer: React.FC = () => {
                   <h3 className="font-matrix-semibold text-matrix-accent text-heading-xl">{t.emotionMatrix}</h3>
                 </div>
 
-                {/* Mobile: 5 columns, Desktop: 2 columns */}
                 <div className="grid grid-cols-5 sm:grid-cols-2 gap-1.5 sm:gap-3 mb-3 sm:mb-6">
-                  {EMOTIONS.map((emotion, index) => (
+                  {activeEmotions.map((emotion) => (
                     <Button
                       key={emotion}
                       onClick={() => checkAnswer(emotion)}
@@ -697,163 +775,64 @@ const EmotionTrainer: React.FC = () => {
                         showResult && emotion === currentImage?.emotion
                           ? `bg-emotion-${emotion}/20 border-emotion-${emotion} emotion-text-${emotion} matrix-glow animate-matrix-pulse`
                           : showResult && emotion === selectedEmotion && !isCorrect
-                          ? 'bg-emotion-anger/20 border-emotion-anger text-emotion-anger'
-                          : `matrix-glass border-matrix-accent/20 text-foreground/80 hover:border-matrix-accent/50 hover:bg-matrix-accent/10 hover:text-matrix-accent`
+                            ? 'bg-emotion-anger/20 border-emotion-anger emotion-text-anger'
+                            : `hover:bg-emotion-${emotion}/10 border-border`
                       }`}
-                      style={{ animationDelay: `${index * 0.05}s` }}
                     >
                       <div className="flex flex-col items-center gap-0.5 sm:gap-1">
-                        <span className="text-base sm:text-lg">{getEmotionEmoji(emotion)}</span>
-                        <span className="hidden sm:inline">{getEmotionTranslation(emotion)}</span>
+                        <span className="text-lg sm:text-xl">{getEmotionEmoji(emotion)}</span>
+                        <span className="truncate max-w-full">{emotion.substring(0, 3)}</span>
                       </div>
                     </Button>
                   ))}
                 </div>
 
-                <Button
-                  onClick={() => loadNextImage()}
-                  className="matrix-primary-action matrix-glow w-full h-10 rounded-lg border font-matrix text-xs transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-matrix-secondary focus:ring-offset-2 focus:ring-offset-matrix-bg sm:h-12 sm:text-sm"
-                  aria-label="Load next emotion image for analysis"
-                >
-                  <RefreshCw className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span>{t.nextScan}</span>
-                </Button>
-              </div>
-
-              {/* Data streams visualization - hidden on mobile */}
-              <div className="hidden sm:block mt-6 matrix-glass rounded-2xl p-4">
-                <h4 className="font-matrix text-matrix-secondary text-sm mb-3 uppercase tracking-wider">{t.neuralActivity}</h4>
-                <div className="space-y-2">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-matrix-accent rounded-full animate-matrix-pulse" style={{ animationDelay: `${i * 0.3}s` }} />
-                      <div className="flex-1 h-1 bg-muted rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-matrix-accent to-matrix-secondary animate-matrix-scan"
-                          style={{ animationDelay: `${i * 0.5}s`, animationDuration: '2s' }}
-                        />
-                      </div>
-                    </div>
-                  ))}
+                {/* Current emotion display */}
+                <div className="matrix-glass rounded-lg p-3 sm:p-4 text-center">
+                  <div className="text-muted-foreground text-xs sm:text-sm mb-1">{t.neuralActivity}</div>
+                  <div className="flex items-center justify-center gap-2 sm:gap-3">
+                    {currentImage ? (
+                      <>
+                        <span className="text-2xl sm:text-3xl">{getEmotionEmoji(currentImage.emotion)}</span>
+                        <span className="font-matrix text-matrix-accent text-sm sm:text-base uppercase">
+                          {getEmotionTranslation(currentImage.emotion)}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="font-matrix text-muted-foreground text-xs sm:text-sm">No image</span>
+                    )}
+                  </div>
                 </div>
+
+                <Button
+                  onClick={loadNextImage}
+                  className="w-full mt-3 sm:mt-4 font-matrix text-xs sm:text-sm uppercase tracking-wider"
+                  size="sm"
+                >
+                  <RefreshCw className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+                  {t.nextScan}
+                </Button>
               </div>
             </div>
           </div>
 
-          {/* Footer - simplified on mobile */}
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 sm:gap-6 matrix-glass rounded-xl sm:rounded-2xl px-3 sm:px-8 py-2 sm:py-4 border border-matrix-accent/20">
-              <div className="flex items-center gap-1 sm:gap-2 text-muted-foreground">
-                <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-matrix-accent" />
-                <span className="font-matrix text-[10px] sm:text-sm uppercase tracking-wider">{t.neuralNetwork}</span>
+          {/* Footer */}
+          <div className="mt-8 text-center">
+            <div className="inline-flex items-center gap-4 sm:gap-6 matrix-glass rounded-xl sm:rounded-2xl px-6 sm:px-8 py-3 sm:py-4">
+              <div className="flex items-center gap-2">
+                <img src="/favicon.png" alt="logo" className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="font-matrix text-matrix-secondary text-xs sm:text-sm">{t.neuralNetwork}</span>
               </div>
-              <div className="w-px h-4 sm:h-6 bg-matrix-accent/30"></div>
-              <div className="hidden sm:block text-xs text-muted-foreground font-medium">
+              <div className="text-[10px] sm:text-xs text-muted-foreground">
                 {t.poweredBy}
               </div>
-              <div className="hidden sm:block w-px h-6 bg-matrix-accent/30"></div>
-              <div className="flex items-center gap-1 sm:gap-2 text-muted-foreground">
-                <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-matrix-secondary" />
-                <span className="font-matrix text-[10px] sm:text-sm uppercase tracking-wider">{t.secure}</span>
+              <div className="flex items-center gap-1 text-emotion-joy">
+                <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="font-matrix text-xs sm:text-sm">{t.secure}</span>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Confusion Matrix Modal */}
-        {showConfusionMatrix && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="matrix-glass rounded-2xl p-4 sm:p-6 max-w-4xl w-full max-h-[90vh] overflow-auto">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="font-matrix text-matrix-accent text-lg sm:text-xl">{t.confusionMatrix}</h2>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setShowConfusionMatrix(false)}
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  <X className="w-5 h-5" />
-                </Button>
-              </div>
-
-              {/* Matrix Grid */}
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs sm:text-sm">
-                  <thead>
-                    <tr>
-                      <th className="p-1 sm:p-2 text-left text-muted-foreground font-matrix text-[10px] sm:text-xs">
-                        {t.actualEmotion} ↓ / {t.predictedEmotion} →
-                      </th>
-                      {EMOTIONS.map(emotion => (
-                        <th key={emotion} className="p-1 sm:p-2 text-center" title={getEmotionTranslation(emotion)}>
-                          <span className="text-base sm:text-lg">{getEmotionEmoji(emotion)}</span>
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {EMOTIONS.map(actual => {
-                      const rowTotal = Object.values(confusionMatrix[actual] || {}).reduce((a, b) => a + b, 0);
-                      return (
-                        <tr key={actual} className="border-t border-matrix-accent/10">
-                          <td className="p-1 sm:p-2 font-matrix text-muted-foreground" title={getEmotionTranslation(actual)}>
-                            <span className="text-base sm:text-lg mr-1 sm:mr-2">{getEmotionEmoji(actual)}</span>
-                            <span className="hidden sm:inline text-xs">{getEmotionTranslation(actual)}</span>
-                          </td>
-                          {EMOTIONS.map(predicted => {
-                            const count = confusionMatrix[actual]?.[predicted] || 0;
-                            const isCorrect = actual === predicted;
-                            const intensity = rowTotal > 0 ? count / rowTotal : 0;
-                            return (
-                              <td
-                                key={predicted}
-                                className={`p-1 sm:p-2 text-center font-matrix transition-colors ${
-                                  count === 0
-                                    ? 'text-muted-foreground/30'
-                                    : isCorrect
-                                    ? 'text-emotion-joy'
-                                    : 'text-emotion-anger'
-                                }`}
-                                style={{
-                                  backgroundColor: count > 0
-                                    ? isCorrect
-                                      ? `rgba(34, 197, 94, ${intensity * 0.3})`
-                                      : `rgba(239, 68, 68, ${intensity * 0.3})`
-                                    : 'transparent'
-                                }}
-                              >
-                                {count || '-'}
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Legend */}
-              <div className="mt-4 flex flex-wrap gap-4 text-xs text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded bg-emotion-joy/30" />
-                  <span>{t.confirmed}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded bg-emotion-anger/30" />
-                  <span>{t.error}</span>
-                </div>
-              </div>
-
-              <Button
-                onClick={() => setShowConfusionMatrix(false)}
-                className="mt-4 w-full bg-matrix-accent hover:bg-matrix-accent/80 text-matrix-bg"
-              >
-                {t.closeMatrix}
-              </Button>
-            </div>
-          </div>
-        )}
       </div>
     </MatrixBackground>
   );
