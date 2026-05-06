@@ -80,7 +80,11 @@ const ALL_EMOTIONS = [
 type EmotionKey = (typeof ALL_EMOTIONS)[number];
 
 // Emotion presets
-type EmotionPreset = "all" | "basic" | "extended" | "advanced" | "custom" | "personality" | "social" | "cognitive" | "affective" | "behavioral";
+type EmotionPreset = 
+  | "all" | "basic" | "extended" | "advanced" | "custom" 
+  | "personality" | "social" | "cognitive" | "affective" | "behavioral" 
+  | "threat_level1" | "threat_level2" | "threat_level3" 
+  | "manipulation" | "deception" | "aggression" | "distress" | "antisocial";
 
 const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
   all: ALL_EMOTIONS,
@@ -245,6 +249,110 @@ const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
     "frustration",
     "contempt",
   ] as const,
+  // === ОПАСНЫЕ ЭМОЦИИ / DANGEROUS EMOTIONS ===
+  // Уровень 1 - Надзор (Low-Level Monitoring)
+  threat_level1: [
+    "anxiety",
+    "suspicion",
+    "frustration",
+    "disappointment",
+    "embarrassment",
+    "envy",
+    "jealousy",
+    "contempt",
+    "confusion",
+  ] as const,
+  // Уровень 2 - Повышенная опасность (High-Risk)
+  threat_level2: [
+    "anger",
+    "hatred",
+    "resentment",
+    "deceit",
+    "manipulative",
+    "narcissism",
+    "callousness",
+    "fearlessness",
+    "predatory",
+  ] as const,
+  // Уровень 3 - Критическая угроза (Critical Threat)
+  threat_level3: [
+    "sociopathy",
+    "remorselessness",
+    "shallow_affect",
+    "despair",
+  ] as const,
+  // Профилирование манипуляций
+  manipulation: [
+    "deceit",
+    "manipulative",
+    "narcissism",
+    "sociopathy",
+    "shame",
+    "guilt",
+    "embarrassment",
+    "fear",
+    "anxiety",
+    "suspicion",
+    "callousness",
+    "remorselessness",
+  ] as const,
+  // Профилирование обмана
+  deception: [
+    "deceit",
+    "suspicion",
+    "fear",
+    "anxiety",
+    "guilt",
+    "shame",
+    "embarrassment",
+    "pride",
+    "surprise",
+    "confusion",
+    "disgust",
+    "anger",
+  ] as const,
+  // Профилирование агрессии
+  aggression: [
+    "anger",
+    "hatred",
+    "frustration",
+    "contempt",
+    "disgust",
+    "predatory",
+    "determination",
+    "fearlessness",
+    "sociopathy",
+    "callousness",
+    "remorselessness",
+  ] as const,
+  // Профилирование стресса/тревоги
+  distress: [
+    "anxiety",
+    "fear",
+    "sadness",
+    "despair",
+    "guilt",
+    "shame",
+    "embarrassment",
+    "loneliness",
+    "disappointment",
+    "regret",
+    "frustration",
+    "confusion",
+    "suspicion",
+  ] as const,
+  // Профилирование antisocial behavior
+  antisocial: [
+    "sociopathy",
+    "narcissism",
+    "callousness",
+    "remorselessness",
+    "shallow_affect",
+    "predatory",
+    "manipulative",
+    "deceit",
+    "fearlessness",
+  ] as const,
   custom: ALL_EMOTIONS,
 };
 
@@ -259,6 +367,15 @@ const PRESET_LABEL_KEYS: Record<EmotionPreset, string> = {
   cognitive: "presetCognitive",
   affective: "presetAffective",
   behavioral: "presetBehavioral",
+  // Dangerous profiling
+  threat_level1: "presetThreat1",
+  threat_level2: "presetThreat2",
+  threat_level3: "presetThreat3",
+  manipulation: "presetManipulation",
+  deception: "presetDeception",
+  aggression: "presetAggression",
+  distress: "presetDistress",
+  antisocial: "presetAntisocial",
   custom: "presetCustom",
 };
 
@@ -857,21 +974,30 @@ const EmotionTrainer: React.FC = () => {
                  {emotionPreset && (
                    <div className="mt-2 p-2 rounded-lg bg-matrix-accent/5 border border-matrix-accent/20">
                      <p className="text-[10px] text-muted-foreground leading-relaxed">
-                       {(() => {
-                         const descriptions: Record<EmotionPreset, string> = {
-                           all: t.presetDescAll || 'All 39 emotions for comprehensive training',
-                           basic: t.presetDescBasic || '10 core emotions for beginners',
-                           extended: t.presetDescExtended || '20 common emotions for intermediate training',
-                           advanced: t.presetDescAdvanced || '30 emotions for advanced practitioners',
-                           personality: t.presetDescPersonality || '22 emotions for personality and character analysis',
-                           social: t.presetDescSocial || '22 emotions for social dynamics and relationship intelligence',
-                           cognitive: t.presetDescCognitive || '8 emotions related to thinking, learning, and appraisal',
-                           affective: t.presetDescAffective || '18 emotions organized by positive/negative valence',
-                           behavioral: t.presetDescBehavioral || '14 emotions linked to behavioral tendencies and risk assessment',
-                           custom: t.presetDescCustom || 'Your personalized selection',
-                         };
-                         return descriptions[emotionPreset] || '';
-                       })()}
+                        {(() => {
+                          const descriptions: Record<EmotionPreset, string> = {
+                            all: t.presetDescAll || 'All 39 emotions for comprehensive training',
+                            basic: t.presetDescBasic || '10 core emotions for beginners',
+                            extended: t.presetDescExtended || '20 common emotions for intermediate training',
+                            advanced: t.presetDescAdvanced || '30 emotions for advanced practitioners',
+                            personality: t.presetDescPersonality || '22 emotions for personality and character analysis',
+                            social: t.presetDescSocial || '22 emotions for social dynamics and relationship intelligence',
+                            cognitive: t.presetDescCognitive || '8 emotions related to thinking, learning, and appraisal',
+                            affective: t.presetDescAffective || '18 emotions organized by positive/negative valence',
+                            behavioral: t.presetDescBehavioral || '14 emotions linked to behavioral tendencies and risk assessment',
+                            // Dangerous profiling sets
+                            threat_level1: t.presetDescThreat1 || '9 low-level monitoring emotions for routine assessment',
+                            threat_level2: t.presetDescThreat2 || '9 high-risk emotions requiring heightened awareness',
+                            threat_level3: t.presetDescThreat3 || '4 critical threat emotions indicating potential danger',
+                            manipulation: t.presetDescManipulation || '12 emotions commonly used in manipulative contexts',
+                            deception: t.presetDescDeception || '12 emotions associated with dishonesty and concealment',
+                            aggression: t.presetDescAggression || '11 emotions signaling hostile intent or violence',
+                            distress: t.presetDescDistress || '13 emotions indicating heightened anxiety or suffering',
+                            antisocial: t.presetDescAntisocial || '9 emotions characteristic of antisocial patterns',
+                            custom: t.presetDescCustom || 'Your personalized selection',
+                          };
+                          return descriptions[emotionPreset] || '';
+                        })()}
                      </p>
                    </div>
                  )}
