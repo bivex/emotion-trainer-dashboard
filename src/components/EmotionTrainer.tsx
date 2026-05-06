@@ -351,7 +351,7 @@ const EmotionTrainer: React.FC = () => {
 
     playEmotionSound(emotion, correct);
 
-    setScore(prev => ({
+    setScore((prev: { correct: number; total: number }) => ({
       correct: prev.correct + (correct ? 1 : 0),
       total: prev.total + 1
     }));
