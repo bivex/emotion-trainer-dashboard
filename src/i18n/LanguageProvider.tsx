@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { translations, Language } from './translations';
+import { translations } from './translations';
+import type { Language } from './translations';
 
 type LanguageContextType = {
   language: Language;

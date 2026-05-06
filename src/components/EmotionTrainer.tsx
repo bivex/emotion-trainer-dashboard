@@ -80,7 +80,7 @@ const ALL_EMOTIONS = [
 type EmotionKey = (typeof ALL_EMOTIONS)[number];
 
 // Emotion presets
-type EmotionPreset = "all" | "basic" | "extended" | "advanced" | "custom";
+type EmotionPreset = "all" | "basic" | "extended" | "advanced" | "custom" | "personality" | "social" | "cognitive" | "affective" | "behavioral";
 
 const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
   all: ALL_EMOTIONS,
@@ -146,6 +146,105 @@ const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
     "loneliness",
     "jealousy",
   ] as const,
+  // Профилирование личности
+  personality: [
+    "joy",
+    "anger",
+    "fear",
+    "sadness",
+    "disgust",
+    "surprise",
+    "shame",
+    "guilt",
+    "pride",
+    "embarrassment",
+    "anxiety",
+    "frustration",
+    "contempt",
+    "envy",
+    "jealousy",
+    "suspicion",
+    "interest",
+    "determination",
+    "loneliness",
+    "amusement",
+    "excitement",
+    "relief",
+  ] as const,
+  // Социальные эмоции (relationship dynamics)
+  social: [
+    "joy",
+    "amusement",
+    "excitement",
+    "pride",
+    "relief",
+    "sadness",
+    "anger",
+    "fear",
+    "anxiety",
+    "shame",
+    "guilt",
+    "embarrassment",
+    "loneliness",
+    "envy",
+    "jealousy",
+    "contempt",
+    "suspicion",
+    "disgust",
+    "deceit",
+    "manipulative",
+    "narcissism",
+    "callousness",
+  ] as const,
+  // Когнитивные эмоции (cognitive appraisal)
+  cognitive: [
+    "surprise",
+    "confusion",
+    "interest",
+    "disappointment",
+    "regret",
+    "determination",
+    "suspicion",
+    "awe",
+  ] as const,
+  // Аффективные эмоции (valence-based)
+  affective: [
+    "joy",
+    "excitement",
+    "pride",
+    "relief",
+    "amusement",
+    "sadness",
+    "anger",
+    "fear",
+    "disgust",
+    "despair",
+    "guilt",
+    "shame",
+    "embarrassment",
+    "anxiety",
+    "frustration",
+    "disappointment",
+    "regret",
+    "loneliness",
+  ] as const,
+  // Поведенческие триггеры (behavioral tendencies)
+  behavioral: [
+    "predatory",
+    "manipulative",
+    "narcissism",
+    "callousness",
+    "remorselessness",
+    "shallow_affect",
+    "sociopathy",
+    "deceit",
+    "suspicion",
+    "fearlessness",
+    "determination",
+    "anger",
+    "frustration",
+    "contempt",
+  ] as const,
   custom: ALL_EMOTIONS,
 };
 
@@ -155,6 +254,11 @@ const PRESET_LABEL_KEYS: Record<EmotionPreset, string> = {
   basic: "presetBasic",
   extended: "presetExtended",
   advanced: "presetAdvanced",
+  personality: "presetPersonality",
+  social: "presetSocial",
+  cognitive: "presetCognitive",
+  affective: "presetAffective",
+  behavioral: "presetBehavioral",
   custom: "presetCustom",
 };
 
@@ -743,11 +847,34 @@ const EmotionTrainer: React.FC = () => {
                     ),
                   )}
                 </div>
-                {emotionPreset !== "all" && (
-                  <div className="mt-2 text-[10px] text-muted-foreground">
-                    {t.activeEmotionsCount.replace('{count}', activeEmotions.length.toString())}
-                  </div>
-                )}
+                 {emotionPreset !== "all" && (
+                   <div className="mt-2 text-[10px] text-muted-foreground">
+                     {t.activeEmotionsCount.replace('{count}', activeEmotions.length.toString())}
+                   </div>
+                 )}
+                 
+                 {/* Preset description */}
+                 {emotionPreset && (
+                   <div className="mt-2 p-2 rounded-lg bg-matrix-accent/5 border border-matrix-accent/20">
+                     <p className="text-[10px] text-muted-foreground leading-relaxed">
+                       {(() => {
+                         const descriptions: Record<EmotionPreset, string> = {
+                           all: t.presetDescAll || 'All 39 emotions for comprehensive training',
+                           basic: t.presetDescBasic || '10 core emotions for beginners',
+                           extended: t.presetDescExtended || '20 common emotions for intermediate training',
+                           advanced: t.presetDescAdvanced || '30 emotions for advanced practitioners',
+                           personality: t.presetDescPersonality || '22 emotions for personality and character analysis',
+                           social: t.presetDescSocial || '22 emotions for social dynamics and relationship intelligence',
+                           cognitive: t.presetDescCognitive || '8 emotions related to thinking, learning, and appraisal',
+                           affective: t.presetDescAffective || '18 emotions organized by positive/negative valence',
+                           behavioral: t.presetDescBehavioral || '14 emotions linked to behavioral tendencies and risk assessment',
+                           custom: t.presetDescCustom || 'Your personalized selection',
+                         };
+                         return descriptions[emotionPreset] || '';
+                       })()}
+                     </p>
+                   </div>
+                 )}
               </div>
 
               {/* Emotion Spectrum */}
