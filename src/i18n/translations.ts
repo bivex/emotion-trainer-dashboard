@@ -115,13 +115,35 @@ export const translations = {
      noImage: 'No image',
      openDevTools: 'Open DevTools',
 
-     // Preset labels
-     presetAll: 'All 39',
-     presetBasic: 'Basic 10',
-     presetExtended: 'Extended 20',
-     presetAdvanced: 'Advanced 30',
-     presetCustom: 'Custom',
-   },
+      // Preset labels
+      presetAll: 'All 39',
+      presetBasic: 'Basic 10',
+      presetExtended: 'Extended 20',
+      presetAdvanced: 'Advanced 30',
+      presetCustom: 'Custom',
+
+      // Additional UI keys
+      selectEmotion: 'Select {emotion} emotion',
+      logoAlt: 'Emotion Trainer logo',
+      close: 'Close',
+      neuralScanAlt: 'Neural scan: {emotion}',
+      seoTitle: 'Neural Emotion Scanner - AI-Powered Emotion Recognition Training',
+      seoDescription: 'Advanced neural network for emotion recognition training. Decode facial expressions with precision using our AI-powered emotion analysis tool. Train your skills in recognizing joy, sadness, anger, fear, surprise, disgust, guilt, shame, suspicion, and neutral expressions.',
+      seoKeywords: 'emotion recognition, facial expression analysis, AI training, neural network, emotion detection, facial microexpressions, emotion training, psychology, machine learning, computer vision',
+      seoSiteName: 'Neural Emotion Scanner',
+      seoTwitterHandle: '@emotion_scanner',
+      seoAuthor: 'Bivex',
+      seoSection: 'Technology',
+      seoTags: ['AI', 'Emotion Recognition', 'Training', 'Neural Network', 'Psychology'],
+      seoFeatureList: [
+        'Real-time emotion recognition',
+        'Facial expression analysis',
+        'Neural network training',
+        'Interactive learning interface',
+        'Multi-language support',
+        'Performance tracking',
+      ],
+    },
 
   ru: {
     // Header
@@ -239,13 +261,35 @@ export const translations = {
      noImage: 'Нет изображения',
      openDevTools: 'Открыть инструменты разработчика',
 
-     // Preset labels
-     presetAll: 'Все 39',
-     presetBasic: 'Базовые 10',
-     presetExtended: 'Расширенные 20',
-     presetAdvanced: 'Продвинутые 30',
-     presetCustom: 'Пользовательские',
-   },
+      // Preset labels
+      presetAll: 'Все 39',
+      presetBasic: 'Базовые 10',
+      presetExtended: 'Расширенные 20',
+      presetAdvanced: 'Продвинутые 30',
+      presetCustom: 'Пользовательские',
+
+      // Additional UI keys
+      selectEmotion: 'Выбрать эмоцию {emotion}',
+      logoAlt: 'Логотип тренанера эмоций',
+      close: 'Закрыть',
+      neuralScanAlt: 'Нейронный скан: {emotion}',
+      seoTitle: 'Нейронный сканер эмоций - ИИ-тренажёр распознавания эмоций',
+      seoDescription: 'Продвинутая нейросеть для тренировки распознавания эмоций. Точный анализ выражений лица с помощью технологий искусственного интеллекта. Тренируйте умение распознавать радость, грусть, гнев, страх, удивление, отвращение, вину, стыд, подозрение и нейтральные выражения.',
+      seoKeywords: 'распознавание эмоций, анализ выражений лица, ИИ-тренажёр, нейронная сеть, детекция эмоций, микровыражения лица, тренировка эмоций, психология, машинное обучение, компьютерное зрение',
+      seoSiteName: 'Нейронный сканер эмоций',
+      seoTwitterHandle: '@emotion_scanner',
+      seoAuthor: 'Bivex',
+      seoSection: 'Технологии',
+      seoTags: ['ИИ', 'Распознавание эмоций', 'Тренировка', 'Нейронная сеть', 'Психология'],
+      seoFeatureList: [
+        'Распознавание эмоций в реальном времени',
+        'Анализ мимики',
+        'Тренировка нейронной сети',
+        'Интерактивный обучающий интерфейс',
+        'Многоязычная поддержка',
+        'Отслеживание прогресса',
+      ],
+    },
 
   zh: {
     // Header
@@ -363,13 +407,35 @@ export const translations = {
      noImage: '无图像',
      openDevTools: '打开开发者工具',
 
-     // Preset labels
-     presetAll: '全部 39',
-     presetBasic: '基础 10',
-     presetExtended: '扩展 20',
-     presetAdvanced: '高级 30',
-     presetCustom: '自定义',
-   },
+      // Preset labels
+      presetAll: '全部 39',
+      presetBasic: '基础 10',
+      presetExtended: '扩展 20',
+      presetAdvanced: '高级 30',
+      presetCustom: '自定义',
+
+      // Additional UI keys
+      selectEmotion: '选择 {emotion} 情绪',
+      logoAlt: '情绪训练器标志',
+      close: '关闭',
+      neuralScanAlt: '神经扫描: {emotion}',
+      seoTitle: '神经情绪扫描器 - AI情绪识别训练',
+      seoDescription: '先进的神经网络用于情绪识别训练。 使用我们的人工智能情绪分析工具精确解码面部表情。 训练您识别喜悦、悲伤、愤怒、恐惧、惊讶、厌恶、内疚、羞耻、怀疑和中性的能力。',
+      seoKeywords: '情绪识别, 面部表情分析, AI训练, 神经网络, 情绪检测, 面部微表情, 情绪训练, 心理学, 机器学习, 计算机视觉',
+      seoSiteName: '神经情绪扫描器',
+      seoTwitterHandle: '@emotion_scanner',
+      seoAuthor: 'Bivex',
+      seoSection: '技术',
+      seoTags: ['人工智能', '情绪识别', '训练', '神经网络', '心理学'],
+      seoFeatureList: [
+        '实时情绪识别',
+        '面部表情分析',
+        '神经网络训练',
+        '互动学习界面',
+        '多语言支持',
+        '性能追踪',
+      ],
+    },
 
    es: {
      // Header
@@ -487,13 +553,36 @@ export const translations = {
      noImage: 'No hay imagen',
      openDevTools: 'Abrir herramientas de desarrollo',
 
-     // Preset labels
-     presetAll: 'Todas 39',
-     presetBasic: 'Básicas 10',
-     presetExtended: 'Extendidas 20',
-     presetAdvanced: 'Avanzadas 30',
-     presetCustom: 'Personalizado',
-   }
+      // Preset labels
+      presetAll: 'Todas 39',
+      presetBasic: 'Básicas 10',
+      presetExtended: 'Extendidas 20',
+      presetAdvanced: 'Avanzadas 30',
+      presetCustom: 'Personalizado',
+
+      // Additional UI keys
+      emotionPresetLabel: 'Preestablecido de emociones',
+      selectEmotion: 'Seleccionar emoción {emotion}',
+      logoAlt: 'Logotipo del entrenador de emociones',
+      close: 'Cerrar',
+      neuralScanAlt: 'Escaneo neuronal: {emotion}',
+      seoTitle: 'Escáner neuronal de emociones - Reconocimiento de emociones con IA',
+      seoDescription: 'Red neuronal avanzada para entrenamiento de reconocimiento de emociones. Decodifica expresiones faciales con precisión usando nuestra herramienta de análisis de emociones con IA. Entrena tus habilidades para reconocer alegría, tristeza, ira, miedo, sorpresa, asco, culpa, vergüenza, sospecha y expresiones neutrales.',
+      seoKeywords: 'reconocimiento de emociones, análisis de expresiones faciales, entrenamiento con IA, red neuronal, detección de emociones, microexpresiones faciales, entrenamiento de emociones, psicología, aprendizaje automático, visión por computadora',
+      seoSiteName: 'Escáner neuronal de emociones',
+      seoTwitterHandle: '@emotion_scanner',
+      seoAuthor: 'Bivex',
+      seoSection: 'Tecnología',
+      seoTags: ['IA', 'Reconocimiento de emociones', 'Entrenamiento', 'Red neuronal', 'Psicología'],
+      seoFeatureList: [
+        'Reconocimiento de emociones en tiempo real',
+        'Análisis de expresiones faciales',
+        'Entrenamiento de redes neuronales',
+        'Interfaz de aprendizaje interactiva',
+        'Soporte multilenguaje',
+        'Seguimiento del rendimiento',
+      ],
+    },
 };
 
 export type Language = keyof typeof translations;

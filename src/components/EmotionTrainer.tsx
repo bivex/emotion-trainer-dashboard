@@ -720,12 +720,12 @@ const EmotionTrainer: React.FC = () => {
 
               {/* Emotion Preset Selector */}
               <div className="matrix-glass rounded-2xl p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <ListFilter className="w-4 h-4 text-matrix-accent" />
-                  <h3 className="font-matrix text-matrix-accent text-sm">
-                    {t.emotionPreset || "Emotion Preset"}
-                  </h3>
-                </div>
+                 <div className="flex items-center gap-2 mb-3">
+                   <ListFilter className="w-4 h-4 text-matrix-accent" />
+                   <h3 className="font-matrix text-matrix-accent text-sm">
+                     {t.emotionPreset}
+                   </h3>
+                 </div>
                 <div className="flex flex-wrap gap-2">
                   {(Object.keys(EMOTION_PRESETS) as EmotionPreset[]).map(
                     (preset) => (
