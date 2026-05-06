@@ -437,6 +437,7 @@ const EmotionTrainer: React.FC = () => {
   const [showResult, setShowResult] = useState(false);
   const [selectedEmotion, setSelectedEmotion] = useState<string>("");
   const [isCorrect, setIsCorrect] = useState(false);
+  const [revealEmotion, setRevealEmotion] = useState(false);
   const [confusionMatrix, setConfusionMatrix] = useState<ConfusionMatrix>(
     () => {
       const stored = localStorage.getItem(STORAGE_KEYS.confusionMatrix);
@@ -582,6 +583,7 @@ const EmotionTrainer: React.FC = () => {
     }
     setShowResult(false);
     setSelectedEmotion("");
+    setRevealEmotion(false);
   };
 
   // Sound
@@ -1303,7 +1305,16 @@ const EmotionTrainer: React.FC = () => {
                     <div className={`absolute -inset-1 rounded-lg opacity-40 blur-lg emotion-bg-${selectedEmotion} animate-matrix-glow`} />
                   )}
                   <div className="flex items-center justify-center gap-2 sm:gap-3 relative z-10">
-                    {showResult && selectedEmotion ? (
+                    {showResult && selectedEmotion && !revealEmotion ? (
+                      <button onClick={() => setRevealEmotion(true)} className="cursor-pointer">
+                        <span className="text-2xl sm:text-3xl blur-md select-none opacity-60">
+                          {getEmotionEmoji(selectedEmotion)}
+                        </span>
+                        <span className="font-matrix text-sm sm:text-base uppercase blur-md select-none opacity-60">
+                          {getEmotionTranslation(selectedEmotion)}
+                        </span>
+                      </button>
+                     ) : showResult && selectedEmotion ? (
                       <>
                         <span className="text-2xl sm:text-3xl">
                           {getEmotionEmoji(selectedEmotion)}
