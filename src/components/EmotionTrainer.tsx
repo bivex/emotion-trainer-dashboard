@@ -1298,9 +1298,21 @@ const EmotionTrainer: React.FC = () => {
                 </div>
 
                 {/* Current emotion display */}
-                <div className="matrix-glass rounded-lg p-3 sm:p-4 text-center">
-                  <div className="flex items-center justify-center gap-2 sm:gap-3">
-                    {currentImage ? (
+                <div className="matrix-glass rounded-lg p-3 sm:p-4 text-center relative overflow-hidden">
+                  {showResult && selectedEmotion && (
+                    <div className={`absolute -inset-1 rounded-lg opacity-40 blur-lg emotion-bg-${selectedEmotion} animate-matrix-glow`} />
+                  )}
+                  <div className="flex items-center justify-center gap-2 sm:gap-3 relative z-10">
+                    {showResult && selectedEmotion ? (
+                      <>
+                        <span className="text-2xl sm:text-3xl">
+                          {getEmotionEmoji(selectedEmotion)}
+                        </span>
+                        <span className={`font-matrix text-sm sm:text-base uppercase ${isCorrect ? 'text-emotion-joy' : 'text-emotion-anger'}`}>
+                          {getEmotionTranslation(selectedEmotion)}
+                        </span>
+                      </>
+                     ) : currentImage ? (
                       <>
                         <span className="text-2xl sm:text-3xl">
                           {getEmotionEmoji(currentImage.emotion)}
