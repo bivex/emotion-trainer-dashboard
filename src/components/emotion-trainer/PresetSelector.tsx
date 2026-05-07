@@ -429,8 +429,56 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({
                className={`text-xs ${emotionPreset === "profile_cognitive" ? "bg-lime-600 text-white" : "text-lime-700 border-lime-600/50 hover:bg-lime-600/10 dark:text-lime-500"}`}
              >
                {t.presetProfileCognitive}
-             </Button>
-           </div>
+               </Button>
+              <Button
+                size="sm"
+                variant={emotionPreset === "archetype_runaway" ? "default" : "outline"}
+                onClick={() => setEmotionPreset("archetype_runaway")}
+                className={`text-xs ${emotionPreset === "archetype_runaway" ? "bg-amber-600 text-white" : "text-amber-700 border-amber-600/50 hover:bg-amber-600/10 dark:text-amber-500"}`}
+              >
+                {t.presetArchetypeRunaway}
+              </Button>
+              <Button
+                size="sm"
+                variant={emotionPreset === "archetype_victim" ? "default" : "outline"}
+                onClick={() => setEmotionPreset("archetype_victim")}
+                className={`text-xs ${emotionPreset === "archetype_victim" ? "bg-amber-600 text-white" : "text-amber-700 border-amber-600/50 hover:bg-amber-600/10 dark:text-amber-500"}`}
+              >
+                {t.presetArchetypeVictim}
+              </Button>
+              <Button
+                size="sm"
+                variant={emotionPreset === "archetype_manipulator" ? "default" : "outline"}
+                onClick={() => setEmotionPreset("archetype_manipulator")}
+                className={`text-xs ${emotionPreset === "archetype_manipulator" ? "bg-amber-600 text-white" : "text-amber-700 border-amber-600/50 hover:bg-amber-600/10 dark:text-amber-500"}`}
+              >
+                {t.presetArchetypeManipulator}
+              </Button>
+              <Button
+                size="sm"
+                variant={emotionPreset === "archetype_aggressor" ? "default" : "outline"}
+                onClick={() => setEmotionPreset("archetype_aggressor")}
+                className={`text-xs ${emotionPreset === "archetype_aggressor" ? "bg-amber-600 text-white" : "text-amber-700 border-amber-600/50 hover:bg-amber-600/10 dark:text-amber-500"}`}
+              >
+                {t.presetArchetypeAggressor}
+              </Button>
+              <Button
+                size="sm"
+                variant={emotionPreset === "archetype_anxious" ? "default" : "outline"}
+                onClick={() => setEmotionPreset("archetype_anxious")}
+                className={`text-xs ${emotionPreset === "archetype_anxious" ? "bg-amber-600 text-white" : "text-amber-700 border-amber-600/50 hover:bg-amber-600/10 dark:text-amber-500"}`}
+              >
+                {t.presetArchetypeAnxious}
+              </Button>
+              <Button
+                size="sm"
+                variant={emotionPreset === "archetype_resilient" ? "default" : "outline"}
+                onClick={() => setEmotionPreset("archetype_resilient")}
+                className={`text-xs ${emotionPreset === "archetype_resilient" ? "bg-amber-600 text-white" : "text-amber-700 border-amber-600/50 hover:bg-amber-600/10 dark:text-amber-500"}`}
+              >
+                {t.presetArchetypeResilient}
+              </Button>
+            </div>
            <p className="text-[10px] text-muted-foreground mt-1.5 ml-2">
              {t.presetDescProfileJoy || 'Emotion families for discrimination training'}
            </p>
@@ -581,9 +629,16 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({
                   archetype_rebel: t.presetDescArchetypeRebel || '5 emotions: anger, excitement, frustration, contempt, fearlessness. Interrupts, defiant.',
                   archetype_predator: t.presetDescArchetypePredator || '5 emotions: deceit, manipulative, shallow_affect, remorselessness, narcissism. Charming, manipulative.',
                   archetype_analyst: t.presetDescArchetypeAnalyst || '5 emotions: anxiety, suspicion, confusion, fear, interest. Worries, detail-oriented.',
-                  archetype_supporter: t.presetDescArchetypeSupporter || '5 emotions: joy, interest, relief, awe, pride. Active listener, defuses tension.',
+                   archetype_supporter: t.presetDescArchetypeSupporter || '5 emotions: joy, interest, relief, awe, pride. Active listener, defuses tension.',
 
-                  custom: t.presetDescCustom || 'Your personalized selection',
+                   archetype_runaway: t.presetDescArchetypeRunaway || '6 emotions: fear, anxiety, determination, loneliness, suspicion, relief. Street experience, distrustful.',
+                   archetype_victim: t.presetDescArchetypeVictim || '6 emotions: fear, anxiety, shame, sadness, loneliness, confusion. Depressed, awaiting help.',
+                   archetype_manipulator: t.presetDescArchetypeManipulator || '6 emotions: manipulative, deceit, suspicion, shame, guilt, narcissism. Controls others, lies.',
+                   archetype_aggressor: t.presetDescArchetypeAggressor || '6 emotions: anger, hatred, contempt, disgust, predatory, frustration. Conflict-prone, threatening.',
+                   archetype_anxious: t.presetDescArchetypeAnxious || '6 emotions: anxiety, fear, confusion, suspicion, despair, shame. Constant tension.',
+                   archetype_resilient: t.presetDescArchetypeResilient || '6 emotions: determination, fearlessness, pride, joy, relief, interest. Adaptive, optimistic.',
+
+                   custom: t.presetDescCustom || 'Your personalized selection',
                };
               return descriptions[emotionPreset] || '';
             })()}

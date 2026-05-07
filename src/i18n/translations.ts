@@ -206,9 +206,23 @@ export const translations = {
           presetArchetypeAnalyst: 'Anxious Analyst',
           presetDescArchetypeAnalyst: '5 emotions: anxiety, suspicion, confusion, fear, interest. Worries, many scenarios, detail-oriented.',
           presetArchetypeSupporter: 'Optimistic Supporter',
-          presetDescArchetypeSupporter: '5 emotions: joy, interest, relief, awe, pride. Active listener, defuses tension, praises others.',
+           presetDescArchetypeSupporter: '5 emotions: joy, interest, relief, awe, pride. Active listener, defuses tension, praises others.',
 
-        // Curriculum categories
+           // Juvenile police archetypes
+           presetArchetypeRunaway: 'Runaway Youth',
+           presetDescArchetypeRunaway: '6 emotions: fear, anxiety, determination, loneliness, suspicion, relief. Street experience, distrustful.',
+           presetArchetypeVictim: 'Bullying Victim',
+           presetDescArchetypeVictim: '6 emotions: fear, anxiety, shame, sadness, loneliness, confusion. Depressed, awaiting help.',
+           presetArchetypeManipulator: 'Manipulator',
+           presetDescArchetypeManipulator: '6 emotions: manipulative, deceit, suspicion, shame, guilt, narcissism. Controls others, lies.',
+           presetArchetypeAggressor: 'Aggressor',
+           presetDescArchetypeAggressor: '6 emotions: anger, hatred, contempt, disgust, predatory, frustration. Conflict-prone, threatening.',
+           presetArchetypeAnxious: 'Anxious Teen',
+           presetDescArchetypeAnxious: '6 emotions: anxiety, fear, confusion, suspicion, despair, shame. Constant tension.',
+           presetArchetypeResilient: 'Resilient',
+           presetDescArchetypeResilient: '6 emotions: determination, fearlessness, pride, joy, relief, interest. Adaptive, optimistic.',
+
+         // Curriculum categories
       categoryAcademy: 'Academy · Level 1',
       categoryField: 'Field Training · Level 2',
       categoryExpert: 'Expert · Level 3',
@@ -455,9 +469,23 @@ export const translations = {
            presetArchetypeAnalyst: 'Тревожный аналитик',
            presetDescArchetypeAnalyst: '5 эмоций: тревога, подозрение, дезорганизация, страх, интерес. Беспокоится, многие сценарии, ориентирован на детали.',
            presetArchetypeSupporter: 'Оптимист-поддержка',
-           presetDescArchetypeSupporter: '5 эмоций: радость, интерес, облегчение, восторг, гордость. Активное слушание, снимает напряжение, похвала.',
+            presetDescArchetypeSupporter: '5 эмоций: радость, интерес, облегчение, восторг, гордость. Активное слушание, снимает напряжение, похвала.',
 
-          // Curriculum categories
+            // Juvenile police archetypes
+            presetArchetypeRunaway: 'Сбежавший подросток',
+            presetDescArchetypeRunaway: '6 эмоций: страх, тревога, решительность, одиночество, подозрительность, облегчение. Уличный опыт, не доверяет.',
+            presetArchetypeVictim: 'Жертва буллинга',
+            presetDescArchetypeVictim: '6 эмоций: страх, тревога, стыд, грусть, одиночество, дезорганизация. Подавлен, ожидает помощи.',
+            presetArchetypeManipulator: 'Манипулятор',
+            presetDescArchetypeManipulator: '6 эмоций: манипулятивность, обман, подозрительность, стыд, вина, нарциссизм. Контролируетothers, лжет.',
+            presetArchetypeAggressor: 'Агрессор',
+            presetDescArchetypeAggressor: '6 эмоций: гнев, ненависть, презрение, отвращение, хищность, раздражение. Конфликтен, угрожает.',
+            presetArchetypeAnxious: 'Тревожный подросток',
+            presetDescArchetypeAnxious: '6 эмоций: тревога, страх, дезорганизация, подозрительность, отчаяние, стыд. Постоянное напряжение.',
+            presetArchetypeResilient: 'Устойчивый',
+            presetDescArchetypeResilient: '6 эмоций: решимость, бесстрашие, гордость, радость, облегчение, интерес. Адаптивен, optimistic.',
+
+           // Curriculum categories
        categoryAcademy: 'Академия · Уровень 1',
        categoryField: 'Полевая практика · Уровень 2',
        categoryExpert: 'Экспертный · Уровень 3',
@@ -672,9 +700,23 @@ export const translations = {
         presetArchetypeAnalyst: 'Analista Ansioso',
         presetDescArchetypeAnalyst: '5 emociones: ansiedad, sospecha, confusión, miedo, interés. Preocupado, muchos escenarios, orientado a detalles.',
         presetArchetypeSupporter: 'Apoyo Optimista',
-        presetDescArchetypeSupporter: '5 emociones: alegría, interés, alivio, asombro, orgullo. Escucha activa, difunde tensión, elogia.',
+         presetDescArchetypeSupporter: '5 emociones: alegría, interés, alivio, asombro, orgullo. Escucha activa, difunde tensión, elogia.',
 
-        // Curriculum category labels
+         // Juvenile police archetypes
+         presetArchetypeRunaway: 'Joven Fugitivo',
+         presetDescArchetypeRunaway: '6 emociones: miedo, ansiedad, determinación, soledad, sospecha, alivio. Experiencia callejera, desconfianza.',
+         presetArchetypeVictim: 'Víctima de Bullying',
+         presetDescArchetypeVictim: '6 emociones: miedo, ansiedad, vergüenza, tristeza, soledad, confusión. Deprimido, esperando ayuda.',
+         presetArchetypeManipulator: 'Manipulador',
+         presetDescArchetypeManipulator: '6 emociones: manipulativo, engaño, sospecha, vergüenza, culpa, narcisismo. Controla a otros, miente.',
+         presetArchetypeAggressor: 'Agresor',
+         presetDescArchetypeAggressor: '6 emociones: ira, odio, desprecio, asco, depredador, frustración. Propenso a conflictos, amenazante.',
+         presetArchetypeAnxious: 'Adolescente Ansioso',
+         presetDescArchetypeAnxious: '6 emociones: ansiedad, miedo, confusión, sospecha, desesperación, vergüenza. Tensión constante.',
+         presetArchetypeResilient: 'Resiliente',
+         presetDescArchetypeResilient: '6 emociones: determinación, intrepidez, orgullo, alegría, alivio, interés. Adaptable, optimista.',
+
+         // Curriculum category labels
       categoryAcademy: 'Academia · Nivel 1',
       categoryField: 'Práctica de campo · Nivel 2',
       categoryExpert: 'Experto · Nivel 3',

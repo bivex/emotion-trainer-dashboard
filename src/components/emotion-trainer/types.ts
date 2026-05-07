@@ -59,7 +59,9 @@ export type EmotionPreset =
   // Learning profiles — emotion families for discrimination training
   | "profile_joy" | "profile_sadness" | "profile_aggression" | "profile_fear" | "profile_selfesteem" | "profile_coldness" | "profile_cognitive"
   // Archetype profiles — character templates for podcast/storytelling
-  | "archetype_leader" | "archetype_strategist" | "archetype_romantic" | "archetype_rebel" | "archetype_predator" | "archetype_analyst" | "archetype_supporter";
+  | "archetype_leader" | "archetype_strategist" | "archetype_romantic" | "archetype_rebel" | "archetype_predator" | "archetype_analyst" | "archetype_supporter"
+  // Juvenile police archetypes
+  | "archetype_runaway" | "archetype_victim" | "archetype_manipulator" | "archetype_aggressor" | "archetype_anxious" | "archetype_resilient";
 
 export const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
   all: ALL_EMOTIONS,
@@ -167,6 +169,14 @@ export const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
   archetype_predator: ["deceit", "manipulative", "shallow_affect", "remorselessness", "narcissism"] as const,
   archetype_analyst: ["anxiety", "suspicion", "confusion", "fear", "interest"] as const,
   archetype_supporter: ["joy", "interest", "relief", "awe", "pride"] as const,
+
+  // === ARCHETYPE PROFILES — Juvenile police context ===
+  archetype_runaway: ["fear", "anxiety", "determination", "loneliness", "suspicion", "relief"] as const,
+  archetype_victim: ["fear", "anxiety", "shame", "sadness", "loneliness", "confusion"] as const,
+  archetype_manipulator: ["manipulative", "deceit", "suspicion", "shame", "guilt", "narcissism"] as const,
+  archetype_aggressor: ["anger", "hatred", "contempt", "disgust", "predatory", "frustration"] as const,
+  archetype_anxious: ["anxiety", "fear", "confusion", "suspicion", "despair", "shame"] as const,
+  archetype_resilient: ["determination", "fearlessness", "pride", "joy", "relief", "interest"] as const,
 
   custom: ALL_EMOTIONS,
 };
