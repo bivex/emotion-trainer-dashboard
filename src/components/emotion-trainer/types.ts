@@ -1,45 +1,53 @@
 import { EmotionImage } from "../../api/images";
 
 export const ALL_EMOTIONS = [
-  "amusement",
-  "anger",
-  "anxiety",
-  "awe",
-  "callousness",
-  "confusion",
-  "contempt",
-  "deceit",
-  "despair",
-  "determination",
-  "disappointment",
-  "disgust",
-  "embarrassment",
-  "envy",
-  "excitement",
-  "fear",
-  "fearlessness",
-  "frustration",
-  "guilt",
-  "hatred",
-  "interest",
-  "jealousy",
+  // === BASIC 10 (универсальные/фундаментальные) ===
   "joy",
-  "loneliness",
-  "manipulative",
-  "narcissism",
-  "neutral",
-  "predatory",
-  "pride",
+  "sadness",
+  "anger",
+  "fear",
+  "surprise",
+  "disgust",
+  "contempt",
+  "anxiety",
+  "shame",
+  "guilt",
+
+  // === EXTENDED 20 (промежуточная сложность) ===
+  "excitement",
+  "embarrassment",
   "regret",
   "relief",
-  "remorselessness",
-  "resentment",
-  "sadness",
-  "shallow_affect",
-  "shame",
-  "sociopathy",
-  "surprise",
   "suspicion",
+  "confusion",
+  "disappointment",
+  "frustration",
+  "resentment",
+  "envy",
+
+  // === ADVANCED 30 (специализированные/фореnsic niche) ===
+  "jealousy",
+  "amusement",
+  "interest",
+  "pride",
+  "determination",
+  "awe",
+  "loneliness",
+  "fearlessness",
+  "despair",
+  "hatred",
+
+  // === ПАТОЛОГИЧЕСКИЕ / ПОВЕДЕНЧЕСКИЕ ИНДИКАТОРЫ ===
+  "manipulative",
+  "narcissism",
+  "predatory",
+  "callousness",
+  "remorselessness",
+  "shallow_affect",
+  "sociopathy",
+  "deceit",
+
+  "neutral",
 ] as const;
 
 export type EmotionKey = (typeof ALL_EMOTIONS)[number];
@@ -54,72 +62,93 @@ export type EmotionPreset =
 export const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
   all: ALL_EMOTIONS,
   basic: [
-    "joy", "sadness", "anger", "fear", "surprise", "disgust", "guilt", "shame", "suspicion", "neutral"
+    "joy", "sadness", "anger", "fear", "surprise", "disgust", "contempt", "anxiety", "shame", "guilt"
   ] as const,
   extended: [
-    "joy", "sadness", "anger", "fear", "surprise", "disgust", "guilt", "shame", "suspicion", "neutral",
-    "amusement", "excitement", "pride", "relief", "anxiety", "confusion", "contempt", "embarrassment", "envy", "frustration"
+    "joy", "sadness", "anger", "fear", "surprise", "disgust", "contempt", "anxiety", "shame", "guilt",
+    "excitement", "embarrassment", "regret", "relief", "suspicion", "confusion", "disappointment", "frustration", "resentment", "envy"
   ] as const,
   advanced: [
-    "joy", "sadness", "anger", "fear", "surprise", "disgust", "guilt", "shame", "suspicion", "neutral",
-    "amusement", "excitement", "pride", "relief", "anxiety", "confusion", "contempt", "embarrassment", "envy", "frustration",
-    "disappointment", "regret", "interest", "determination", "loneliness", "jealousy"
+    "joy", "sadness", "anger", "fear", "surprise", "disgust", "contempt", "anxiety", "shame", "guilt",
+    "excitement", "embarrassment", "regret", "relief", "suspicion", "confusion", "disappointment", "frustration", "resentment", "envy",
+    "jealousy", "amusement", "interest", "pride", "determination", "awe", "loneliness", "fearlessness", "despair", "hatred"
   ] as const,
+
+  // === SPECIALIZATION: BEHAVIORAL ANALYSIS ===
   personality: [
-    "joy", "anger", "fear", "sadness", "disgust", "surprise", "shame", "guilt", "pride", "embarrassment",
-    "anxiety", "frustration", "contempt", "envy", "jealousy", "suspicion", "interest", "determination", "loneliness",
-    "amusement", "excitement", "relief"
+    "shame", "guilt", "pride", "embarrassment", "narcissism",
+    "contempt", "disgust", "resentment", "envy", "jealousy",
+    "sociopathy", "callousness", "remorselessness", "shallow_affect",
+    "loneliness", "awe", "interest", "amusement", "determination",
+    "fearlessness", "predatory", "manipulative"
   ] as const,
   social: [
-    "joy", "amusement", "excitement", "pride", "relief", "sadness", "anger", "fear", "anxiety", "shame",
-    "guilt", "embarrassment", "loneliness", "envy", "jealousy", "contempt", "suspicion", "disgust", "deceit",
-    "manipulative", "narcissism", "callousness"
+    "embarrassment", "shame", "guilt", "jealousy", "envy",
+    "resentment", "pride", "contempt", "disgust", "suspicion",
+    "excitement", "amusement", "interest", "awe", "loneliness",
+    "relief", "frustration", "disappointment", "confusion", "anxiety",
+    "fear", "surprise"
   ] as const,
+   behavioral: [
+     "predatory", "manipulative", "narcissism", "callousness", "remorselessness",
+     "shallow_affect", "sociopathy", "deceit", "suspicion", "fearlessness",
+     "determination", "anger", "frustration", "contempt"
+   ] as const,
+
+  // === SPECIALIZATION: PSYCHOLOGICAL STATES ===
   cognitive: [
-    "surprise", "confusion", "interest", "disappointment", "regret", "determination", "suspicion", "awe"
+    "surprise", "confusion", "interest", "disappointment", "regret",
+    "determination", "awe", "suspicion"
   ] as const,
   affective: [
-    "joy", "excitement", "pride", "relief", "amusement", "sadness", "anger", "fear", "disgust", "despair",
-    "guilt", "shame", "embarrassment", "anxiety", "frustration", "disappointment", "regret", "loneliness"
+    "joy", "sadness", "anger", "fear", "disgust", "excitement",
+    "relief", "pride", "shame", "guilt", "envy", "jealousy",
+    "loneliness", "despair", "hatred", "awe", "amusement", "embarrassment"
   ] as const,
-  behavioral: [
-    "predatory", "manipulative", "narcissism", "callousness", "remorselessness", "shallow_affect", "sociopathy",
-    "deceit", "suspicion", "fearlessness", "determination", "anger", "frustration", "contempt"
-  ] as const,
+
+  // === SPECIALIZATION: THREAT ASSESSMENT ===
   threat_level1: [
-    "anxiety", "suspicion", "frustration", "disappointment", "embarrassment", "envy", "jealousy", "contempt", "confusion"
+    "anxiety", "suspicion", "confusion", "embarrassment", "disappointment",
+    "frustration", "envy", "jealousy", "loneliness"
   ] as const,
   threat_level2: [
-    "anger", "hatred", "resentment", "deceit", "manipulative", "narcissism", "callousness", "fearlessness", "predatory"
+    "anger", "fear", "disgust", "contempt", "hatred",
+    "resentment", "shame", "guilt", "despair"
   ] as const,
   threat_level3: [
-    "sociopathy", "remorselessness", "shallow_affect", "despair"
+    "predatory", "callousness", "remorselessness", "sociopathy"
   ] as const,
+
+  // === SPECIALIZATION: DANGEROUS PATTERNS ===
   manipulation: [
-    "deceit", "manipulative", "narcissism", "sociopathy", "shame", "guilt", "embarrassment", "fear", "anxiety",
-    "suspicion", "callousness", "remorselessness"
+    "deceit", "manipulative", "narcissism", "sociopathy", "shame", "guilt",
+    "embarrassment", "fear", "anxiety", "suspicion", "callousness", "remorselessness"
   ] as const,
   deception: [
-    "deceit", "suspicion", "fear", "anxiety", "guilt", "shame", "embarrassment", "pride", "surprise", "confusion",
-    "disgust", "anger"
+    "deceit", "suspicion", "fear", "anxiety", "guilt", "shame", "embarrassment",
+    "pride", "surprise", "confusion", "disgust", "anger"
   ] as const,
   aggression: [
-    "anger", "hatred", "frustration", "contempt", "disgust", "predatory", "determination", "fearlessness",
-    "sociopathy", "callousness", "remorselessness"
+    "anger", "hatred", "frustration", "contempt", "disgust", "predatory",
+    "determination", "fearlessness", "sociopathy", "callousness", "remorselessness"
   ] as const,
   distress: [
-    "anxiety", "fear", "sadness", "despair", "guilt", "shame", "embarrassment", "loneliness", "disappointment",
-    "regret", "frustration", "confusion", "suspicion"
+    "anxiety", "fear", "despair", "shame", "guilt",
+    "embarrassment", "disappointment", "frustration",
+    "loneliness", "envy", "jealousy", "confusion", "suspicion"
   ] as const,
   antisocial: [
-    "sociopathy", "narcissism", "callousness", "remorselessness", "shallow_affect", "predatory", "manipulative",
-    "deceit", "fearlessness"
+    "sociopathy", "callousness", "remorselessness", "shallow_affect",
+    "predatory", "manipulative", "deceit", "narcissism", "contempt"
   ] as const,
-  manipulation_core: ["manipulative", "deceit", "shame", "guilt"] as const,
-  deception_core: ["deceit", "suspicion", "fear", "anxiety"] as const,
-  aggression_core: ["anger", "hatred", "frustration", "contempt"] as const,
-  stress_core: ["anxiety", "fear", "sadness", "despair"] as const,
-  antisocial_core: ["sociopathy", "narcissism", "callousness", "remorselessness"] as const,
+
+  // === QUICK REFERENCE: CORE PATTERNS ===
+  manipulation_core: ["manipulative", "deceit", "suspicion", "confusion"] as const,
+  deception_core: ["deceit", "shame", "guilt", "anxiety"] as const,
+  aggression_core: ["anger", "hatred", "contempt", "frustration"] as const,
+  stress_core: ["anxiety", "fear", "frustration", "disappointment"] as const,
+  antisocial_core: ["sociopathy", "callousness", "remorselessness", "shallow_affect"] as const,
+
   custom: ALL_EMOTIONS,
 };
 
