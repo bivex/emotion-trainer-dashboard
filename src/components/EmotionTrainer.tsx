@@ -80,11 +80,12 @@ const ALL_EMOTIONS = [
 type EmotionKey = (typeof ALL_EMOTIONS)[number];
 
 // Emotion presets
-type EmotionPreset = 
-  | "all" | "basic" | "extended" | "advanced" | "custom" 
-  | "personality" | "social" | "cognitive" | "affective" | "behavioral" 
-  | "threat_level1" | "threat_level2" | "threat_level3" 
-  | "manipulation" | "deception" | "aggression" | "distress" | "antisocial";
+type EmotionPreset =
+  | "all" | "basic" | "extended" | "advanced" | "custom"
+  | "personality" | "social" | "cognitive" | "affective" | "behavioral"
+  | "threat_level1" | "threat_level2" | "threat_level3"
+  | "manipulation" | "deception" | "aggression" | "distress" | "antisocial"
+  | "manipulation_core" | "deception_core" | "aggression_core" | "stress_core" | "antisocial_core";
 
 const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
   all: ALL_EMOTIONS,
@@ -341,20 +342,26 @@ const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
     "confusion",
     "suspicion",
   ] as const,
-  // Профилирование antisocial behavior
-  antisocial: [
-    "sociopathy",
-    "narcissism",
-    "callousness",
-    "remorselessness",
-    "shallow_affect",
-    "predatory",
-    "manipulative",
-    "deceit",
-    "fearlessness",
-  ] as const,
-  custom: ALL_EMOTIONS,
-};
+   // Профилирование antisocial behavior
+   antisocial: [
+     "sociopathy",
+     "narcissism",
+     "callousness",
+     "remorselessness",
+     "shallow_affect",
+     "predatory",
+     "manipulative",
+     "deceit",
+     "fearlessness",
+   ] as const,
+   //Core bad emotion profiling lists (3-4 emotions each)
+   manipulation_core: ["manipulative", "deceit", "shame", "guilt"] as const,
+   deception_core: ["deceit", "suspicion", "fear", "anxiety"] as const,
+   aggression_core: ["anger", "hatred", "frustration", "contempt"] as const,
+   stress_core: ["anxiety", "fear", "sadness", "despair"] as const,
+   antisocial_core: ["sociopathy", "narcissism", "callousness", "remorselessness"] as const,
+   custom: ALL_EMOTIONS,
+ };
 
 // Mapping preset keys to translation keys
 const PRESET_LABEL_KEYS: Record<EmotionPreset, string> = {
@@ -366,17 +373,23 @@ const PRESET_LABEL_KEYS: Record<EmotionPreset, string> = {
   social: "presetSocial",
   cognitive: "presetCognitive",
   affective: "presetAffective",
-  behavioral: "presetBehavioral",
-  // Dangerous profiling
-  threat_level1: "presetThreat1",
-  threat_level2: "presetThreat2",
-  threat_level3: "presetThreat3",
-  manipulation: "presetManipulation",
-  deception: "presetDeception",
-  aggression: "presetAggression",
-  distress: "presetDistress",
-  antisocial: "presetAntisocial",
-  custom: "presetCustom",
+   behavioral: "presetBehavioral",
+   // Dangerous profiling
+   threat_level1: "presetThreat1",
+   threat_level2: "presetThreat2",
+   threat_level3: "presetThreat3",
+   manipulation: "presetManipulation",
+   deception: "presetDeception",
+   aggression: "presetAggression",
+   distress: "presetDistress",
+   antisocial: "presetAntisocial",
+   // Core bad emotion lists
+   manipulation_core: "presetManipulationCore",
+   deception_core: "presetDeceptionCore",
+   aggression_core: "presetAggressionCore",
+   stress_core: "presetStressCore",
+   antisocial_core: "presetAntisocialCore",
+   custom: "presetCustom",
 };
 
 // Fisher-Yates shuffle
@@ -995,8 +1008,14 @@ const EmotionTrainer: React.FC = () => {
                             deception: t.presetDescDeception || '12 emotions associated with dishonesty and concealment',
                             aggression: t.presetDescAggression || '11 emotions signaling hostile intent or violence',
                             distress: t.presetDescDistress || '13 emotions indicating heightened anxiety or suffering',
-                            antisocial: t.presetDescAntisocial || '9 emotions characteristic of antisocial patterns',
-                            custom: t.presetDescCustom || 'Your personalized selection',
+                             antisocial: t.presetDescAntisocial || '9 emotions characteristic of antisocial patterns',
+                             // Core bad emotion lists (3-4 emotions each)
+                             manipulation_core: t.presetDescManipulationCore || '4 core manipulation emotions',
+                             deception_core: t.presetDescDeceptionCore || '4 core deception emotions',
+                             aggression_core: t.presetDescAggressionCore || '4 core aggression emotions',
+                             stress_core: t.presetDescStressCore || '4 core stress-related emotions',
+                             antisocial_core: t.presetDescAntisocialCore || '4 core antisocial personality emotions',
+                             custom: t.presetDescCustom || 'Your personalized selection',
                           };
                           return descriptions[emotionPreset] || '';
                         })()}
