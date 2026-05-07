@@ -57,7 +57,9 @@ export type EmotionPreset =
   | "manipulation" | "deception" | "aggression" | "distress" | "antisocial"
   | "manipulation_core" | "deception_core" | "aggression_core" | "stress_core" | "antisocial_core"
   // Learning profiles — emotion families for discrimination training
-  | "profile_joy" | "profile_sadness" | "profile_aggression" | "profile_fear" | "profile_selfesteem" | "profile_coldness" | "profile_cognitive";
+  | "profile_joy" | "profile_sadness" | "profile_aggression" | "profile_fear" | "profile_selfesteem" | "profile_coldness" | "profile_cognitive"
+  // Archetype profiles — character templates for podcast/storytelling
+  | "archetype_leader" | "archetype_strategist" | "archetype_romantic" | "archetype_rebel" | "archetype_predator" | "archetype_analyst" | "archetype_supporter";
 
 export const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
   all: ALL_EMOTIONS,
@@ -156,6 +158,15 @@ export const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
   profile_selfesteem: ["guilt", "shame", "embarrassment", "pride", "narcissism"] as const,
   profile_coldness: ["callousness", "manipulative", "deceit", "remorselessness", "shallow_affect", "sociopathy", "predatory"] as const,
   profile_cognitive: ["surprise", "confusion", "determination", "fearlessness", "neutral"] as const,
+
+  // === ARCHETYPE PROFILES — character templates for podcast/storytelling ===
+  archetype_leader: ["determination", "excitement", "pride", "anger", "fearlessness"] as const,
+  archetype_strategist: ["neutral", "interest", "suspicion", "manipulative", "callousness"] as const,
+  archetype_romantic: ["sadness", "loneliness", "disappointment", "regret", "awe"] as const,
+  archetype_rebel: ["anger", "excitement", "frustration", "contempt", "fearlessness"] as const,
+  archetype_predator: ["deceit", "manipulative", "shallow_affect", "remorselessness", "narcissism"] as const,
+  archetype_analyst: ["anxiety", "suspicion", "confusion", "fear", "interest"] as const,
+  archetype_supporter: ["joy", "interest", "relief", "awe", "pride"] as const,
 
   custom: ALL_EMOTIONS,
 };

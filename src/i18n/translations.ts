@@ -189,10 +189,26 @@ export const translations = {
          presetDescProfileSelfesteem: '5 emotions: guilt, shame, embarrassment, pride, narcissism',
          presetProfileColdness: 'Coldness & Antisociality',
          presetDescProfileColdness: '7 emotions: callousness, manipulative, deceit, remorselessness, shallow_affect, sociopathy, predatory',
-         presetProfileCognitive: 'Cognitive States',
-         presetDescProfileCognitive: '5 emotions: surprise, confusion, determination, fearlessness, neutral',
+          presetProfileCognitive: 'Cognitive States',
+          presetDescProfileCognitive: '5 emotions: surprise, confusion, determination, fearlessness, neutral',
 
-       // Curriculum categories
+          // Archetype profiles (character templates for podcast/storytelling)
+          presetArchetypeLeader: 'Burning Leader',
+          presetDescArchetypeLeader: '5 emotions: determination, excitement, pride, anger, fearlessness. Confident, pushes forward, anger at resistance.',
+          presetArchetypeStrategist: 'Cold Strategist',
+          presetDescArchetypeStrategist: '5 emotions: neutral, interest, suspicion, manipulative, callousness. Calm, controlled, minimal emotions.',
+          presetArchetypeRomantic: 'Wounded Romantic',
+          presetDescArchetypeRomantic: '4 emotions: sadness, loneliness, disappointment, regret. Longing, sensitive to rejection.',
+          presetArchetypeRebel: 'Impulsive Rebel',
+          presetDescArchetypeRebel: '5 emotions: anger, excitement, frustration, contempt, fearlessness. Interrupts, emotional spikes, defiant.',
+          presetArchetypePredator: 'Social Predator',
+          presetDescArchetypePredator: '5 emotions: deceit, manipulative, shallow_affect, remorselessness, narcissism. Charming, manipulative, no empathy.',
+          presetArchetypeAnalyst: 'Anxious Analyst',
+          presetDescArchetypeAnalyst: '5 emotions: anxiety, suspicion, confusion, fear, interest. Worries, many scenarios, detail-oriented.',
+          presetArchetypeSupporter: 'Optimistic Supporter',
+          presetDescArchetypeSupporter: '5 emotions: joy, interest, relief, awe, pride. Active listener, defuses tension, praises others.',
+
+        // Curriculum categories
       categoryAcademy: 'Academy · Level 1',
       categoryField: 'Field Training · Level 2',
       categoryExpert: 'Expert · Level 3',
@@ -202,10 +218,11 @@ export const translations = {
       categoryPatterns: 'Specialization · Dangerous Patterns',
       categoryCore: 'Quick Reference · Core Patterns',
        categoryPsychological: 'Specialization · Psychological States',
-       categoryCustom: 'Custom Settings',
-       categoryLearning: 'Learning Profiles · Emotion Families',
+        categoryCustom: 'Custom Settings',
+        categoryLearning: 'Learning Profiles · Emotion Families',
+        categoryArchetypes: 'Character Archetypes',
 
-       // Additional UI keys
+        // Additional UI keys
       selectEmotion: 'Select {emotion} emotion',
       logoAlt: 'Emotion Trainer logo',
       close: 'Close',
@@ -421,10 +438,26 @@ export const translations = {
          presetDescProfileSelfesteem: '5 эмоций: вина, стыд, смущение, гордость, нарциссизм',
          presetProfileColdness: 'Холодность и антисоциальность',
          presetDescProfileColdness: '7 эмоций: черствость, манипулятивность, обман, бесчувственность, поверхностность, социопатия, хищность',
-         presetProfileCognitive: 'Когнитивные состояния',
-         presetDescProfileCognitive: '5 эмоций: удивление, дезорганизация, решимость, бесстрашие, нейтральный',
+           presetProfileCognitive: 'Когнитивные состояния',
+           presetDescProfileCognitive: '5 эмоций: удивление, дезорганизация, решимость, бесстрашие, нейтральный',
 
-        // Curriculum categories
+           // Archetype profiles (character templates for podcast/storytelling)
+           presetArchetypeLeader: 'Горящий лидер',
+           presetDescArchetypeLeader: '5 эмоций: решимость, возбуждение, гордость, гнев, бесстрашие. Уверенный, движется вперед, гнев при сопротивлении.',
+           presetArchetypeStrategist: 'Холодный стратег',
+           presetDescArchetypeStrategist: '5 эмоций: нейтральность, интерес, подозрение, манипулятивность, черствость. Споен, контролирует, минимум эмоций.',
+           presetArchetypeRomantic: 'Раненый романтик',
+           presetDescArchetypeRomantic: '4 эмоции: грусть, одиночество, разочарование, сожаление. Тоска, чувствителен к отвержению.',
+           presetArchetypeRebel: 'Импульсивный бунтарь',
+           presetDescArchetypeRebel: '5 эмоций: гнев, возбуждение, раздражение, презрение, бесстрашие. Перебивает, эмоциональные всплески, defiant.',
+           presetArchetypePredator: 'Социальный хищник',
+           presetDescArchetypePredator: '5 эмоций: обман, манипулятивность, поверхностность, бесчувственность, нарциссизм. Обаятелен, манипулирует, без эмпатии.',
+           presetArchetypeAnalyst: 'Тревожный аналитик',
+           presetDescArchetypeAnalyst: '5 эмоций: тревога, подозрение, дезорганизация, страх, интерес. Беспокоится, многие сценарии, ориентирован на детали.',
+           presetArchetypeSupporter: 'Оптимист-поддержка',
+           presetDescArchetypeSupporter: '5 эмоций: радость, интерес, облегчение, восторг, гордость. Активное слушание, снимает напряжение, похвала.',
+
+          // Curriculum categories
        categoryAcademy: 'Академия · Уровень 1',
        categoryField: 'Полевая практика · Уровень 2',
        categoryExpert: 'Экспертный · Уровень 3',
@@ -434,13 +467,12 @@ export const translations = {
        categoryPatterns: 'Специализация · Опасные паттерны',
        categoryCore: 'Быстрый справочник · Ключевые паттерны',
        categoryPsychological: 'Специализация · Психологические состояния',
-       categoryCustom: 'Пользовательские',
-       categoryLearning: 'Обучение · Семьи эмоций',
-
-
+        categoryCustom: 'Пользовательские',
+        categoryLearning: 'Обучение · Семьи эмоций',
+        categoryArchetypes: 'Архетипы персонажей',
       },
 
-   es: {
+    es: {
      // Header
      appTitle: 'MATRIZ DE EMOCIONES',
      title: 'ESCÁNER',
@@ -621,12 +653,28 @@ export const translations = {
        presetDescProfileFear: '5 emociones: miedo, ansiedad, sospecha, celos, envidia',
        presetProfileSelfesteem: 'Autoestima y Yo Social',
        presetDescProfileSelfesteem: '5 emociones: culpa, vergüenza, ansiedad, orgullo, narcisismo',
-       presetProfileColdness: 'Frialdad y Antisocialidad',
-       presetDescProfileColdness: '7 emociones: indiferencia, manipulación, engaño, sin remordimientos, superficialidad, sociopatía, depredación',
-       presetProfileCognitive: 'Estados Cognitivos',
-       presetDescProfileCognitive: '5 emociones: sorpresa, confusión, determinación, intrepidez, neutral',
+        presetProfileColdness: 'Frialdad y Antisocialidad',
+        presetDescProfileColdness: '7 emociones: indiferencia, manipulación, engaño, sin remordimientos, superficialidad, sociopatía, depredación',
+        presetProfileCognitive: 'Estados Cognitivos',
+        presetDescProfileCognitive: '5 emociones: sorpresa, confusión, determinación, intrepidez, neutral',
 
-       // Curriculum category labels
+        // Archetype profiles
+        presetArchetypeLeader: 'Líder Ardiente',
+        presetDescArchetypeLeader: '5 emociones: determinación, excitación, orgullo, ira, intrepidez. Confiado, avanza, ira ante resistencia.',
+        presetArchetypeStrategist: 'Estrategista Frío',
+        presetDescArchetypeStrategist: '5 emociones: neutral, interés, sospecha, manipulación, indiferencia. Calmado, controlado, emociones mínimas.',
+        presetArchetypeRomantic: 'Romántico Herido',
+        presetDescArchetypeRomantic: '4 emociones: tristeza, soledad, decepción, arrepentimiento. Nostálgico, sensible al rechazo.',
+        presetArchetypeRebel: 'Rebelde Impulsivo',
+        presetDescArchetypeRebel: '5 emociones: ira, excitación, frustración, desprecio, intrepidez. Interrumpe, picos emocionales, desafiante.',
+        presetArchetypePredator: 'Depredador Social',
+        presetDescArchetypePredator: '5 emociones: engaño, manipulación, superficialidad, sin remordimientos, narcisismo. Encantador, manipulador, sin empatía.',
+        presetArchetypeAnalyst: 'Analista Ansioso',
+        presetDescArchetypeAnalyst: '5 emociones: ansiedad, sospecha, confusión, miedo, interés. Preocupado, muchos escenarios, orientado a detalles.',
+        presetArchetypeSupporter: 'Apoyo Optimista',
+        presetDescArchetypeSupporter: '5 emociones: alegría, interés, alivio, asombro, orgullo. Escucha activa, difunde tensión, elogia.',
+
+        // Curriculum category labels
       categoryAcademy: 'Academia · Nivel 1',
       categoryField: 'Práctica de campo · Nivel 2',
       categoryExpert: 'Experto · Nivel 3',
@@ -636,10 +684,11 @@ export const translations = {
       categoryPatterns: 'Especialización · Patrones peligrosos',
       categoryCore: 'Referencia rápida · Patrones clave',
        categoryPsychological: 'Especialización · Estados psicológicos',
-       categoryCustom: 'Configuración personalizada',
-       categoryLearning: 'Perfiles de aprendizaje · Familias de emociones',
+        categoryCustom: 'Configuración personalizada',
+        categoryLearning: 'Perfiles de aprendizaje · Familias de emociones',
+        categoryArchetypes: 'Arquetipos de personajes',
 
-       // Additional UI keys
+        // Additional UI keys
       emotionPresetLabel: 'Preestablecido de emociones',
       selectEmotion: 'Seleccionar emoción {emotion}',
       logoAlt: 'Logotipo del entrenador de emociones',
