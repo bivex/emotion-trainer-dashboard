@@ -192,6 +192,35 @@ export const useEmotionTrainer = () => {
     setEmotionStats(createEmptyEmotionStats());
   }, []);
 
+  const resetGoodStats = useCallback(() => {
+    setScore((prev) => ({ correct: 0, total: prev.total - prev.correct }));
+    setEmotionStats((prev) => {
+      const next = { ...prev };
+      Object.keys(next).forEach((key) => {
+        next[key] = {
+          correct: 0,
+          total: next[key].total - next[key].correct,
+        };
+      });
+      return next;
+    });
+  }, []);
+
+  const resetBadStats = useCallback(() => {
+    setScore((prev) => ({ correct: prev.correct, total: prev.correct }));
+    setEmotionStats((prev) => {
+      const next = { ...prev };
+      Object.keys(next).forEach((key) => {
+        next[key] = {
+          correct: next[key].correct,
+          total: next[key].correct,
+        };
+      });
+      return next;
+    });
+    setConfusionMatrix(createEmptyConfusionMatrix());
+  }, []);
+
   const checkAnswer = useCallback((emotion: string) => {
     // Prevent multiple clicks for the same image
     if (!currentImage || showResult) return;
@@ -299,6 +328,8 @@ export const useEmotionTrainer = () => {
     checkAnswer,
     loadNextImage,
     resetStats,
+    resetGoodStats,
+    resetBadStats,
     getEmotionAccuracy,
     getEmotionTranslation,
     getWeakEmotions,

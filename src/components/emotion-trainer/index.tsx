@@ -33,6 +33,8 @@ const EmotionTrainer: React.FC = () => {
     checkAnswer,
     loadNextImage,
     resetStats,
+    resetGoodStats,
+    resetBadStats,
     getEmotionAccuracy,
     getEmotionTranslation,
     getWeakEmotions,
@@ -76,7 +78,11 @@ const EmotionTrainer: React.FC = () => {
                 setTrainingMode={setTrainingMode}
                 weakEmotions={getWeakEmotions()}
               />
-              <ResetControls resetStats={resetStats} />
+              <ResetControls 
+                resetStats={resetStats} 
+                resetGoodStats={resetGoodStats}
+                resetBadStats={resetBadStats}
+              />
             </div>
 
             {/* Center Panel */}
