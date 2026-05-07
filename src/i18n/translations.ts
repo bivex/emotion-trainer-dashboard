@@ -171,12 +171,28 @@ export const translations = {
         presetDescAggressionCore: '4 core aggression emotions',
         presetStressCore: 'Stress Core',
         presetDescStressCore: '4 core stress-related emotions',
-        presetAntisocialCore: 'Antisocial Core',
-        presetDescAntisocialCore: '4 core antisocial personality emotions',
-        presetCustom: 'Custom',
-        presetDescCustom: 'Your personalized selection',
+         presetAntisocialCore: 'Antisocial Core',
+         presetDescAntisocialCore: '4 core antisocial personality emotions',
+         presetCustom: 'Custom',
+         presetDescCustom: 'Your personalized selection',
 
-      // Curriculum categories
+         // Learning profiles (7 emotion families)
+         presetProfileJoy: 'Joy & Positive',
+         presetDescProfileJoy: '6 emotions: joy, amusement, excitement, awe, interest, relief',
+         presetProfileSadness: 'Sadness & Loss',
+         presetDescProfileSadness: '5 emotions: sadness, disappointment, regret, despair, loneliness',
+         presetProfileAggression: 'Aggression & Rejection',
+         presetDescProfileAggression: '5 emotions: anger, frustration, hatred, contempt, resentment',
+         presetProfileFear: 'Fear & Anxiety',
+         presetDescProfileFear: '5 emotions: fear, anxiety, suspicion, jealousy, envy',
+         presetProfileSelfesteem: 'Self-Esteem & Social Self',
+         presetDescProfileSelfesteem: '5 emotions: guilt, shame, embarrassment, pride, narcissism',
+         presetProfileColdness: 'Coldness & Antisociality',
+         presetDescProfileColdness: '7 emotions: callousness, manipulative, deceit, remorselessness, shallow_affect, sociopathy, predatory',
+         presetProfileCognitive: 'Cognitive States',
+         presetDescProfileCognitive: '5 emotions: surprise, confusion, determination, fearlessness, neutral',
+
+       // Curriculum categories
       categoryAcademy: 'Academy · Level 1',
       categoryField: 'Field Training · Level 2',
       categoryExpert: 'Expert · Level 3',
@@ -185,10 +201,11 @@ export const translations = {
       categoryThreat: 'Specialization · Threat Assessment',
       categoryPatterns: 'Specialization · Dangerous Patterns',
       categoryCore: 'Quick Reference · Core Patterns',
-      categoryPsychological: 'Specialization · Psychological States',
-      categoryCustom: 'Custom Settings',
+       categoryPsychological: 'Specialization · Psychological States',
+       categoryCustom: 'Custom Settings',
+       categoryLearning: 'Learning Profiles · Emotion Families',
 
-      // Additional UI keys
+       // Additional UI keys
       selectEmotion: 'Select {emotion} emotion',
       logoAlt: 'Emotion Trainer logo',
       close: 'Close',
@@ -381,32 +398,27 @@ export const translations = {
          presetStressCore: 'Стресс (ядро)',
          presetDescStressCore: '4 ключевые эмоции стресса',
          presetAntisocialCore: 'Антисоциальность (ядро)',
-         presetDescAntisocialCore: '4 ключевые черты антисоциальной личности',
+         presetDescAntisocialCore: '4 ключевые эмоции антисоциальной личности',
          presetCustom: 'Пользовательские',
          presetDescCustom: 'Ваш персональный набор',
 
-      // Additional UI keys
-      selectEmotion: 'Выбрать эмоцию {emotion}',
-      logoAlt: 'Логотип тренанера эмоций',
-      close: 'Закрыть',
-      neuralScanAlt: 'Нейронный скан: {emotion}',
-      seoTitle: 'Нейронный сканер эмоций - ИИ-тренажёр распознавания эмоций',
-      seoDescription: 'Продвинутая нейросеть для тренировки распознавания эмоций. Точный анализ выражений лица с помощью технологий искусственного интеллекта. Тренируйте умение распознавать радость, грусть, гнев, страх, удивление, отвращение, вину, стыд, подозрение и нейтральные выражения.',
-      seoKeywords: 'распознавание эмоций, анализ выражений лица, ИИ-тренажёр, нейронная сеть, детекция эмоций, микровыражения лица, тренировка эмоций, психология, машинное обучение, компьютерное зрение',
-      seoSiteName: 'Нейронный сканер эмоций',
-      seoTwitterHandle: '@emotion_scanner',
-      seoAuthor: 'Bivex',
-      seoSection: 'Технологии',
-      seoTags: ['ИИ', 'Распознавание эмоций', 'Тренировка', 'Нейронная сеть', 'Психология'],
-       seoFeatureList: [
-         'Распознавание эмоций в реальном времени',
-         'Анализ мимики',
-         'Тренировка нейронной сети',
-         'Интерактивный обучающий интерфейс',
-         'Многоязычная поддержка',
-         'Отслеживание прогресса',
-       ],
-       // Curriculum categories
+         // Профили обучения (7 семейств эмоций)
+         presetProfileJoy: 'Радость и позитив',
+         presetDescProfileJoy: '6 эмоций: радость, веселье, возбуждение, восторг, интерес, облегчение',
+         presetProfileSadness: 'Печаль и утрата',
+         presetDescProfileSadness: '5 эмоций: грусть, разочарование, сожаление, отчаяние, одиночество',
+         presetProfileAggression: 'Агрессия и отвержение',
+         presetDescProfileAggression: '5 эмоций: гнев, раздражение, ненависть, презрение, обида',
+         presetProfileFear: 'Страх и тревожность',
+         presetDescProfileFear: '5 эмоций: страх, тревога, подозрение, ревность, зависть',
+         presetProfileSelfesteem: 'Самооценка и социальное Я',
+         presetDescProfileSelfesteem: '5 эмоций: вина, стыд, смущение, гордость, нарциссизм',
+         presetProfileColdness: 'Холодность и антисоциальность',
+         presetDescProfileColdness: '7 эмоций: черствость, манипулятивность, обман, бесчувственность, поверхностность, социопатия, хищность',
+         presetProfileCognitive: 'Когнитивные состояния',
+         presetDescProfileCognitive: '5 эмоций: удивление, дезорганизация, решимость, бесстрашие, нейтральный',
+
+        // Curriculum categories
        categoryAcademy: 'Академия · Уровень 1',
        categoryField: 'Полевая практика · Уровень 2',
        categoryExpert: 'Экспертный · Уровень 3',
@@ -416,184 +428,10 @@ export const translations = {
        categoryPatterns: 'Специализация · Опасные паттерны',
        categoryCore: 'Быстрый справочник · Ключевые паттерны',
        categoryPsychological: 'Специализация · Психологические состояния',
-       categoryCustom: 'Свои настройки',
-     },
+       categoryCustom: 'Пользовательские',
+       categoryLearning: 'Обучение · Семьи эмоций',
 
-  zh: {
-    // Header
-    appTitle: '情绪矩阵',
-    title: '神经',
-    titleAccent: '情绪',
-    titleEnd: '扫描器',
-    subtitle: '用于情绪识别训练的先进神经网络。',
-    subtitleLine2: '精准解码面部表情。',
-    matrixReady: '矩阵就绪',
-    toggleTheme: '切换主题',
-
-    // Stats Panel
-    neuralPerformance: '神经性能',
-    accuracy: '准确率',
-    correct: '正确',
-    total: '总计',
-    emotionSpectrum: '情绪光谱',
-
-    // Analysis Panel
-    neuralAnalysis: '神经分析',
-    processingFacial: '处理面部微表情',
-    initializing: '初始化中',
-    loadingDatabase: '加载神经数据库...',
-    neuralProcessing: '神经处理中...',
-    confirmed: '已确认',
-    error: '错误',
-    neuralMatch: '神经匹配',
-    analysisError: '分析错误',
-    detectedEmotion: '检测到的情绪',
-    predicted: '预测',
-
-    // Emotion Matrix Panel
-    emotionMatrix: '情绪矩阵',
-    nextScan: '下一个扫描',
-    neuralActivity: '神经活动',
-
-      // Emotions (ordered by curriculum progression)
-      emotions: {
-        // === BASIC 10 ===
-        joy: '喜悦',
-        sadness: '悲伤',
-        anger: '愤怒',
-        fear: '恐惧',
-        surprise: '惊讶',
-        disgust: '厌恶',
-        contempt: '蔑视',
-        anxiety: '焦虑',
-        shame: '羞耻',
-        guilt: '内疚',
-
-        // === EXTENDED 20 ===
-        excitement: '兴奋',
-        embarrassment: '尴尬',
-        regret: '后悔',
-        relief: '宽慰',
-        suspicion: '怀疑',
-        confusion: '困惑',
-        disappointment: '失望',
-        frustration: '挫折',
-        resentment: '怨恨',
-        envy: '嫉妒',
-
-        // === ADVANCED 30 ===
-        jealousy: '妒忌',
-        amusement: '娱乐',
-        interest: '兴趣',
-        pride: '自豪',
-        determination: '决心',
-        awe: '敬畏',
-        loneliness: '孤独',
-        fearlessness: '无畏',
-        despair: '绝望',
-        hatred: '憎恨',
-
-        // === ПАТОЛОГИЧЕСКИЕ ===
-        manipulative: '操纵',
-        narcissism: '自恋',
-        predatory: '掠夺',
-        callousness: '冷漠',
-        remorselessness: '无情',
-        shallow_affect: '浅情',
-        sociopathy: '反社会',
-        deceit: '欺骗',
-
-        neutral: '中性',
-      },
-
-    // Footer
-    neuralNetwork: '神经网络',
-    poweredBy: '由先进的AI情绪识别技术驱动',
-    secure: '安全',
-
-     // Language selector
-     language: '语言',
-     selectLanguage: '选择语言',
-
-     // Progress
-    imagesRemaining: '张图片剩余',
-    allImagesSeen: '开始新一轮！',
-
-    // Training Mode & Stats
-     trainingMode: '训练模式',
-     normalMode: '正常',
-     weakMode: '弱项',
-     emotionPreset: '情绪预设',
-     confusionMatrix: '混淆矩阵',
-     showMatrix: '查看',
-     closeMatrix: '关闭',
-     resetStats: '重置',
-    resetConfirm: '重置所有统计数据？',
-    actualEmotion: '实际',
-    predictedEmotion: '预测',
-     noData: '暂无数据',
-     weakEmotions: '弱项情绪',
-     noWeakEmotions: '未检测到弱项情绪',
-
-     // Accessibility & UI
-     ariaLabelDashboard: '情绪识别训练面板',
-     ariaLabelNeuralScanner: '神经情绪扫描器 - AI驱动的情绪识别',
-     ariaLabelTrainingInterface: '训练界面',
-     activeEmotionsCount: '活跃：{count} 种情绪',
-     noImage: '无图像',
-     openDevTools: '打开开发者工具',
-
-        // Preset labels and descriptions
-        presetAll: '全部 39',
-        presetDescAll: '全部39种情绪，全面训练',
-        presetBasic: '基础 10',
-        presetDescBasic: '10种核心情绪，适合初学者',
-        presetExtended: '扩展 20',
-        presetDescExtended: '20种常见情绪，适合中级训练',
-        presetAdvanced: '高级 30',
-        presetDescAdvanced: '30种情绪，适合高级实践者',
-        presetPersonality: '人格特质',
-        presetDescPersonality: '22种情绪，用于人格和性格分析',
-        presetSocial: '社交动态',
-        presetDescSocial: '22种情绪，用于社交动态和关系智能',
-        presetCognitive: '认知评估',
-        presetDescCognitive: '8种与思维、学习和评估相关的情绪',
-        presetAffective: '情感效价',
-        presetDescAffective: '18种按正负效价分类的情绪',
-        presetBehavioral: '行为倾向',
-        presetDescBehavioral: '14种与行为倾向和风险评估相关的情绪',
-        // Dangerous profiling sets
-        presetThreat1: '威胁等级 1',
-        presetDescThreat1: '9种低级别监控情绪，用于日常评估',
-        presetThreat2: '威胁等级 2',
-        presetDescThreat2: '9种高风险情绪，需要提高警惕',
-        presetThreat3: '威胁等级 3',
-        presetDescThreat3: '4种关键威胁情绪，指示潜在危险',
-        presetManipulation: '操纵模式',
-        presetDescManipulation: '12种常在操纵情境中出现的情绪',
-        presetDeception: '欺骗迹象',
-        presetDescDeception: '12种与不诚实和隐瞒相关的情绪',
-        presetAggression: '攻击信号',
-        presetDescAggression: '11种表示敌意意图或暴力的情绪',
-        presetDistress: '痛苦状态',
-        presetDescDistress: '13种显示高度焦虑或痛苦的情绪',
-         presetAntisocial: '反社会行为',
-         presetDescAntisocial: '9种反社会模式特征情绪',
-         // Core bad emotion lists
-         presetManipulationCore: '操纵核心',
-         presetDescManipulationCore: '4种核心操纵情绪',
-         presetDeceptionCore: '欺骗核心',
-         presetDescDeceptionCore: '4种核心欺骗情绪',
-         presetAggressionCore: '攻击核心',
-         presetDescAggressionCore: '4种核心攻击情绪',
-         presetStressCore: '压力核心',
-         presetDescStressCore: '4种核心压力相关情绪',
-         presetAntisocialCore: '反社会核心',
-         presetDescAntisocialCore: '4种反社会人格核心特征',
-         presetCustom: '自定义',
-         presetDescCustom: '您的个性化选择',
-
-      // Additional UI keys
+       // Additional UI keys
       selectEmotion: '选择 {emotion} 情绪',
       logoAlt: '情绪训练器标志',
       close: '关闭',
@@ -614,18 +452,19 @@ export const translations = {
          '多语言支持',
          '性能追踪',
        ],
-       // Curriculum categories
-       categoryAcademy: '学院 · 一级',
-       categoryField: '外勤实习 · 二级',
-       categoryExpert: '专家 · 三级',
-       categoryMastery: '大师 · 完整周期',
-       categoryBehavioral: '专业 · 行为分析',
-       categoryThreat: '专业 · 威胁评估',
-       categoryPatterns: '专业 · 危险模式',
-       categoryCore: '快速参考 · 核心模式',
-       categoryPsychological: '专业 · 心理状态',
-       categoryCustom: '自定义设置',
-     },
+        // Curriculum categories
+        categoryAcademy: '学院 · 一级',
+        categoryField: '外勤实习 · 二级',
+        categoryExpert: '专家 · 三级',
+        categoryMastery: '大师 · 完整周期',
+        categoryBehavioral: '专业 · 行为分析',
+        categoryThreat: '专业 · 威胁评估',
+        categoryPatterns: '专业 · 危险模式',
+        categoryCore: '快速参考 · 核心模式',
+        categoryPsychological: '专业 · 心理状态',
+        categoryCustom: '自定义设置',
+        categoryLearning: '学习Profile · 情绪家族',
+      },
 
    es: {
      // Header
@@ -793,11 +632,27 @@ export const translations = {
       presetDescThreat2: '9 emociones de alto riesgo que requieren atención elevada',
       presetThreat3: 'Nivel de amenaza 3',
       presetDescThreat3: '4 emociones de amenaza crítica que indican peligro potencial',
-      // Custom
-      presetCustom: 'Personalizado',
-      presetDescCustom: 'Tu selección personalizada',
+       // Custom
+       presetCustom: 'Personalizado',
+       presetDescCustom: 'Tu selección personalizada',
 
-      // Curriculum category labels
+       // Learning profiles (7 emotion families)
+       presetProfileJoy: 'Alegría y Positivo',
+       presetDescProfileJoy: '6 emociones: alegría, diversión, excitación, asombro, interés, alivio',
+       presetProfileSadness: 'Tristeza y Pérdida',
+       presetDescProfileSadness: '5 emociones: tristeza, decepción, arrepentimiento, desesperación, soledad',
+       presetProfileAggression: 'Agresión y Rechazo',
+       presetDescProfileAggression: '5 emociones: ira, frustración, odio, desprecio, resentimiento',
+       presetProfileFear: 'Miedo y Ansiedad',
+       presetDescProfileFear: '5 emociones: miedo, ansiedad, sospecha, celos, envidia',
+       presetProfileSelfesteem: 'Autoestima y Yo Social',
+       presetDescProfileSelfesteem: '5 emociones: culpa, vergüenza, ansiedad, orgullo, narcisismo',
+       presetProfileColdness: 'Frialdad y Antisocialidad',
+       presetDescProfileColdness: '7 emociones: indiferencia, manipulación, engaño, sin remordimientos, superficialidad, sociopatía, depredación',
+       presetProfileCognitive: 'Estados Cognitivos',
+       presetDescProfileCognitive: '5 emociones: sorpresa, confusión, determinación, intrepidez, neutral',
+
+       // Curriculum category labels
       categoryAcademy: 'Academia · Nivel 1',
       categoryField: 'Práctica de campo · Nivel 2',
       categoryExpert: 'Experto · Nivel 3',

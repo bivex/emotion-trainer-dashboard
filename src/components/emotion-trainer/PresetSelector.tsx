@@ -2,7 +2,7 @@ import React from "react";
 import { ListFilter } from "lucide-react";
 import { Button } from "../ui/button";
 import { useLanguage } from "../../i18n/LanguageProvider";
-import { EmotionPreset } from "./types";
+import type { EmotionPreset } from "./types";
 
 interface PresetSelectorProps {
   emotionPreset: EmotionPreset;
@@ -360,9 +360,83 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({
               {t.presetAffective}
             </Button>
           </div>
-        </div>
+         </div>
 
-        {/* CUSTOM */}
+         {/* LEARNING PROFILES — discrimination training by emotion family */}
+         <div>
+           <div className="flex items-center gap-3 mb-3">
+             <div className="w-2 h-2 rounded-full bg-lime-500" />
+             <div className="h-px flex-1 bg-lime-500/30" />
+             <span className="text-[11px] uppercase tracking-widest text-lime-600 dark:text-lime-500 font-bold">
+               {t.categoryLearning}
+             </span>
+             <div className="h-px flex-1 bg-lime-500/30" />
+             <div className="w-2 h-2 rounded-full bg-lime-500" />
+           </div>
+           <div className="flex flex-wrap gap-2 ml-2">
+             <Button
+               size="sm"
+               variant={emotionPreset === "profile_joy" ? "default" : "outline"}
+               onClick={() => setEmotionPreset("profile_joy")}
+               className={`text-xs ${emotionPreset === "profile_joy" ? "bg-lime-600 text-white" : "text-lime-700 border-lime-600/50 hover:bg-lime-600/10 dark:text-lime-500"}`}
+             >
+               {t.presetProfileJoy}
+             </Button>
+             <Button
+               size="sm"
+               variant={emotionPreset === "profile_sadness" ? "default" : "outline"}
+               onClick={() => setEmotionPreset("profile_sadness")}
+               className={`text-xs ${emotionPreset === "profile_sadness" ? "bg-lime-600 text-white" : "text-lime-700 border-lime-600/50 hover:bg-lime-600/10 dark:text-lime-500"}`}
+             >
+               {t.presetProfileSadness}
+             </Button>
+             <Button
+               size="sm"
+               variant={emotionPreset === "profile_aggression" ? "default" : "outline"}
+               onClick={() => setEmotionPreset("profile_aggression")}
+               className={`text-xs ${emotionPreset === "profile_aggression" ? "bg-lime-600 text-white" : "text-lime-700 border-lime-600/50 hover:bg-lime-600/10 dark:text-lime-500"}`}
+             >
+               {t.presetProfileAggression}
+             </Button>
+             <Button
+               size="sm"
+               variant={emotionPreset === "profile_fear" ? "default" : "outline"}
+               onClick={() => setEmotionPreset("profile_fear")}
+               className={`text-xs ${emotionPreset === "profile_fear" ? "bg-lime-600 text-white" : "text-lime-700 border-lime-600/50 hover:bg-lime-600/10 dark:text-lime-500"}`}
+             >
+               {t.presetProfileFear}
+             </Button>
+             <Button
+               size="sm"
+               variant={emotionPreset === "profile_selfesteem" ? "default" : "outline"}
+               onClick={() => setEmotionPreset("profile_selfesteem")}
+               className={`text-xs ${emotionPreset === "profile_selfesteem" ? "bg-lime-600 text-white" : "text-lime-700 border-lime-600/50 hover:bg-lime-600/10 dark:text-lime-500"}`}
+             >
+               {t.presetProfileSelfesteem}
+             </Button>
+             <Button
+               size="sm"
+               variant={emotionPreset === "profile_coldness" ? "default" : "outline"}
+               onClick={() => setEmotionPreset("profile_coldness")}
+               className={`text-xs ${emotionPreset === "profile_coldness" ? "bg-lime-600 text-white" : "text-lime-700 border-lime-600/50 hover:bg-lime-600/10 dark:text-lime-500"}`}
+             >
+               {t.presetProfileColdness}
+             </Button>
+             <Button
+               size="sm"
+               variant={emotionPreset === "profile_cognitive" ? "default" : "outline"}
+               onClick={() => setEmotionPreset("profile_cognitive")}
+               className={`text-xs ${emotionPreset === "profile_cognitive" ? "bg-lime-600 text-white" : "text-lime-700 border-lime-600/50 hover:bg-lime-600/10 dark:text-lime-500"}`}
+             >
+               {t.presetProfileCognitive}
+             </Button>
+           </div>
+           <p className="text-[10px] text-muted-foreground mt-1.5 ml-2">
+             {t.presetDescProfileJoy || 'Emotion families for discrimination training'}
+           </p>
+         </div>
+
+         {/* CUSTOM */}
         <div>
           <div className="flex items-center gap-3 mb-3">
             <div className="w-2 h-2 rounded-full bg-gray-400" />
@@ -397,31 +471,38 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({
         <div className="mt-2 p-2 rounded-lg bg-matrix-accent/5 border border-matrix-accent/20">
           <p className="text-[10px] text-muted-foreground leading-relaxed">
             {(() => {
-              const descriptions: Record<EmotionPreset, string> = {
-                all: t.presetDescAll || 'All 39 emotions for comprehensive training',
-                basic: t.presetDescBasic || '10 core emotions for beginners',
-                extended: t.presetDescExtended || '20 common emotions for intermediate training',
-                advanced: t.presetDescAdvanced || '30 emotions for advanced practitioners',
-                personality: t.presetDescPersonality || '22 emotions for personality and character analysis',
-                social: t.presetDescSocial || '22 emotions for social dynamics and relationship intelligence',
-                cognitive: t.presetDescCognitive || '8 emotions related to thinking, learning, and appraisal',
-                affective: t.presetDescAffective || '18 emotions organized by positive/negative valence',
-                behavioral: t.presetDescBehavioral || '14 emotions linked to behavioral tendencies and risk assessment',
-                threat_level1: t.presetDescThreat1 || '9 low-level monitoring emotions for routine assessment',
-                threat_level2: t.presetDescThreat2 || '9 high-risk emotions requiring heightened awareness',
-                threat_level3: t.presetDescThreat3 || '4 critical threat emotions indicating potential danger',
-                manipulation: t.presetDescManipulation || '12 emotions commonly used in manipulative contexts',
-                deception: t.presetDescDeception || '12 emotions associated with dishonesty and concealment',
-                aggression: t.presetDescAggression || '11 emotions signaling hostile intent or violence',
-                distress: t.presetDescDistress || '13 emotions indicating heightened anxiety or suffering',
-                antisocial: t.presetDescAntisocial || '9 emotions characteristic of antisocial patterns',
-                manipulation_core: t.presetDescManipulationCore || '4 core manipulation emotions',
-                deception_core: t.presetDescDeceptionCore || '4 core deception emotions',
-                aggression_core: t.presetDescAggressionCore || '4 core aggression emotions',
-                stress_core: t.presetDescStressCore || '4 core stress-related emotions',
-                antisocial_core: t.presetDescAntisocialCore || '4 core antisocial personality emotions',
-                custom: t.presetDescCustom || 'Your personalized selection',
-              };
+               const descriptions: Record<EmotionPreset, string> = {
+                 all: t.presetDescAll || 'All 39 emotions for comprehensive training',
+                 basic: t.presetDescBasic || '10 core emotions for beginners',
+                 extended: t.presetDescExtended || '20 common emotions for intermediate training',
+                 advanced: t.presetDescAdvanced || '30 emotions for advanced practitioners',
+                 personality: t.presetDescPersonality || '22 emotions for personality and character analysis',
+                 social: t.presetDescSocial || '22 emotions for social dynamics and relationship intelligence',
+                 cognitive: t.presetDescCognitive || '8 emotions related to thinking, learning, and appraisal',
+                 affective: t.presetDescAffective || '18 emotions organized by positive/negative valence',
+                 behavioral: t.presetDescBehavioral || '14 emotions linked to behavioral tendencies and risk assessment',
+                 threat_level1: t.presetDescThreat1 || '9 low-level monitoring emotions for routine assessment',
+                 threat_level2: t.presetDescThreat2 || '9 high-risk emotions requiring heightened awareness',
+                 threat_level3: t.presetDescThreat3 || '4 critical threat emotions indicating potential danger',
+                 manipulation: t.presetDescManipulation || '12 emotions commonly used in manipulative contexts',
+                 deception: t.presetDescDeception || '12 emotions associated with dishonesty and concealment',
+                 aggression: t.presetDescAggression || '11 emotions signaling hostile intent or violence',
+                 distress: t.presetDescDistress || '13 emotions indicating heightened anxiety or suffering',
+                 antisocial: t.presetDescAntisocial || '9 emotions characteristic of antisocial patterns',
+                 manipulation_core: t.presetDescManipulationCore || '4 core manipulation emotions',
+                 deception_core: t.presetDescDeceptionCore || '4 core deception emotions',
+                 aggression_core: t.presetDescAggressionCore || '4 core aggression emotions',
+                 stress_core: t.presetDescStressCore || '4 core stress-related emotions',
+                 antisocial_core: t.presetDescAntisocialCore || '4 core antisocial personality emotions',
+                 profile_joy: t.presetDescProfileJoy || '6 emotions: joy, amusement, excitement, awe, interest, relief',
+                 profile_sadness: t.presetDescProfileSadness || '5 emotions: sadness, disappointment, regret, despair, loneliness',
+                 profile_aggression: t.presetDescProfileAggression || '5 emotions: anger, frustration, hatred, contempt, resentment',
+                 profile_fear: t.presetDescProfileFear || '5 emotions: fear, anxiety, suspicion, jealousy, envy',
+                 profile_selfesteem: t.presetDescProfileSelfesteem || '5 emotions: guilt, shame, embarrassment, pride, narcissism',
+                 profile_coldness: t.presetDescProfileColdness || '7 emotions: callousness, manipulative, deceit, remorselessness, shallow_affect, sociopathy, predatory',
+                 profile_cognitive: t.presetDescProfileCognitive || '5 emotions: surprise, confusion, determination, fearlessness, neutral',
+                 custom: t.presetDescCustom || 'Your personalized selection',
+               };
               return descriptions[emotionPreset] || '';
             })()}
           </p>

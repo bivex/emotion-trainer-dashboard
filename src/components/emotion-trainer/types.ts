@@ -1,5 +1,3 @@
-import { EmotionImage } from "../../api/images";
-
 export const ALL_EMOTIONS = [
   // === BASIC 10 (универсальные/фундаментальные) ===
   "joy",
@@ -57,7 +55,9 @@ export type EmotionPreset =
   | "personality" | "social" | "cognitive" | "affective" | "behavioral"
   | "threat_level1" | "threat_level2" | "threat_level3"
   | "manipulation" | "deception" | "aggression" | "distress" | "antisocial"
-  | "manipulation_core" | "deception_core" | "aggression_core" | "stress_core" | "antisocial_core";
+  | "manipulation_core" | "deception_core" | "aggression_core" | "stress_core" | "antisocial_core"
+  // Learning profiles — emotion families for discrimination training
+  | "profile_joy" | "profile_sadness" | "profile_aggression" | "profile_fear" | "profile_selfesteem" | "profile_coldness" | "profile_cognitive";
 
 export const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
   all: ALL_EMOTIONS,
@@ -89,11 +89,11 @@ export const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
     "relief", "frustration", "disappointment", "confusion", "anxiety",
     "fear", "surprise"
   ] as const,
-   behavioral: [
-     "predatory", "manipulative", "narcissism", "callousness", "remorselessness",
-     "shallow_affect", "sociopathy", "deceit", "suspicion", "fearlessness",
-     "determination", "anger", "frustration", "contempt"
-   ] as const,
+  behavioral: [
+    "predatory", "manipulative", "narcissism", "callousness", "remorselessness",
+    "shallow_affect", "sociopathy", "deceit", "suspicion", "fearlessness",
+    "determination", "anger", "frustration", "contempt"
+  ] as const,
 
   // === SPECIALIZATION: PSYCHOLOGICAL STATES ===
   cognitive: [
@@ -133,9 +133,8 @@ export const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
     "determination", "fearlessness", "sociopathy", "callousness", "remorselessness"
   ] as const,
   distress: [
-    "anxiety", "fear", "despair", "shame", "guilt",
-    "embarrassment", "disappointment", "frustration",
-    "loneliness", "envy", "jealousy", "confusion", "suspicion"
+    "anxiety", "fear", "despair", "shame", "guilt", "embarrassment",
+    "disappointment", "frustration", "loneliness", "envy", "jealousy", "confusion", "suspicion"
   ] as const,
   antisocial: [
     "sociopathy", "callousness", "remorselessness", "shallow_affect",
@@ -148,6 +147,15 @@ export const EMOTION_PRESETS: Record<EmotionPreset, readonly EmotionKey[]> = {
   aggression_core: ["anger", "hatred", "contempt", "frustration"] as const,
   stress_core: ["anxiety", "fear", "frustration", "disappointment"] as const,
   antisocial_core: ["sociopathy", "callousness", "remorselessness", "shallow_affect"] as const,
+
+  // === LEARNING PROFILES — emotion families for discrimination training ===
+  profile_joy: ["joy", "amusement", "excitement", "awe", "interest", "relief"] as const,
+  profile_sadness: ["sadness", "disappointment", "regret", "despair", "loneliness"] as const,
+  profile_aggression: ["anger", "frustration", "hatred", "contempt", "resentment"] as const,
+  profile_fear: ["fear", "anxiety", "suspicion", "jealousy", "envy"] as const,
+  profile_selfesteem: ["guilt", "shame", "embarrassment", "pride", "narcissism"] as const,
+  profile_coldness: ["callousness", "manipulative", "deceit", "remorselessness", "shallow_affect", "sociopathy", "predatory"] as const,
+  profile_cognitive: ["surprise", "confusion", "determination", "fearlessness", "neutral"] as const,
 
   custom: ALL_EMOTIONS,
 };
