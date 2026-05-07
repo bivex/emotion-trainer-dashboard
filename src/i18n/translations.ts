@@ -348,11 +348,17 @@ export const translations = {
      ariaLabelDashboard: 'Панель тренировки распознавания эмоций',
      ariaLabelNeuralScanner: 'Нейронный сканер эмоций - Распознавание эмоций на базе ИИ',
      ariaLabelTrainingInterface: 'Интерфейс тренировки',
-     activeEmotionsCount: 'Активно: {count} эмоций',
-     noImage: 'Нет изображения',
-     openDevTools: 'Открыть инструменты разработчика',
+      activeEmotionsCount: 'Активно: {count} эмоций',
+      noImage: 'Нет изображения',
+      openDevTools: 'Открыть инструменты разработчика',
 
-        // Preset labels and descriptions
+      // Additional UI keys (Russian)
+      selectEmotion: 'Выбрать эмоцию {emotion}',
+      logoAlt: 'Логотип эмоÇÃO тренера',
+      close: 'Закрыть',
+      neuralScanAlt: 'Нейронный скан: {emotion}',
+
+         // Preset labels and descriptions
         presetAll: 'Все 39',
         presetDescAll: 'Все 39 эмоций для комплексной тренировки',
         presetBasic: 'Базовые 10',
@@ -431,39 +437,7 @@ export const translations = {
        categoryCustom: 'Пользовательские',
        categoryLearning: 'Обучение · Семьи эмоций',
 
-       // Additional UI keys
-      selectEmotion: '选择 {emotion} 情绪',
-      logoAlt: '情绪训练器标志',
-      close: '关闭',
-      neuralScanAlt: '神经扫描: {emotion}',
-      seoTitle: '神经情绪扫描器 - AI情绪识别训练',
-      seoDescription: '先进的神经网络用于情绪识别训练。 使用我们的人工智能情绪分析工具精确解码面部表情。 训练您识别喜悦、悲伤、愤怒、恐惧、惊讶、厌恶、内疚、羞耻、怀疑和中性的能力。',
-      seoKeywords: '情绪识别, 面部表情分析, AI训练, 神经网络, 情绪检测, 面部微表情, 情绪训练, 心理学, 机器学习, 计算机视觉',
-      seoSiteName: '神经情绪扫描器',
-      seoTwitterHandle: '@emotion_scanner',
-      seoAuthor: 'Bivex',
-      seoSection: '技术',
-      seoTags: ['人工智能', '情绪识别', '训练', '神经网络', '心理学'],
-       seoFeatureList: [
-         '实时情绪识别',
-         '面部表情分析',
-         '神经网络训练',
-         '互动学习界面',
-         '多语言支持',
-         '性能追踪',
-       ],
-        // Curriculum categories
-        categoryAcademy: '学院 · 一级',
-        categoryField: '外勤实习 · 二级',
-        categoryExpert: '专家 · 三级',
-        categoryMastery: '大师 · 完整周期',
-        categoryBehavioral: '专业 · 行为分析',
-        categoryThreat: '专业 · 威胁评估',
-        categoryPatterns: '专业 · 危险模式',
-        categoryCore: '快速参考 · 核心模式',
-        categoryPsychological: '专业 · 心理状态',
-        categoryCustom: '自定义设置',
-        categoryLearning: '学习Profile · 情绪家族',
+
       },
 
    es: {
@@ -661,10 +635,11 @@ export const translations = {
       categoryThreat: 'Especialización · Evaluación de amenazas',
       categoryPatterns: 'Especialización · Patrones peligrosos',
       categoryCore: 'Referencia rápida · Patrones clave',
-      categoryPsychological: 'Especialización · Estados psicológicos',
-      categoryCustom: 'Configuración personalizada',
+       categoryPsychological: 'Especialización · Estados psicológicos',
+       categoryCustom: 'Configuración personalizada',
+       categoryLearning: 'Perfiles de aprendizaje · Familias de emociones',
 
-      // Additional UI keys
+       // Additional UI keys
       emotionPresetLabel: 'Preestablecido de emociones',
       selectEmotion: 'Seleccionar emoción {emotion}',
       logoAlt: 'Logotipo del entrenador de emociones',
