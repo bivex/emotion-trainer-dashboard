@@ -87,17 +87,23 @@ export const useEmotionTrainer = () => {
     imageList: EmotionImage[],
     mode: "normal" | "weak" = trainingMode,
   ) => {
-    let filteredList = imageList;
+    // Always respect the preset first
+    let filteredList = filterImagesByPreset(imageList);
 
     if (mode === "weak") {
       const weakEmotions = getWeakEmotions();
       if (weakEmotions.length > 0) {
-        filteredList = imageList.filter((img) =>
+        // Further filter by weak emotions among the preset-filtered list
+        const weakInPreset = filteredList.filter((img) =>
           weakEmotions.includes(img.emotion),
         );
+        
+        // If there are weak emotions in the current preset, use them.
+        // Otherwise, stay with the preset list (don't show empty queue)
+        if (weakInPreset.length > 0) {
+          filteredList = weakInPreset;
+        }
       }
-    } else {
-      filteredList = filterImagesByPreset(imageList);
     }
 
     const shuffled = shuffleArray(filteredList);
@@ -180,13 +186,12 @@ export const useEmotionTrainer = () => {
   }, []);
 
   const checkAnswer = useCallback((emotion: string) => {
-    if (!currentImage) return;
+    // Prevent multiple clicks for the same image
+    if (!currentImage || showResult) return;
 
     const actualEmotion = currentImage.emotion;
     setSelectedEmotion(emotion);
     setShowResult(true);
-
-    if (!getActiveEmotions().includes(emotion as EmotionKey)) return;
 
     const correct = emotion === actualEmotion;
     setIsCorrect(correct);
@@ -216,7 +221,8 @@ export const useEmotionTrainer = () => {
     setTimeout(() => {
       loadNextImage();
     }, 2000);
-  }, [currentImage, getActiveEmotions, playEmotionSound, loadNextImage]);
+  }, [currentImage, showResult, playEmotionSound, loadNextImage]);
+
 
   // Effects
   useEffect(() => {
