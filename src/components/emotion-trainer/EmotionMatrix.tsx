@@ -102,10 +102,11 @@ export const EmotionMatrix: React.FC<EmotionMatrixProps> = ({
 
         <Button
           onClick={loadNextImage}
-          className="w-full mt-3 sm:mt-4 font-matrix text-xs sm:text-sm uppercase tracking-wider"
+          disabled={showResult}
+          className="w-full mt-3 sm:mt-4 font-matrix text-xs sm:text-sm uppercase tracking-wider disabled:opacity-50"
           size="sm"
         >
-          <RefreshCw className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
+          <RefreshCw className={`w-3 h-3 sm:w-4 sm:h-4 mr-2 ${showResult ? "" : "animate-spin-slow"}`} />
           {t.nextScan}
         </Button>
       </div>

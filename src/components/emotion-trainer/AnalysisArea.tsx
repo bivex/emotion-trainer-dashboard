@@ -49,6 +49,7 @@ export const AnalysisArea: React.FC<AnalysisAreaProps> = ({
             {currentImage ? (
               <>
                 <img
+                  key={currentImage.path}
                   src={currentImage.path}
                   alt="Target expression"
                   className={`w-full h-full object-cover transition-all duration-700 ${showResult ? "scale-105" : "hover:scale-105"}`}
