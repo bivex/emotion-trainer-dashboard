@@ -1,10 +1,9 @@
 import { useLanguage } from '../i18n/LanguageProvider';
 import { Globe } from 'lucide-react';
 
-const languages: { code: 'en' | 'ru' | 'zh' | 'es'; label: string; flag: string }[] = [
+const languages: { code: 'en' | 'ru' | 'es'; label: string; flag: string }[] = [
   { code: 'en', label: 'English', flag: '🇺🇸' },
   { code: 'ru', label: 'Русский', flag: '🇷🇺' },
-  { code: 'zh', label: '中文', flag: '🇨🇳' },
   { code: 'es', label: 'Español', flag: '🇪🇸' },
 ];
 
