@@ -962,23 +962,292 @@ const EmotionTrainer: React.FC = () => {
                      {t.emotionPreset}
                    </h3>
                  </div>
-                <div className="flex flex-wrap gap-2">
-                  {(Object.keys(EMOTION_PRESETS) as EmotionPreset[]).map(
-                    (preset) => (
-                       <Button
-                         key={preset}
-                         size="sm"
-                         variant={
-                           emotionPreset === preset ? "default" : "outline"
-                         }
-                         onClick={() => setEmotionPreset(preset)}
-                         className={`text-xs ${emotionPreset === preset ? "bg-matrix-accent text-matrix-bg" : ""}`}
-                       >
-                         {t[PRESET_LABEL_KEYS[preset] as keyof typeof t] as React.ReactNode}
-                       </Button>
-                    ),
-                  )}
-                </div>
+                  <div className="space-y-4">
+                    {/* Training Levels */}
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="h-px flex-1 bg-matrix-accent/30" />
+                        <span className="text-[10px] uppercase tracking-wider text-matrix-accent font-semibold">
+                          Уровни обучения
+                        </span>
+                        <div className="h-px flex-1 bg-matrix-accent/30" />
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          key="basic"
+                          size="sm"
+                          variant={emotionPreset === "basic" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("basic")}
+                          className={`text-xs ${emotionPreset === "basic" ? "bg-matrix-accent text-matrix-bg" : ""}`}
+                        >
+                          {t.presetBasic}
+                        </Button>
+                        <Button
+                          key="extended"
+                          size="sm"
+                          variant={emotionPreset === "extended" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("extended")}
+                          className={`text-xs ${emotionPreset === "extended" ? "bg-matrix-accent text-matrix-bg" : ""}`}
+                        >
+                          {t.presetExtended}
+                        </Button>
+                        <Button
+                          key="advanced"
+                          size="sm"
+                          variant={emotionPreset === "advanced" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("advanced")}
+                          className={`text-xs ${emotionPreset === "advanced" ? "bg-matrix-accent text-matrix-bg" : ""}`}
+                        >
+                          {t.presetAdvanced}
+                        </Button>
+                        <Button
+                          key="all"
+                          size="sm"
+                          variant={emotionPreset === "all" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("all")}
+                          className={`text-xs ${emotionPreset === "all" ? "bg-matrix-accent text-matrix-bg" : ""}`}
+                        >
+                          {t.presetAll}
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Profiling Categories */}
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="h-px flex-1 bg-matrix-accent/30" />
+                        <span className="text-[10px] uppercase tracking-wider text-matrix-accent font-semibold">
+                          Профилирование
+                        </span>
+                        <div className="h-px flex-1 bg-matrix-accent/30" />
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          key="personality"
+                          size="sm"
+                          variant={emotionPreset === "personality" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("personality")}
+                          className={`text-xs ${emotionPreset === "personality" ? "bg-matrix-accent text-matrix-bg" : ""}`}
+                        >
+                          {t.presetPersonality}
+                        </Button>
+                        <Button
+                          key="social"
+                          size="sm"
+                          variant={emotionPreset === "social" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("social")}
+                          className={`text-xs ${emotionPreset === "social" ? "bg-matrix-accent text-matrix-bg" : ""}`}
+                        >
+                          {t.presetSocial}
+                        </Button>
+                        <Button
+                          key="cognitive"
+                          size="sm"
+                          variant={emotionPreset === "cognitive" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("cognitive")}
+                          className={`text-xs ${emotionPreset === "cognitive" ? "bg-matrix-accent text-matrix-bg" : ""}`}
+                        >
+                          {t.presetCognitive}
+                        </Button>
+                        <Button
+                          key="affective"
+                          size="sm"
+                          variant={emotionPreset === "affective" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("affective")}
+                          className={`text-xs ${emotionPreset === "affective" ? "bg-matrix-accent text-matrix-bg" : ""}`}
+                        >
+                          {t.presetAffective}
+                        </Button>
+                        <Button
+                          key="behavioral"
+                          size="sm"
+                          variant={emotionPreset === "behavioral" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("behavioral")}
+                          className={`text-xs ${emotionPreset === "behavioral" ? "bg-matrix-accent text-matrix-bg" : ""}`}
+                        >
+                          {t.presetBehavioral}
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Threat Levels */}
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="h-px flex-1 bg-destructive/30" />
+                        <span className="text-[10px] uppercase tracking-wider text-destructive font-semibold">
+                          Уровни угрозы
+                        </span>
+                        <div className="h-px flex-1 bg-destructive/30" />
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          key="threat_level1"
+                          size="sm"
+                          variant={emotionPreset === "threat_level1" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("threat_level1")}
+                          className={`text-xs ${emotionPreset === "threat_level1" ? "bg-destructive text-destructive-foreground" : "text-destructive border-destructive/50 hover:bg-destructive/10"}`}
+                        >
+                          {t.presetThreat1}
+                        </Button>
+                        <Button
+                          key="threat_level2"
+                          size="sm"
+                          variant={emotionPreset === "threat_level2" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("threat_level2")}
+                          className={`text-xs ${emotionPreset === "threat_level2" ? "bg-destructive text-destructive-foreground" : "text-destructive border-destructive/50 hover:bg-destructive/10"}`}
+                        >
+                          {t.presetThreat2}
+                        </Button>
+                        <Button
+                          key="threat_level3"
+                          size="sm"
+                          variant={emotionPreset === "threat_level3" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("threat_level3")}
+                          className={`text-xs ${emotionPreset === "threat_level3" ? "bg-destructive text-destructive-foreground" : "text-destructive border-destructive/50 hover:bg-destructive/10"}`}
+                        >
+                          {t.presetThreat3}
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Dangerous Patterns */}
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="h-px flex-1 bg-orange-500/30" />
+                        <span className="text-[10px] uppercase tracking-wider text-orange-600 dark:text-orange-500 font-semibold">
+                          Паттерны поведения
+                        </span>
+                        <div className="h-px flex-1 bg-orange-500/30" />
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          key="manipulation"
+                          size="sm"
+                          variant={emotionPreset === "manipulation" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("manipulation")}
+                          className={`text-xs ${emotionPreset === "manipulation" ? "bg-orange-600 text-white" : "text-orange-600 border-orange-600/50 hover:bg-orange-600/10"}`}
+                        >
+                          {t.presetManipulation}
+                        </Button>
+                        <Button
+                          key="deception"
+                          size="sm"
+                          variant={emotionPreset === "deception" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("deception")}
+                          className={`text-xs ${emotionPreset === "deception" ? "bg-orange-600 text-white" : "text-orange-600 border-orange-600/50 hover:bg-orange-600/10"}`}
+                        >
+                          {t.presetDeception}
+                        </Button>
+                        <Button
+                          key="aggression"
+                          size="sm"
+                          variant={emotionPreset === "aggression" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("aggression")}
+                          className={`text-xs ${emotionPreset === "aggression" ? "bg-orange-600 text-white" : "text-orange-600 border-orange-600/50 hover:bg-orange-600/10"}`}
+                        >
+                          {t.presetAggression}
+                        </Button>
+                        <Button
+                          key="distress"
+                          size="sm"
+                          variant={emotionPreset === "distress" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("distress")}
+                          className={`text-xs ${emotionPreset === "distress" ? "bg-orange-600 text-white" : "text-orange-600 border-orange-600/50 hover:bg-orange-600/10"}`}
+                        >
+                          {t.presetDistress}
+                        </Button>
+                        <Button
+                          key="antisocial"
+                          size="sm"
+                          variant={emotionPreset === "antisocial" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("antisocial")}
+                          className={`text-xs ${emotionPreset === "antisocial" ? "bg-orange-600 text-white" : "text-orange-600 border-orange-600/50 hover:bg-orange-600/10"}`}
+                        >
+                          {t.presetAntisocial}
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Core Bad Emotions (NEW) */}
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="h-px flex-1 bg-red-500/30" />
+                        <span className="text-[10px] uppercase tracking-wider text-red-600 dark:text-red-500 font-semibold">
+                          Ключевые плохие эмоции
+                        </span>
+                        <div className="h-px flex-1 bg-red-500/30" />
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          key="manipulation_core"
+                          size="sm"
+                          variant={emotionPreset === "manipulation_core" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("manipulation_core")}
+                          className={`text-xs ${emotionPreset === "manipulation_core" ? "bg-red-600 text-white" : "text-red-600 border-red-600/50 hover:bg-red-600/10"}`}
+                        >
+                          {t.presetManipulationCore}
+                        </Button>
+                        <Button
+                          key="deception_core"
+                          size="sm"
+                          variant={emotionPreset === "deception_core" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("deception_core")}
+                          className={`text-xs ${emotionPreset === "deception_core" ? "bg-red-600 text-white" : "text-red-600 border-red-600/50 hover:bg-red-600/10"}`}
+                        >
+                          {t.presetDeceptionCore}
+                        </Button>
+                        <Button
+                          key="aggression_core"
+                          size="sm"
+                          variant={emotionPreset === "aggression_core" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("aggression_core")}
+                          className={`text-xs ${emotionPreset === "aggression_core" ? "bg-red-600 text-white" : "text-red-600 border-red-600/50 hover:bg-red-600/10"}`}
+                        >
+                          {t.presetAggressionCore}
+                        </Button>
+                        <Button
+                          key="stress_core"
+                          size="sm"
+                          variant={emotionPreset === "stress_core" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("stress_core")}
+                          className={`text-xs ${emotionPreset === "stress_core" ? "bg-red-600 text-white" : "text-red-600 border-red-600/50 hover:bg-red-600/10"}`}
+                        >
+                          {t.presetStressCore}
+                        </Button>
+                        <Button
+                          key="antisocial_core"
+                          size="sm"
+                          variant={emotionPreset === "antisocial_core" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("antisocial_core")}
+                          className={`text-xs ${emotionPreset === "antisocial_core" ? "bg-red-600 text-white" : "text-red-600 border-red-600/50 hover:bg-red-600/10"}`}
+                        >
+                          {t.presetAntisocialCore}
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Custom */}
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="h-px flex-1 bg-muted" />
+                        <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                          Свои настройки
+                        </span>
+                        <div className="h-px flex-1 bg-muted" />
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          key="custom"
+                          size="sm"
+                          variant={emotionPreset === "custom" ? "default" : "outline"}
+                          onClick={() => setEmotionPreset("custom")}
+                          className={`text-xs ${emotionPreset === "custom" ? "bg-matrix-accent text-matrix-bg" : ""}`}
+                        >
+                          {t.presetCustom}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                  {emotionPreset !== "all" && (
                    <div className="mt-2 text-[10px] text-muted-foreground">
                      {t.activeEmotionsCount.replace('{count}', activeEmotions.length.toString())}
