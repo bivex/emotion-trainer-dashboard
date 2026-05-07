@@ -7,7 +7,9 @@ interface AnalysisAreaProps {
   currentImage: EmotionImage | null;
   showResult: boolean;
   isCorrect: boolean;
+  revealEmotion: boolean;
   selectedEmotion: string;
+  setRevealEmotion: (reveal: boolean) => void;
   getEmotionTranslation: (emotion: string) => string;
 }
 
@@ -15,7 +17,9 @@ export const AnalysisArea: React.FC<AnalysisAreaProps> = ({
   currentImage,
   showResult,
   isCorrect,
+  revealEmotion,
   selectedEmotion,
+  setRevealEmotion,
   getEmotionTranslation,
 }) => {
   const { t } = useLanguage();
@@ -62,6 +66,19 @@ export const AnalysisArea: React.FC<AnalysisAreaProps> = ({
                   <div className="absolute top-1/2 left-0 w-full h-px bg-matrix-accent/10" />
                   <div className="absolute top-0 left-1/2 w-px h-full bg-matrix-accent/10" />
                 </div>
+
+                {showResult && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    {!isCorrect && !revealEmotion && (
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); setRevealEmotion(true); }}
+                        className="pointer-events-auto matrix-glass px-6 py-3 rounded-full border border-matrix-accent/40 text-matrix-accent font-matrix uppercase tracking-widest hover:bg-matrix-accent/10 transition-colors shadow-2xl"
+                      >
+                        {t.revealAnswer || "Reveal Answer"}
+                      </button>
+                    )}
+                  </div>
+                )}
 
                 {showResult && (
                   <div
@@ -114,7 +131,7 @@ export const AnalysisArea: React.FC<AnalysisAreaProps> = ({
               <p className="text-xs sm:text-sm text-muted-foreground">
                 {t.detectedEmotion}:{" "}
                 <span
-                  className={`font-matrix uppercase emotion-text-${currentImage?.emotion}`}
+                  className={`font-matrix uppercase emotion-text-${currentImage?.emotion} ${!isCorrect && !revealEmotion ? "blur-sm select-none" : ""}`}
                 >
                   {currentImage
                     ? getEmotionTranslation(currentImage.emotion)

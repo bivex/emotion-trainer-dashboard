@@ -47,7 +47,11 @@ export const EmotionMatrix: React.FC<EmotionMatrixProps> = ({
         <div className="grid grid-cols-5 sm:grid-cols-2 gap-1.5 sm:gap-3 mb-3 sm:mb-6">
           {activeEmotions.map((emotion) => {
             const isSelected = selectedEmotion === emotion;
-            const showBlurred = showResult && isSelected && !revealEmotion;
+            const isActual = emotion === currentImage?.emotion;
+            const showAsCorrect = showResult && isActual;
+            const showAsError = showResult && isSelected && !isCorrect;
+            const showBlurred = showAsCorrect && !isCorrect && !revealEmotion;
+
             return (
               <Button
                 key={emotion}
@@ -58,10 +62,10 @@ export const EmotionMatrix: React.FC<EmotionMatrixProps> = ({
                 aria-pressed={isSelected}
                 className={`h-12 sm:h-16 rounded-lg border sm:border-2 transition-all duration-300 matrix-interactive disabled:opacity-50 disabled:cursor-not-allowed font-matrix text-[9px] sm:text-xs uppercase tracking-wider focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-matrix-accent focus:ring-offset-1 sm:focus:ring-offset-2 focus:ring-offset-matrix-bg px-1 sm:px-4 ${
                   showBlurred
-                    ? "blur-[3px] select-none opacity-70 cursor-pointer"
-                    : showResult && emotion === currentImage?.emotion
+                    ? "bg-matrix-accent/10 border-matrix-accent/40 blur-[3px] select-none opacity-70 cursor-pointer"
+                    : showAsCorrect
                     ? `bg-emotion-${emotion}/20 border-emotion-${emotion} emotion-text-${emotion} matrix-glow animate-matrix-pulse`
-                    : showResult && isSelected && !isCorrect
+                    : showAsError
                     ? "bg-emotion-anger/20 border-emotion-anger emotion-text-anger"
                     : `hover:bg-emotion-${emotion}/10 border-border`
                 }`}
@@ -88,7 +92,7 @@ export const EmotionMatrix: React.FC<EmotionMatrixProps> = ({
                 <div className="text-[10px] uppercase tracking-[0.2em] text-matrix-secondary mb-1">
                   {t.neuralMatch}
                 </div>
-                <span className={`font-matrix text-lg sm:text-2xl uppercase emotion-text-${currentImage.emotion}`}>
+                <span className={`font-matrix text-lg sm:text-2xl uppercase emotion-text-${currentImage.emotion} ${!isCorrect && !revealEmotion ? "blur-sm select-none" : ""}`}>
                   {getEmotionTranslation(currentImage.emotion)}
                 </span>
               </div>
