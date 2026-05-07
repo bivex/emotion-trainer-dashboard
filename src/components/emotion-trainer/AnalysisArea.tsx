@@ -1,5 +1,5 @@
 import React from "react";
-import { Microscope, Brain } from "lucide-react";
+import { Microscope, Brain, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "../../i18n/LanguageProvider";
 import { EmotionImage } from "../../api/images";
 
@@ -11,6 +11,8 @@ interface AnalysisAreaProps {
   selectedEmotion: string;
   setRevealEmotion: (reveal: boolean) => void;
   getEmotionTranslation: (emotion: string) => string;
+  loadPrevImage: () => void;
+  loadNextImage: () => void;
 }
 
 export const AnalysisArea: React.FC<AnalysisAreaProps> = ({
@@ -21,6 +23,8 @@ export const AnalysisArea: React.FC<AnalysisAreaProps> = ({
   selectedEmotion,
   setRevealEmotion,
   getEmotionTranslation,
+  loadPrevImage,
+  loadNextImage,
 }) => {
   const { t } = useLanguage();
 
@@ -65,9 +69,29 @@ export const AnalysisArea: React.FC<AnalysisAreaProps> = ({
                   <div className="absolute bottom-0 right-0 w-8 h-8 sm:w-16 sm:h-16 border-b-2 border-r-2 border-matrix-accent/40 rounded-br-xl sm:rounded-br-2xl" />
                   <div className="absolute top-1/2 left-0 w-full h-px bg-matrix-accent/10" />
                   <div className="absolute top-0 left-1/2 w-px h-full bg-matrix-accent/10" />
-                </div>
+                 </div>
 
-                {showResult && (
+                 {/* Navigation arrows */}
+                 {!showResult && (
+                   <>
+                     <button
+                       onClick={loadPrevImage}
+                       className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors backdrop-blur-sm"
+                       aria-label="Previous image"
+                     >
+                       <ChevronLeft className="w-6 h-6" />
+                     </button>
+                     <button
+                       onClick={loadNextImage}
+                       className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors backdrop-blur-sm"
+                       aria-label="Next image"
+                     >
+                       <ChevronRight className="w-6 h-6" />
+                     </button>
+                   </>
+                 )}
+
+                 {showResult && (
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     {!isCorrect && !revealEmotion && (
                       <button 

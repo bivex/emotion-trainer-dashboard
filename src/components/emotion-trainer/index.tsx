@@ -32,6 +32,7 @@ const EmotionTrainer: React.FC = () => {
     setRevealEmotion,
     checkAnswer,
     loadNextImage,
+    loadPrevImage,
     resetStats,
     resetGoodStats,
     resetBadStats,
@@ -92,6 +93,8 @@ const EmotionTrainer: React.FC = () => {
               isCorrect={isCorrect}
               selectedEmotion={selectedEmotion}
               getEmotionTranslation={getEmotionTranslation}
+              loadPrevImage={loadPrevImage}
+              loadNextImage={loadNextImage}
             />
 
             {/* Right Panel */}

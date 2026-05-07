@@ -118,28 +118,39 @@ export const useEmotionTrainer = () => {
     setRevealEmotion(false);
   }, [trainingMode, getWeakEmotions, filterImagesByPreset]);
 
-  const loadNextImage = useCallback(() => {
-    // Clear any pending transition
-    if (nextImageTimerRef.current) {
-      clearTimeout(nextImageTimerRef.current);
-      nextImageTimerRef.current = null;
-    }
+   const loadNextImage = useCallback(() => {
+     // Clear any pending transition
+     if (nextImageTimerRef.current) {
+       clearTimeout(nextImageTimerRef.current);
+       nextImageTimerRef.current = null;
+     }
 
-    setQueueIndex((prev) => {
-      const next = prev + 1;
-      if (next >= imageQueue.length) {
-        // Shuffling and restarting is fine, but we need to update the queue
-        // For simplicity, we just loop for now or we could reshuffle
-        // To reshuffle properly, we'd need to update imageQueue state
-        return 0; 
-      }
-      return next;
-    });
+     setQueueIndex((prev) => {
+       const next = prev + 1;
+       return next >= imageQueue.length ? 0 : next;
+     });
 
-    setShowResult(false);
-    setSelectedEmotion("");
-    setRevealEmotion(false);
-  }, [imageQueue.length]);
+     setShowResult(false);
+     setSelectedEmotion("");
+     setRevealEmotion(false);
+   }, [imageQueue.length]);
+
+   const loadPrevImage = useCallback(() => {
+     // Clear any pending transition
+     if (nextImageTimerRef.current) {
+       clearTimeout(nextImageTimerRef.current);
+       nextImageTimerRef.current = null;
+     }
+
+     setQueueIndex((prev) => {
+       const prevIdx = prev - 1;
+       return prevIdx < 0 ? imageQueue.length - 1 : prevIdx;
+     });
+
+     setShowResult(false);
+     setSelectedEmotion("");
+     setRevealEmotion(false);
+   }, [imageQueue.length]);
 
   const playEmotionSound = useCallback((emotion: string, isCorrect: boolean) => {
     try {
@@ -325,9 +336,10 @@ export const useEmotionTrainer = () => {
     setTrainingMode,
     setEmotionPreset,
     setRevealEmotion,
-    checkAnswer,
-    loadNextImage,
-    resetStats,
+     checkAnswer,
+     loadNextImage,
+     loadPrevImage,
+     resetStats,
     resetGoodStats,
     resetBadStats,
     getEmotionAccuracy,
