@@ -201,6 +201,48 @@ export const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled;
 };
 
+/** Group images by emotion, then build a round-robin queue so every emotion
+ *  appears exactly once per round before any repeats. Shuffles emotion order
+ *  between rounds to avoid predictable patterns. */
+export const createStratifiedQueue = <T extends { emotion: string }>(
+  images: T[],
+  activeEmotions: readonly string[],
+): T[] => {
+  if (images.length === 0) return [];
+
+  const activeSet = new Set(activeEmotions);
+  const grouped = new Map<string, T[]>();
+  for (const img of images) {
+    if (!activeSet.has(img.emotion)) continue;
+    const list = grouped.get(img.emotion) ?? [];
+    list.push(img);
+    grouped.set(img.emotion, list);
+  }
+  // Shuffle within each group so we don't always pick the same images
+  for (const key of grouped.keys()) {
+    grouped.set(key, shuffleArray(grouped.get(key)!));
+  }
+
+  const emotions = shuffleArray([...grouped.keys()]);
+  const queue: T[] = [];
+  const indices = new Map<string, number>();
+  for (const e of emotions) indices.set(e, 0);
+
+  let exhausted = 0;
+  while (exhausted < emotions.length) {
+    const roundOrder = shuffleArray(emotions.filter((e) => (indices.get(e) ?? 0) < (grouped.get(e)?.length ?? 0)));
+    for (const e of roundOrder) {
+      const idx = indices.get(e)!;
+      const pool = grouped.get(e)!;
+      if (idx >= pool.length) continue;
+      queue.push(pool[idx]);
+      indices.set(e, idx + 1);
+    }
+    exhausted = emotions.filter((e) => (indices.get(e) ?? 0) >= (grouped.get(e)?.length ?? 0)).length;
+  }
+  return queue;
+};
+
 export const createEmptyConfusionMatrix = (): ConfusionMatrix => {
   const matrix: ConfusionMatrix = {};
   ALL_EMOTIONS.forEach((actual) => {

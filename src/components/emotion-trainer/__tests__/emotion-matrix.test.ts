@@ -6,6 +6,7 @@ import {
   createEmptyConfusionMatrix,
   createEmptyEmotionStats,
   shuffleArray,
+  createStratifiedQueue,
   type EmotionKey,
 } from '../types';
 import imageManifest from '../../../data/image-manifest.json';
@@ -326,14 +327,16 @@ describe('shuffleArray', () => {
   });
 });
 
-// ─── 11. Duplicate emotion lists: types.ts vs api/images.ts ───
+// ─── 11. Single source of truth: types.ts is the only emotion list ───
 
-describe('Consistency between types.ts and api/images.ts', () => {
-  it('api/images.ts EMOTIONS list matches ALL_EMOTIONS (same set)', async () => {
-    // Dynamic import to get the EMOTIONS constant from images.ts
+describe('Single source of truth for emotions', () => {
+  it('api/images.ts no longer has a separate EMOTIONS array', async () => {
     const imagesModule = await import('../../../api/images');
-    // images.ts doesn't export EMOTIONS, but we can verify through manifest
-    // that all manifest emotions match ALL_EMOTIONS
+    // Should not export EMOTIONS constant
+    expect((imagesModule as Record<string, unknown>).EMOTIONS).toBeUndefined();
+  });
+
+  it('manifest emotions match ALL_EMOTIONS', () => {
     const manifestEmotions = new Set<string>(
       (imageManifest as { images: { emotion: string }[] }).images.map((i) => i.emotion),
     );
@@ -394,7 +397,136 @@ describe('Weak emotions detection', () => {
   });
 });
 
-// ─── 14. Similar emotions are correctly distinguished ───
+// ─── 14. Stratified queue: balanced distribution ───
+
+describe('createStratifiedQueue', () => {
+  const makeImages = (emotion: string, count: number) =>
+    Array.from({ length: count }, (_, i) => ({
+      path: `/${emotion}/${i}.png`,
+      emotion,
+      filename: `${i}.png`,
+    }));
+
+  it('produces a queue with all images', () => {
+    const images = [
+      ...makeImages('joy', 3),
+      ...makeImages('sadness', 3),
+      ...makeImages('anger', 3),
+    ];
+    const queue = createStratifiedQueue(images, ['joy', 'sadness', 'anger']);
+    expect(queue).toHaveLength(9);
+    // Same set of images
+    const sorted1 = [...images].sort((a, b) => a.path.localeCompare(b.path));
+    const sorted2 = [...queue].sort((a, b) => a.path.localeCompare(b.path));
+    expect(sorted2.map((i) => i.path)).toEqual(sorted1.map((i) => i.path));
+  });
+
+  it('no emotion repeats within one round (when all have equal images)', () => {
+    const emotions = ['joy', 'sadness', 'anger'];
+    const images = emotions.flatMap((e) => makeImages(e, 5));
+    const queue = createStratifiedQueue(images, emotions);
+
+    // In each round of 3, no emotion should repeat
+    for (let round = 0; round < 5; round++) {
+      const roundSlice = queue.slice(round * 3, (round + 1) * 3);
+      const unique = new Set(roundSlice.map((i) => i.emotion));
+      expect(unique.size, `Round ${round} has duplicates`).toBe(roundSlice.length);
+    }
+  });
+
+  it('handles uneven image counts — emotion with fewer images stops appearing', () => {
+    const images = [
+      ...makeImages('joy', 5),
+      ...makeImages('sadness', 2),
+      ...makeImages('anger', 5),
+    ];
+    const queue = createStratifiedQueue(images, ['joy', 'sadness', 'anger']);
+
+    // First 2 rounds should have all 3 emotions
+    const round0 = new Set(queue.slice(0, 3).map((i) => i.emotion));
+    expect(round0.size).toBe(3);
+
+    const round1 = new Set(queue.slice(3, 6).map((i) => i.emotion));
+    expect(round1.size).toBe(3);
+
+    // sadness should appear exactly 2 times total
+    const sadnessCount = queue.filter((i) => i.emotion === 'sadness').length;
+    expect(sadnessCount).toBe(2);
+
+    // joy and anger should appear 5 times each
+    expect(queue.filter((i) => i.emotion === 'joy').length).toBe(5);
+    expect(queue.filter((i) => i.emotion === 'anger').length).toBe(5);
+  });
+
+  it('filters out images not in activeEmotions', () => {
+    const images = [
+      ...makeImages('joy', 3),
+      ...makeImages('sadness', 3),
+      ...makeImages('anger', 3),
+    ];
+    const queue = createStratifiedQueue(images, ['joy', 'sadness']);
+    expect(queue).toHaveLength(6);
+    expect(queue.every((i) => i.emotion !== 'anger')).toBe(true);
+  });
+
+  it('returns empty array for empty input', () => {
+    const queue = createStratifiedQueue([], ['joy']);
+    expect(queue).toEqual([]);
+  });
+
+  it('returns empty array when no images match activeEmotions', () => {
+    const images = makeImages('joy', 5);
+    const queue = createStratifiedQueue(images, ['sadness']);
+    expect(queue).toEqual([]);
+  });
+
+  it('produces balanced distribution across emotions', () => {
+    // With 3 emotions, first N*3 images should have equal counts
+    const emotions = ['joy', 'sadness', 'anger', 'fear', 'surprise'];
+    const images = emotions.flatMap((e) => makeImages(e, 20));
+    const queue = createStratifiedQueue(images, emotions);
+
+    // First 100 images (5 rounds of 20) should have ~20 of each
+    const first100 = queue.slice(0, 100);
+    const counts: Record<string, number> = {};
+    for (const img of first100) {
+      counts[img.emotion] = (counts[img.emotion] || 0) + 1;
+    }
+    for (const e of emotions) {
+      expect(counts[e], `${e} is underrepresented`).toBe(20);
+    }
+  });
+
+  it('different calls produce different orders', () => {
+    const emotions = ['joy', 'sadness', 'anger', 'fear', 'surprise', 'disgust'];
+    const images = emotions.flatMap((e) => makeImages(e, 10));
+
+    const queues = Array.from({ length: 10 }, () =>
+      createStratifiedQueue(images, emotions).map((i) => i.emotion).join(','),
+    );
+    const uniqueOrders = new Set(queues);
+    // With 6 emotions shuffled differently, orders should vary
+    expect(uniqueOrders.size, 'All queues had the same order').toBeGreaterThan(1);
+  });
+
+  it('works with real manifest data for "basic" preset', () => {
+    const allImages = (imageManifest as { images: { emotion: string; path: string; filename: string }[] }).images.map(({ emotion, path, filename }) => ({ emotion, path, filename }));
+    const active = EMOTION_PRESETS.basic;
+    const queue = createStratifiedQueue(allImages, [...active]);
+
+    // Every emotion in the first 10 images should be unique
+    const first10 = queue.slice(0, 10);
+    const unique = new Set(first10.map((i) => i.emotion));
+    expect(unique.size).toBe(10);
+
+    // All 10 basic emotions should be represented
+    for (const e of active) {
+      expect(unique.has(e), `Missing "${e}" in first round`).toBe(true);
+    }
+  });
+});
+
+// ─── 15. Similar emotions are correctly distinguished ───
 
 describe('Similar emotion pairs are distinct keys', () => {
   const similarPairs = [

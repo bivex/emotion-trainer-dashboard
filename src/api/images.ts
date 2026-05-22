@@ -1,4 +1,5 @@
 import imageManifest from '../data/image-manifest.json';
+import { ALL_EMOTIONS, type EmotionKey } from '../components/emotion-trainer/types';
 
 export interface EmotionImage {
   path: string;
@@ -6,19 +7,6 @@ export interface EmotionImage {
   emotion: string;
   filename: string;
 }
-
-// All 39 emotions from the dataset (matches manifest)
-const EMOTIONS = [
-  'amusement', 'anger', 'anxiety', 'awe', 'callousness',
-  'confusion', 'contempt', 'deceit', 'despair', 'determination',
-  'disappointment', 'disgust', 'embarrassment', 'envy', 'excitement',
-  'fear', 'fearlessness', 'frustration', 'guilt', 'hatred',
-  'interest', 'jealousy', 'joy', 'loneliness', 'manipulative',
-  'narcissism', 'neutral', 'predatory', 'pride', 'regret',
-  'relief', 'remorselessness', 'resentment', 'sadness', 'shallow_affect',
-  'shame', 'sociopathy', 'surprise', 'suspicion'
-] as const;
-export type EmotionKey = typeof EMOTIONS[number];
 
 function isTauri(): boolean {
   return typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window;
@@ -32,7 +20,7 @@ export function getAllEmotionImages(): EmotionImage[] {
 export function getEmotionStats(): { [emotion: string]: number } {
   const stats: { [emotion: string]: number } = {};
   const allImages = getAllEmotionImages();
-  for (const emotion of EMOTIONS) {
+  for (const emotion of ALL_EMOTIONS) {
     stats[emotion] = allImages.filter(img => img.emotion === emotion).length;
   }
   return stats;

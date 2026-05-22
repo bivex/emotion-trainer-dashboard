@@ -11,12 +11,14 @@ import {
   EmotionStats,
   createEmptyConfusionMatrix,
   createEmptyEmotionStats,
-  shuffleArray,
+  createStratifiedQueue,
 } from "./types";
 
 export const useEmotionTrainer = () => {
   const { t } = useLanguage();
   const nextImageTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const lastFilteredListRef = useRef<EmotionImage[]>([]);
+  const lastActiveRef = useRef<readonly string[]>(ALL_EMOTIONS);
 
   // State
   const [imageQueue, setImageQueue] = useState<EmotionImage[]>([]);
@@ -109,14 +111,20 @@ export const useEmotionTrainer = () => {
       }
     }
 
-    const shuffled = shuffleArray(filteredList);
-    setImageQueue(shuffled);
+    const active = mode === "weak"
+      ? [...new Set(filteredList.map((img) => img.emotion))]
+      : getActiveEmotions();
+    const queue = createStratifiedQueue(filteredList, active);
+
+    lastFilteredListRef.current = filteredList;
+    lastActiveRef.current = active;
+    setImageQueue(queue);
     setTotalImages(filteredList.length);
     setQueueIndex(0);
     setShowResult(false);
     setSelectedEmotion("");
     setRevealEmotion(false);
-  }, [trainingMode, getWeakEmotions, filterImagesByPreset]);
+  }, [trainingMode, getWeakEmotions, filterImagesByPreset, getActiveEmotions]);
 
    const loadNextImage = useCallback(() => {
      // Clear any pending transition
@@ -127,7 +135,13 @@ export const useEmotionTrainer = () => {
 
      setQueueIndex((prev) => {
        const next = prev + 1;
-       return next >= imageQueue.length ? 0 : next;
+       if (next >= imageQueue.length) {
+         // Reshuffle with a fresh stratified queue on wrap
+         const fresh = createStratifiedQueue(lastFilteredListRef.current, lastActiveRef.current);
+         setImageQueue(fresh);
+         return 0;
+       }
+       return next;
      });
 
      setShowResult(false);
